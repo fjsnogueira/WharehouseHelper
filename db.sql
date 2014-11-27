@@ -1,4 +1,15 @@
 -- 		############################################################################
+-- 		### ------------ ### ------------- ARIGOS ------------- ### ------------ ###
+-- 		############################################################################
+-- 		Nome da tabela: dbo.Fornecedores
+			select * from PRISINF.dbo.Fornecedores ;
+			
+-- 		Atributos relevantes
+--			(PK) Artigo : string > id do artigo :: por exemplo, "CYMBAL0001"
+--			(--) Descricao : string > nome do artigo
+--			(--) CodBarras : string > código de barras do artigo
+
+-- 		############################################################################
 -- 		### ------------ ### ---------- FORNECEDORES ---------- ### ------------ ###
 -- 		############################################################################
 -- 		Nome da tabela: dbo.Fornecedores
