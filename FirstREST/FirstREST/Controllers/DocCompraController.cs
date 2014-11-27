@@ -19,24 +19,6 @@ namespace FirstREST.Controllers
             return Lib_Primavera.Comercial.VGR_List();
         }
 
-        /*
-        // GET api/cliente/5    
-        public Lib_Primavera.Model.DocCompra Get(string id)
-        {
-            Lib_Primavera.Model.DocVenda doccompra = Lib_Primavera.Comercial.GR_List(id);
-            if (docvenda == null)
-            {
-                throw new HttpResponseException(
-                        Request.CreateResponse(HttpStatusCode.NotFound));
-
-            }
-            else
-            {
-                return docvenda;
-            }
-        }
-        */
-
 
         public HttpResponseMessage Post(Lib_Primavera.Model.DocCompra dc)
         {
@@ -45,8 +27,7 @@ namespace FirstREST.Controllers
 
             if (erro.Erro == 0)
             {
-                var response = Request.CreateResponse(
-                   HttpStatusCode.Created, dc.id);
+                var response = Request.CreateResponse( HttpStatusCode.Created , dc.id ) ;
                 string uri = Url.Link("DefaultApi", new { DocId = dc.id });
                 response.Headers.Location = new Uri(uri);
                 return response;

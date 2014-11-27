@@ -15,7 +15,9 @@ namespace FirstREST.Lib_Primavera
 {
     public class Comercial
     {
-
+        private static String NomeEmpresa = "SINF";
+        private static String UtilizadorEmpresa = "";
+        private static String PasswordEmpresa = "" ;
 
         # region Cliente
 
@@ -29,7 +31,7 @@ namespace FirstREST.Lib_Primavera
             List<Model.Cliente> listClientes = new List<Model.Cliente>();
 
 
-            if (PriEngine.InitializeCompany("EMPRESA1", "admin", "admin") == true)
+            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa ) == true)
             {
 
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
@@ -64,7 +66,7 @@ namespace FirstREST.Lib_Primavera
 
             Model.Cliente myCli = new Model.Cliente();
 
-            if (PriEngine.InitializeCompany("EMPRESA1", "admin", "admin") == true)
+            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
 
                 if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente) == true)
@@ -87,9 +89,6 @@ namespace FirstREST.Lib_Primavera
 
         public static Lib_Primavera.Model.RespostaErro UpdCliente(Lib_Primavera.Model.Cliente cliente)
         {
-
-
-
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
             ErpBS objMotor = new ErpBS();
 
@@ -98,7 +97,7 @@ namespace FirstREST.Lib_Primavera
             try
             {
 
-                if (PriEngine.InitializeCompany("EMPRESA1", "admin", "admin") == true)
+                if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
                 {
 
                     if (PriEngine.Engine.Comercial.Clientes.Existe(cliente.CodCliente) == false)
@@ -143,18 +142,14 @@ namespace FirstREST.Lib_Primavera
 
         }
 
-
         public static Lib_Primavera.Model.RespostaErro DelCliente(string codCliente)
         {
-
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
             GcpBECliente objCli = new GcpBECliente();
 
-
             try
             {
-
-                if (PriEngine.InitializeCompany("EMPRESA1", "admin", "admin") == true)
+                if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
                 {
                     if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente) == false)
                     {
@@ -189,7 +184,6 @@ namespace FirstREST.Lib_Primavera
 
         }
 
-
         public static Lib_Primavera.Model.RespostaErro InsereClienteObj(Model.Cliente cli)
         {
 
@@ -199,7 +193,7 @@ namespace FirstREST.Lib_Primavera
 
             try
             {
-                if (PriEngine.InitializeCompany("EMPRESA1", "admin", "admin") == true)
+                if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
                 {
 
                     myCli.set_Cliente(cli.CodCliente);
@@ -256,15 +250,14 @@ namespace FirstREST.Lib_Primavera
 
         #endregion Cliente;   // -----------------------------  END   CLIENTE    -----------------------
 
+        #region Artigos
 
         public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
         {
-            
-
             GcpBEArtigo objArtigo = new GcpBEArtigo();
             Model.Artigo myArt = new Model.Artigo();
 
-            if (PriEngine.InitializeCompany("SINF", "", "") == true)
+            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
 
                 if (PriEngine.Engine.Comercial.Artigos.Existe(codArtigo) == false)
@@ -297,7 +290,7 @@ namespace FirstREST.Lib_Primavera
             Model.Artigo art = new Model.Artigo();
             List<Model.Artigo> listArts = new List<Model.Artigo>();
 
-            if (PriEngine.InitializeCompany("SINF", "", "") == true)
+            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
 
                 objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
@@ -323,81 +316,9 @@ namespace FirstREST.Lib_Primavera
 
         }
 
+        #endregion Artigos
 
-
-        //------------------------------------ ENCOMENDA ---------------------
-        /*
-        public static Model.RespostaErro TransformaDoc(Model.DocCompra dc)
-        {
-
-            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
-            GcpBEDocumentoCompra objEnc = new GcpBEDocumentoCompra();
-            GcpBEDocumentoCompra objGR = new GcpBEDocumentoCompra();
-            GcpBELinhasDocumentoCompra objLinEnc = new GcpBELinhasDocumentoCompra();
-            PreencheRelacaoCompras rl = new PreencheRelacaoCompras();
-
-            List<Model.LinhaDocCompra> lstlindc = new List<Model.LinhaDocCompra>();
-
-            try
-            {
-                if (PriEngine.InitializeCompany("EMPRESA1", "sa", "123456") == true)
-                {
-                
-
-                    objEnc = PriEngine.Engine.Comercial.Compras.Edita("000", "ECF", "2013", 3);
-
-                    // --- Criar os cabeçalhos da GR
-                    objGR.set_Entidade(objEnc.get_Entidade());
-                    objEnc.set_Serie("2013");
-                    objEnc.set_Tipodoc("ECF");
-                    objEnc.set_TipoEntidade("F");
-
-                    objGR = PriEngine.Engine.Comercial.Compras.PreencheDadosRelacionados(objGR,rl);
- 
-
-                    // façam p.f. o ciclo para percorrer as linhas da encomenda que pretendem copiar
-                     
-                        double QdeaCopiar;
-                        PriEngine.Engine.Comercial.Internos.CopiaLinha("C", objEnc, "C", objGR, lin.NumLinha, QdeaCopiar);
-                       
-                        // precisamos aqui de um metodo que permita actualizar a Qde Satisfeita da linha de encomenda.  Existe em VB mas ainda não sei qual é em c#
-                       
-                    PriEngine.Engine.IniciaTransaccao();
-                    PriEngine.Engine.Comercial.Compras.Actualiza(objEnc, "");
-                    PriEngine.Engine.Comercial.Compras.Actualiza(objGR, "");
-
-                    PriEngine.Engine.TerminaTransaccao();
-
-                    erro.Erro = 0;
-                    erro.Descricao = "Sucesso";
-                    return erro;
-                }
-                else
-                {
-                    erro.Erro = 1;
-                    erro.Descricao = "Erro ao abrir empresa";
-                    return erro;
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                PriEngine.Engine.DesfazTransaccao();
-                erro.Erro = 1;
-                erro.Descricao = ex.Message;
-                return erro;
-            }
-        
-        
-        }
-
-        */
-
-
-
-
-        // ------------------------ Documentos de Compra --------------------------//
+        #region DocumendosCompra
 
         public static List<Model.DocCompra> VGR_List()
         {
@@ -410,7 +331,7 @@ namespace FirstREST.Lib_Primavera
             Model.LinhaDocCompra lindc = new Model.LinhaDocCompra();
             List<Model.LinhaDocCompra> listlindc = new List<Model.LinhaDocCompra>();
 
-            if (PriEngine.InitializeCompany("SINF", "", "") == true)
+            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
                 objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, Serie From CabecCompras where TipoDoc='VGR'");
                 while (!objListCab.NoFim())
@@ -454,8 +375,6 @@ namespace FirstREST.Lib_Primavera
             return listdc;
         }
 
-
-
         public static Model.RespostaErro VGR_New(Model.DocCompra dc)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
@@ -470,7 +389,7 @@ namespace FirstREST.Lib_Primavera
 
             try
             {
-                if (PriEngine.InitializeCompany("SINF", "", "") == true)
+                if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
                 {
                     // Atribui valores ao cabecalho do doc
                     //myEnc.set_DataDoc(dv.Data);
@@ -512,12 +431,10 @@ namespace FirstREST.Lib_Primavera
                 return erro;
             }
         }
-        
 
+        #endregion DocumentosCompra
 
-        // ------ Documentos de venda ----------------------
-
-
+        #region DocumentosVenda
 
         public static Model.RespostaErro Encomendas_New(Model.DocVenda dv)
         {
@@ -533,7 +450,7 @@ namespace FirstREST.Lib_Primavera
             
             try
             {
-                if (PriEngine.InitializeCompany("SINF", "", "") == true)
+                if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
                 {
                     // Atribui valores ao cabecalho do doc
                     //myEnc.set_DataDoc(dv.Data);
@@ -577,7 +494,6 @@ namespace FirstREST.Lib_Primavera
             }
         }
 
-
         public static List<Model.DocVenda> Encomendas_List()
         {
             ErpBS objMotor = new ErpBS();
@@ -590,7 +506,7 @@ namespace FirstREST.Lib_Primavera
             List<Model.LinhaDocVenda> listlindv = new
             List<Model.LinhaDocVenda>();
 
-            if (PriEngine.InitializeCompany("SINF", "", "") == true)
+            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
                 objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL'");
                 while (!objListCab.NoFim())
@@ -630,7 +546,6 @@ namespace FirstREST.Lib_Primavera
             return listdv;
         }
 
-
         public static Model.DocVenda Encomenda_Get(string numdoc)
         {
             ErpBS objMotor = new ErpBS();
@@ -641,7 +556,7 @@ namespace FirstREST.Lib_Primavera
             Model.LinhaDocVenda lindv = new Model.LinhaDocVenda();
             List<Model.LinhaDocVenda> listlindv = new List<Model.LinhaDocVenda>();
 
-            if (PriEngine.InitializeCompany("SINF", "", "") == true)
+            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
                  
                 string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL' and NumDoc='" + numdoc + "'";
@@ -678,5 +593,6 @@ namespace FirstREST.Lib_Primavera
             return null;
         }
 
+        #endregion DocumentosVenda
     }
 }

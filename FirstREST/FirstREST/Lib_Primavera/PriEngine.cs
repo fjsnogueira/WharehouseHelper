@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Interop.ErpBS800;         // Use Primavera interop's [Path em C:\Program Files\Common Files\PRIMAVERA\SG800]
 using Interop.StdPlatBS800;
 using Interop.StdBE800;
-using ADODB;
+using ADODB; //
 using Interop.IGcpBS800;
 
 namespace FirstREST.Lib_Primavera
@@ -19,7 +19,6 @@ namespace FirstREST.Lib_Primavera
 
         public static bool InitializeCompany(string Company, string User, string Password)
         {
-
             StdBSConfApl objAplConf = new StdBSConfApl();
             StdPlatBS Plataforma = new StdPlatBS();
             ErpBS MotorLE = new ErpBS();
@@ -40,7 +39,6 @@ namespace FirstREST.Lib_Primavera
             // Is plt initialized?
             if (Plataforma.Inicializada)
             {
-
                 // Retuns the ptl.
                 Platform = Plataforma;
 
