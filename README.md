@@ -15,6 +15,8 @@ A pasta com o projeto está no ambiente de trabalho "FirstREST" se não me engan
 A máquina virtual está comprimida num .zip de aproximadamente 12GB.
 O Pedro Silva já tem o ficheiro na pen se não tragam vocês uma pen ou disco para vos passar! 
 
+Também podem sacar aqui partida em (23) bocados de 500MB: [dropbox](https://www.dropbox.com/sh/deq5gy7az5drfrr/AACRKEH6xF1swUP_WasGQOr5a?dl=0)
+
 **Novas instalações:**
 
 * Notepad++
