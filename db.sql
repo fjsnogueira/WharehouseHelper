@@ -1,4 +1,47 @@
 -- 		############################################################################
+-- 		### ----------- ### ------- DOCUMENTOS DE COMPRA ------- ### ----------- ###
+-- 		############################################################################
+-- 		Nome da tabela: dbo.DocumentosCompra
+			select * from PRISINF.dbo.DocumentosCompra ;
+
+--		Atributos relevantes
+--			(PK) Documento : string > "tag" do documento :: por exemplo, "ECF"
+--			(--) Descricao : string > nome do tipo do documento :: por exemplo, "Encomenda a fornecedor"
+
+-- 		############################################################################
+-- 		### ------------ ### ------------- COMPRAS ------------ ### ------------ ###
+-- 		############################################################################
+--		CABEÇALHO
+--		Nome da tabela: dbo.CabecCompras
+			select * from PRISINF.dbo.CabecCompras;
+
+--		Atributos relevantes
+--			(PK) Id : string
+--			(FK) TipoDoc : DocumentosCompra
+--			(FK) Entidade : Fornecedores
+--			(FK) CondPag : > condição de pagamento
+				select * from PRISINF.dbo.CondPag;
+--				(PK) CondPag : int > id
+--				(--) Descricao : string > nome da condição de pagamento
+
+--			(FK) ModoExp : > modo de expedição
+				select * from PRISINF.dbo.ModosExp;
+--				(PK) ModoExp : int > id
+--				(--) Descricao : string > nome do mode de expedição 
+
+--			(FK) ModoPag : > modo de pagamento
+				select * from PRISINF.dbo.DocumentosBancos;
+--				(PK) Movim : string > id do tipo de pagamento
+--				(--) Descricao : string > nome do modo de pagamento
+
+--			(--) NumContribuinte : int > número de contribuinte do fornecedor
+--			(--) Nome : string > nome do fornecedor
+--			(--) Morada : string > morada do fornecedor
+--			(--) Localidade : string > localidade do fornecedor
+--			(--) CodPostal : string > código postal do fornecedor
+
+
+-- 		############################################################################
 -- 		### ------------ ### ------------- ARIGOS ------------- ### ------------ ###
 -- 		############################################################################
 -- 		Nome da tabela: dbo.Fornecedores
@@ -21,6 +64,9 @@
 --			(--) NumContrib : int > número de contribuinte
 --			(--) EncomendasPendentes : float > número de encomendas pendentes ?? 
 --			(--) NomeFiscal : string > nome fiscal do fornecedor
+--			(--) Morada : string > morada
+--			(--) Local : string > localidade
+--			(--) Cp : string > código postal 
 
 -- 		############################################################################
 -- 		### ------------ ### ------------ ARMAZENS ------------ ### ------------ ###
