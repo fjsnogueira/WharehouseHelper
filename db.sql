@@ -11,7 +11,7 @@
 -- 		############################################################################
 -- 		### ------------ ### ------------- COMPRAS ------------ ### ------------ ###
 -- 		############################################################################
---		CABEÇALHO
+-- CABEÇALHO
 --		Nome da tabela: dbo.CabecCompras
 			select * from PRISINF.dbo.CabecCompras;
 
@@ -40,6 +40,13 @@
 --			(--) Localidade : string > localidade do fornecedor
 --			(--) CodPostal : string > código postal do fornecedor
 
+-- ARTIGOS
+--		Nome da tabela: dbo.LinhasCompras
+			select * from PRISINF.dbo.LinhasCompras;
+
+-- 		Atributos relevantes
+--			()
+--
 
 -- 		############################################################################
 -- 		### ------------ ### ------------- ARIGOS ------------- ### ------------ ###
