@@ -45,8 +45,21 @@
 			select * from PRISINF.dbo.LinhasCompras;
 
 -- 		Atributos relevantes
---			()
---
+--			() NumLinha : int > número da linha no documento de compra
+--			() Artigo : string > id do artigo
+--			() TaxaIva = 23
+--			() CodIva = 23
+--			() Quantidade : int > quantidade do artigo a encomendar
+--			() PrecUnit : floar > preço unitário de compra do artigo
+--			() TipoLinha : int > "10" linha de artigos ; "60" linha converção de documento
+--			(FK) Armazem : string > armazém onde entregar as encomendas
+--			() DataEntrada
+--			() DataEntrega
+--			() PrecoLiquido : int > valor final da compra
+--			() Descricao : string > descrição do artigo
+--			() IdCabecCompras : string > id do documento de compra
+--			(PK) Id : string > id da linha
+--			() Localizacao : string > id do armazém
 
 -- 		############################################################################
 -- 		### ------------ ### ------------- ARIGOS ------------- ### ------------ ###
