@@ -1,0 +1,114 @@
+body {
+    background-color: #50555d ; /* fiord */
+}
+
+/* div principal */
+div.main_card_block {
+    padding-top: 12px ;
+    margin: auto ;
+    margin-top: 10%;
+    width: 40% ;
+    height: 60% ;
+    background-color: #ffffff ; /* white */
+    border-radius: 6px ;
+    border-top: 1px solid #393e45 ; /* charade */
+    border-left: 2px solid #30333a ; /* ebony */
+    border-right: 2px solid #30333a ; /* ebony */ 
+    border-bottom: 3px solid #30333a ; /* ebony */
+}
+
+/* ------ buraco no div principal ------ */
+div.main_card_block_upper_cut {
+    margin: auto ;
+    width: 25% ;
+    height: 12px;
+    background-color: #50555d ; /* fiord */ ;
+    border-radius: 6px ;
+    border-top: 2px solid #c5c5c8 ; /* ghost */
+    
+}
+
+/* ------ clips e ring no div principal ------ */
+div.back_clip {
+    margin: auto ;
+    margin-top: -97px ;
+    width: 17% ;
+    height: 90px ;
+    background-color: #7b7e82 ; /* TIN */
+    border-radius: 6px ;
+    border-top: 2px solid #b4b6b9 ; /* loblolly */
+    opacity: 0.7; 
+}
+
+div.front_clip {
+    width: 100% ;
+    margin-top: 4px;
+    height: 86px ;
+    background-color: #868a8f ; /* aluminium */
+    border-radius: 6px ;
+    border-top: 2px solid #aaadb0 ; /* bombay */
+    opacity: 0.9 ;
+}
+
+div.ring_clip {
+    margin: auto ;
+    margin-top: 30% ;
+    width: 30% ;
+    height: 25% ;
+    border-radius: 50% ;
+    border: 3px solid #d7d7d9 ; /* mystic */
+    background-color: #50555d ; /* fiord */
+}
+
+/* ------ títulos ------ */
+div.main_card_title {
+    padding: 10px 0 ;
+}
+
+h1 {
+    text-align: center ;
+    color: #36383c ; /* vulcan */
+    font-family: "Sansation_Light" ;
+}
+
+h3 {
+    text-align: center ;
+    color: #7c818a ; /* regent gray */
+    font-weight: 100 ;
+    font-family: "Sansation_Light" ;
+}
+
+/* ------ formulário de login ------ */
+div.main_card_loginform {
+    padding: 0 15% ;
+    padding-bottom: 30px ;
+}
+
+form.main_card_form {
+	position: relative;
+}
+
+input {
+    text-align: center ;
+    box-sizing: border-box ;
+    border-radius: 5px ;
+	height: auto ;
+    padding-bottom: 10px ;
+    padding-top: 10px ;
+	font-size: 16px ;
+	width: 100% ;
+	border: 1px solid #c3c5c7 ; /* ghost */
+    font-family: "Sansation_Light" ;
+}
+
+button {
+	font-family: "Sansation_Light" ;
+	width: 100%;
+	padding: 15px;
+    margin-top: 20px ;
+	font-size: 16px;
+	background-color: #20b7a7 ; /* light sea green (fundo) */
+	border: 1px solid #20b7a7 ; /* light sea green (borda do botão) */
+	border-radius: 5px;
+	color: #ffffff ; /* white (letras) */
+}
