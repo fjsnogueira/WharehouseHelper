@@ -1,12 +1,4 @@
 /************************************************************************/
-/* ------ fundo da página ------ */
-body {
-    /*background-color: #50555d ; /* fiord */
-    background-image: url("../img/bg2.jpg") ;
-    background-repeat: repeat ;
-}
-
-/************************************************************************/
 /* ------ div principal: bloco central ------ */
 div.main_card_block {
     padding-top: 12px ;
@@ -22,7 +14,7 @@ div.main_card_block {
     /*border-right: 2px solid #30333a ; /* ebony */ 
     /*border-bottom: 3px solid #30333a ; /* ebony */
     
-    box-shadow: 0px 1px 10px 2px #393e45 ; /* charade */
+    box-shadow: 0px 1px 6px 0px #393e45 ; /* charade */
 }
 
 /************************************************************************/

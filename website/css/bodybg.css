@@ -1,0 +1,7 @@
+/************************************************************************/
+/* ------ fundo da página ------ */
+body {
+    /*background-color: #50555d ; /* fiord */
+    background-image: url("../img/bg2.jpg") ;
+    background-repeat: repeat ;
+}
