@@ -1,0 +1,52 @@
+/************************************************************************/
+/* ------ fundo da página ------ */
+body {
+    background-color: #50555d ; /* fiord */
+}
+
+/************************************************************************/
+/* ------ div principal ------ */
+div.main_register_block {
+    margin: 20px auto ;
+    padding: 10px ;
+    width:90% ;
+    background-color: #ffffff ; /* white */
+}
+
+/************************************************************************/
+/* ------ formulário de login ------ */
+div.main_register_form {
+    padding: 0 1% ;
+    padding-bottom: 10px ;
+}
+
+form.register_form {
+	position: relative;
+}
+
+/* campos de inputs */
+input {
+    box-sizing: border-box ;
+    border-radius: 5px ;
+	height: auto ;
+    padding-bottom: 10px ;
+    padding-top: 10px ;
+    margin-top: 5px ;
+	font-size: 16px ;
+	width: 50% ;
+	border: 1px solid #c3c5c7 ; /* ghost */
+    font-family: "Sansation_Light" ;
+}
+
+/* botão de submit: "entrar" */
+button {
+    width: 50% ;
+	font-family: "Sansation_Light" ;
+	padding: 15px;
+    margin-top: 20px ;
+	font-size: 16px;
+	background-color: #20b7a7 ; /* light sea green (fundo) */
+	border: 1px solid #20b7a7 ; /* light sea green (borda do botão) */
+	border-radius: 5px;
+	color: #ffffff ; /* white (letras) */
+}

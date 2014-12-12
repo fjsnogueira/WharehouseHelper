@@ -1,8 +1,11 @@
+/************************************************************************/
+/* ------ fundo da página ------ */
 body {
     background-color: #50555d ; /* fiord */
 }
 
-/* div principal */
+/************************************************************************/
+/* ------ div principal: bloco central ------ */
 div.main_card_block {
     padding-top: 12px ;
     margin: auto ;
@@ -17,7 +20,8 @@ div.main_card_block {
     border-bottom: 3px solid #30333a ; /* ebony */
 }
 
-/* ------ buraco no div principal ------ */
+/************************************************************************/
+/* ------ buraco no div principal: corte em cima ao centro ------ */
 div.main_card_block_upper_cut {
     margin: auto ;
     width: 25% ;
@@ -28,7 +32,9 @@ div.main_card_block_upper_cut {
     
 }
 
-/* ------ clips e ring no div principal ------ */
+/************************************************************************/
+/* ------ clips e ring no div principal: nas "fitas" no topo ------ */
+/* parte de trás do clip */
 div.back_clip {
     margin: auto ;
     margin-top: -97px ;
@@ -40,6 +46,7 @@ div.back_clip {
     opacity: 0.7; 
 }
 
+/* parte da frente do clip */
 div.front_clip {
     width: 100% ;
     margin-top: 4px;
@@ -50,6 +57,7 @@ div.front_clip {
     opacity: 0.9 ;
 }
 
+/* ring no centro dos clips */
 div.ring_clip {
     margin: auto ;
     margin-top: 30% ;
@@ -60,34 +68,74 @@ div.ring_clip {
     background-color: #50555d ; /* fiord */
 }
 
+/************************************************************************/
 /* ------ títulos ------ */
 div.main_card_title {
     padding: 10px 0 ;
 }
 
+h1, h3 {
+    text-align: center ;
+    font-family: "Sansation_Light" ;
+    padding-left: 2% ;
+    padding-right: 2% ;
+}
+
+/* titulo principal */
 h1 {
-    text-align: center ;
+    font-weight: bolder ;
     color: #36383c ; /* vulcan */
-    font-family: "Sansation_Light" ;
+    font-size: 32px;
 }
 
+/* ultimo div da página: contém link para a página de registo */
+div.main_card_register > h3 {
+    font-size: 16px ;
+}
+
+/* subtitulo na página principal */
 h3 {
-    text-align: center ;
     color: #7c818a ; /* regent gray */
-    font-weight: 100 ;
-    font-family: "Sansation_Light" ;
+    font-size: 20px ;
 }
 
+/************************************************************************/
+/* ------ a: link para registo ------ */
+
+a#register_link {
+    font-family: "Sansation_Light" ;
+    text-decoration: none ;
+}
+
+/* link */ 
+a#register_link:link {
+    color: #20b7a7 ; /* light sea green (fundo) */
+}
+
+/* link visitado */ 
+a#register_link:visited {
+    color: #158276 ; /**/
+}
+
+/* rato em cima do link */ 
+a#register_link:hover {
+    color: #f56746 ; /**/
+}
+
+
+
+/************************************************************************/
 /* ------ formulário de login ------ */
 div.main_card_loginform {
     padding: 0 15% ;
-    padding-bottom: 30px ;
+    padding-bottom: 10px ;
 }
 
 form.main_card_form {
 	position: relative;
 }
 
+/* campos de inputs */
 input {
     text-align: center ;
     box-sizing: border-box ;
@@ -95,12 +143,14 @@ input {
 	height: auto ;
     padding-bottom: 10px ;
     padding-top: 10px ;
+    margin-top: 5px ;
 	font-size: 16px ;
 	width: 100% ;
 	border: 1px solid #c3c5c7 ; /* ghost */
     font-family: "Sansation_Light" ;
 }
 
+/* botão de submit: "entrar" */
 button {
 	font-family: "Sansation_Light" ;
 	width: 100%;
