@@ -78,7 +78,7 @@ button {
 	font-family: "Sansation_Light" ;
 	padding: 15px;
     margin-top: 30px ;
-	font-size: 16px;
+	font-size: 16px ;
     background-color: #20b7a7 ; /* light sea green (fundo) */
 	border: 1px solid #20b7a7 ; /* light sea green (borda do botão) */
 	border-radius: 5px;

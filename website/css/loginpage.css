@@ -23,10 +23,12 @@ div.main_card_block_upper_cut {
     margin: auto ;
     width: 25% ;
     height: 12px;
-    background-color: #50555d ; /* fiord */ ;
+    /*background-color: #50555d ; /* fiord */ ;
+    background-image: url("../img/bg2.jpg") ;
+    background-repeat: repeat ;
     border-radius: 6px ;
-    border-top: 2px solid #c5c5c8 ; /* ghost */
     
+    box-shadow: 0px 1px 6px 0px #393e45 inset; /* charade */
 }
 
 /************************************************************************/
@@ -41,6 +43,8 @@ div.back_clip {
     border-radius: 6px ;
     border-top: 2px solid #b4b6b9 ; /* loblolly */
     opacity: 0.7; 
+    
+    box-shadow: 0px 1px 6px 0px #393e45 ; /* charade */
 }
 
 /* parte da frente do clip */
@@ -52,6 +56,8 @@ div.front_clip {
     border-radius: 6px ;
     border-top: 2px solid #aaadb0 ; /* bombay */
     opacity: 0.9 ;
+    
+    box-shadow: 0px 1px 6px 0px #393e45 ; /* charade */
 }
 
 /* ring no centro dos clips */
@@ -62,7 +68,11 @@ div.ring_clip {
     height: 25% ;
     border-radius: 50% ;
     border: 3px solid #d7d7d9 ; /* mystic */
-    background-color: #50555d ; /* fiord */
+    background-image: url("../img/bg2.jpg") ;
+    background-repeat: repeat ;
+    /*background-color: #50555d ; /* fiord */
+    
+    box-shadow: 0px 1px 6px 0px #393e45 ; /* charade */
 }
 
 /************************************************************************/
