@@ -333,7 +333,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
-                objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, Serie From CabecCompras where TipoDoc='VGR'");
+                objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, Serie From CabecCompras where DataVencimento = DataIntroducao and TipoDoc = 'ECF' order by NumDoc");
                 while (!objListCab.NoFim())
                 {
                     dc = new Model.DocCompra();

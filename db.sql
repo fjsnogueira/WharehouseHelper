@@ -2,8 +2,10 @@
 -- 		### ----------- ### ------- DOCUMENTOS DE COMPRA ------- ### ----------- ###
 -- 		############################################################################
 -- 		Nome da tabela: dbo.DocumentosCompra
+			--Selectiona todos os docs de compra
 			select * from PRISINF.dbo.DocumentosCompra ;
-
+			--Seleciona apenas docs de compra do ECF que nao tenham um VFA associado
+			Select * from PRISINF.dbo.CabecCompras where DataVencimento = DataIntroducao and TipoDoc = 'ECF' order by NumDoc;
 --		Atributos relevantes
 --			(PK) Documento : string > "tag" do documento :: por exemplo, "ECF"
 --			(--) Descricao : string > nome do tipo do documento :: por exemplo, "Encomenda a fornecedor"
