@@ -2,7 +2,10 @@
 
 <html>
     <header>
-        <title> Sinf Login 2 </title>
+        <title> Registo de Funcionário </title>
+        
+        <meta charset="utf-8">
+        
         <link rel="stylesheet" href="css/registerpage.css" />
         <link rel="stylesheet" href="css/fonts.css" />
         <link rel="stylesheet" href="css/bodybg.css" />
@@ -14,17 +17,33 @@
             
             <!-- titulos -->
             <div class="main_register_title"> 
-                <h1> P&aacute;gina de Registo </h1>
+                <h1> Página de Registo </h1>
                 <h3> Bem vindo! Por favor, preencha todos os campos abaixo. </h3>
             </div>
             
             <!-- formulário de login --> 
             <div class="main_register_form"> 
                 <form class="register_form" > 
-                    <input type="text" placeholder="Introduza o seu nome">
-                    <input type="password" placeholder="Introduza uma palavra passe">
-                    <input type="password" placeholder="Introduza a palavra passe novamente">
-                    <input type="text" placeholder="Introduza o código de verificação fornecido">
+                    <!-- nome do funcionario-->
+                    <div class="form_input">
+                        <label class="register_label"> Nome completo </label>
+                        <input type="text" placeholder="Introduza o seu nome" name="username">
+                    </div> 
+                    <!-- password -->
+                    <div class="form_input">
+                        <label class="register_label"> Palavra passe </label>
+                        <input type="password" placeholder="Introduza uma palavra passe" name="passwrod"> 
+                    </div>
+                    <!-- repetir password -->
+                    <div class="form_input">
+                        <label class="register_label"> Repetir palavra passe </label> 
+                        <input type="password" placeholder="Introduza a palavra passe novamente" name="confirm_password"> 
+                    </div>
+                    <!-- código de validação -->
+                    <div class="form_input">
+                        <label class="register_label"> Código de validação </label> 
+                        <input type="text" placeholder="Introduza o código de verificação fornecido" name="validation_code"> 
+                    </div>
                     
                     <button type="submit"> efetuar registo </button>
                 </form>
