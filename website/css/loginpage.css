@@ -1,7 +1,9 @@
 /************************************************************************/
 /* ------ fundo da página ------ */
 body {
-    background-color: #50555d ; /* fiord */
+    /*background-color: #50555d ; /* fiord */
+    background-image: url("../img/bg2.jpg") ;
+    background-repeat: repeat ;
 }
 
 /************************************************************************/
@@ -14,10 +16,13 @@ div.main_card_block {
     height: 60% ;
     background-color: #ffffff ; /* white */
     border-radius: 6px ;
-    border-top: 1px solid #393e45 ; /* charade */
-    border-left: 2px solid #30333a ; /* ebony */
-    border-right: 2px solid #30333a ; /* ebony */ 
-    border-bottom: 3px solid #30333a ; /* ebony */
+    
+    /*border-top: 1px solid #393e45 ; /* charade */
+    /*border-left: 2px solid #30333a ; /* ebony */
+    /*border-right: 2px solid #30333a ; /* ebony */ 
+    /*border-bottom: 3px solid #30333a ; /* ebony */
+    
+    box-shadow: 0px 1px 10px 2px #393e45 ; /* charade */
 }
 
 /************************************************************************/
@@ -97,6 +102,7 @@ div.main_card_register > h3 {
 h3 {
     color: #7c818a ; /* regent gray */
     font-size: 20px ;
+    font-weight: 100 ;
 }
 
 /************************************************************************/
