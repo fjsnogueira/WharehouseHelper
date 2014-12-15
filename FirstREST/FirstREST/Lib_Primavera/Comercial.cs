@@ -319,6 +319,28 @@ namespace FirstREST.Lib_Primavera
 
         #endregion Artigos
 
+        #region Fornecedores
+
+        public static Lib_Primavera.Model.Fornecedor GetFornecedor(string codFornecedor)
+        { 
+            string query = "SELECT nome FROM dbo.Fornecedores WHERE dbo.Fornecedores.Fornecedor='"+codFornecedor+"'";
+            ErpBS objMotor = new ErpBS();
+            StdBELista objList;
+            Model.Fornecedor fornecedor =  new Model.Fornecedor();
+
+            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
+            {
+                objList = PriEngine.Engine.Consulta(query);
+                if (!objList.NoFim()){
+                    fornecedor.nome = objList.Valor("nome");
+                }
+            }
+
+            return fornecedor;
+        }
+
+        #endregion Fornecedores
+
         #region DocumendosCompra
 
         public static List<Model.DocCompra> VGR_List()
