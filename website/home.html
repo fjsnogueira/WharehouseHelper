@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+    <header>
+        <title> Entradas em Armazém </title>
+        
+        <meta charset="utf-8">
+        
+        <script type="text/javascript" src="bwip.js"></script>
+        <script type="text/javascript" src="lib/jquery-1.4.1.js"></script>
+        <script type="text/javascript" src="lib/canvas.js"></script>
+        <script type="text/javascript" src="lib/barcodeRender.js"></script>
+        
+        <link rel="stylesheet" href="css/searchpage.css" />
+        <link rel="stylesheet" href="css/fonts.css" />
+        <link rel="stylesheet" href="css/bodybg.css" />
+        <link rel="stylesheet" href="css/style.css" />
+    </header>
+
+    <body onload="meteQB()">
+        
+        <div class="main_search_block">
+            
+            <!-- titulos -->
+            <div class="main_search_title"> 
+                <h1> Pesquisa de encomendas </h1>
+                <h3> Por favor, digite um nome ou identificador de um fornecedor, código de encomendas ou de artigos. </h3>
+            </div>
+            
+            <!-- formulário de login --> 
+            <div class="main_search_form"> 
+                <form class="search_form" > 
+                    <!-- nome do funcionario-->
+                    <div class="form_input">
+                        <input type="text" placeholder="Introduza os termos a pesquisar" name="username">
+                        <button id="search_bt" class="form_label" type="submit"> pesquisar </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- resultados da pesquisa -->
+            <div class="search_results">
+                <h3> <span class="bt-icon icon-search"></span> Resultados obtidos </h3>
+                <table id="search_elements"> 
+                    <tr>
+                        <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
+                        <td class="td_img"> <img src="img/artigo.png"> </td>
+                        <!-- breve descrição do elemento -->
+                        <td class="td_desc"> Descrição do artigo resultante das pesquisa. </td>
+                        <!-- botão para abrir mais opções -->
+                        <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
+                        <!-- código de barras associado -->
+                        <td class="td_canvas"> <canvas id="canvas1"> </canvas> </td>
+                    </tr>
+                    <tr>
+                        <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
+                        <td class="td_img"> <img src="img/encomenda.png"> </td>
+                        <!-- breve descrição do elemento -->
+                        <td class="td_desc"> Descrição da encomenda resultante das pesquisa. </td>
+                        <!-- botão para abrir mais opções -->
+                        <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
+                        <!-- código de barras associado -->
+                        <td class="td_canvas"> <canvas id="canvas2"> </canvas> </td>
+                    </tr>
+                    <tr>
+                        <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
+                        <td class="td_img"> <img src="img/fornecedor.png"> </td>
+                        <!-- breve descrição do elemento -->
+                        <td class="td_desc"> Descrição do fornecedor resultante das pesquisa. </td>
+                        <!-- botão para abrir mais opções -->
+                        <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
+                        <!-- código de barras associado -->
+                        <td class="td_canvas"> <canvas id="canvas3"> </canvas> </td>
+                    </tr>
+                    <tr>
+                        <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
+                        <td class="td_img"> <img src="img/armazem.png"> </td>
+                        <!-- breve descrição do elemento -->
+                        <td class="td_desc"> Descrição do armazém resultante das pesquisa. </td>
+                        <!-- botão para abrir mais opções -->
+                        <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
+                        <!-- código de barras associado -->
+                        <td class="td_canvas"> <canvas id="canvas4"> </canvas> </td>
+                    </tr>
+                </table>
+            </div>
+            
+        </div>
+        
+        <script type="text/javascript"> 
+            function meteQB(){
+                render('ean13','8424818263563','canvas1');
+                render('code128','ECF-0001','canvas2');
+                render('code128','FND-0001','canvas3');
+                render('code128','ARM-0001','canvas4');
+            };
+        </script>
+    </body>
+</html>

@@ -1,0 +1,88 @@
+/************************************************************************/
+/* ------ div principal ------ */
+div.main_register_block {
+    margin: 20px auto ;
+    padding: 12px ;
+    padding-left: 2%;
+    width:90% ;
+    background-color: #ffffff ; /* white */
+    box-shadow: 0px 1px 6px 0px #393e45 ; /* charade */
+    border-radius: 6px ;
+}
+
+/************************************************************************/
+/* ------ títulos ------  */
+h1, h3 {
+    font-family: "Sansation_Light" ;
+    color: #36383c ; /* vulcan */
+}
+
+h3 {
+    color: #7c818a ; /* regent gray */
+    font-weight: 100 ;   
+}
+
+/************************************************************************/
+/* ------ formulário de login ------ */
+div.main_register_form {
+    padding-bottom: 10px ;
+    margin: 5% 0 ;
+}
+
+/* blocos de inputs */
+div.form_input {
+    margin-left: 5%;
+    margin-bottom: 1%;
+    width: 90% ;
+}
+
+/* label do lado esquerdo do input */
+label.register_label {
+    margin-left: 11% ;
+    margin-right: 0;
+    display: inline-block ;
+    font-family: "Sansation_Light" ;
+    text-align: center;
+    padding: 10px ;
+    width: 18%;
+    background-color: #e2e2e2 ; /* platinum */
+
+    border-radius: 5px ;
+    border: 1px solid #c3c5c7 ; /* ghost */    
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* campos de inputs */
+input {
+    box-sizing: border-box ;
+    border-radius: 5px ;
+	height: auto ;
+    /* top - right - bottom - left */
+    padding: 10px 10px 10px 20px ;
+    margin-left: -5px;
+    margin-top: 5px ;
+	font-size: 16px ;
+	width: 60% ;
+	border: 1px solid #c3c5c7 ; /* ghost */
+    font-family: "Sansation_Light" ;
+    
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+/* botão de submit: "entrar" */
+button {
+    margin-left: 25% ;
+    width: 50% ;
+	font-family: "Sansation_Light" ;
+	padding: 15px;
+    margin-top: 30px ;
+	font-size: 16px ;
+    background-color: #20b7a7 ; /* light sea green (fundo) */
+	border: 1px solid #20b7a7 ; /* light sea green (borda do botão) */
+	border-radius: 5px;
+	color: #ffffff ; /* white (letras) */
+    
+    
+}

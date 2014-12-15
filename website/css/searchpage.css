@@ -1,0 +1,160 @@
+/************************************************************************/
+/* ------ div principal ------ */
+div.main_search_block {
+    margin: 20px auto ;
+    padding: 12px ;
+    padding-left: 2%;
+    width:90% ;
+    background-color: #ffffff ; /* white */
+    box-shadow: 0px 1px 6px 0px #393e45 ; /* charade */
+    border-radius: 6px ;
+}
+
+/************************************************************************/
+/* ------ títulos ------  */
+h1, h3 {
+    font-family: "Sansation_Light" ;
+    color: #36383c ; /* vulcan */
+}
+
+h3 {
+    color: #7c818a ; /* regent gray */
+    font-weight: 100 ;   
+}
+
+/************************************************************************/
+/* ------ formulário de pesquisa ------ */
+div.main_search_form {
+    padding-bottom: 10px ;
+    margin: 5% 0 ;
+}
+
+/* blocos de inputs */
+div.form_input {
+    margin-left: 5%;
+    margin-bottom: 1%;
+    width: 90% ;
+}
+
+/* campos de inputs */
+input {
+    box-sizing: border-box ;
+    border-radius: 5px ;
+	height: auto ;
+    /* top - right - bottom - left */
+    padding: 15px 15px 15px 20px ;
+    margin-top: 5px ;
+    margin-left: 12% ;
+	font-size: 16px ;
+	width: 60% ;
+	border: 1px solid #c3c5c7 ; /* ghost */
+    font-family: "Sansation_Light" ;
+    
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* botão de submit: "entrar" */
+button.form_label {
+    width: 15% ;
+	font-family: "Sansation_Light" ;
+    display: inline-block ;
+	padding: 15px;
+    margin-left: -5px;
+    margin-top: 30px ;
+	font-size: 16px ;
+    background-color: #20b7a7 ; /* light sea green (fundo) */
+	border: 1px solid #20b7a7 ; /* light sea green (borda do botão) */
+	border-radius: 5px;
+	color: #ffffff ; /* white (letras) */
+    
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+button.form_label:hover {
+    width: 15% ;
+	font-family: "Sansation_Light" ;
+    display: inline-block ;
+	padding: 15px;
+    margin-left: -5px;
+    margin-top: 30px ;
+	font-size: 16px ;
+    background-color: #207070 ;
+	border: 1px solid #207070 ; /* light sea green (borda do botão) */
+	border-radius: 5px;
+	color: #ffffff ; /* white (letras) */
+    
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+/************************************************************************/
+/* ------ resultados da pesquisa ------ */
+
+div.search_results {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+/* botão de mais opções */
+button.more_opt {
+    font-family: "Sansation_Light" ;
+    font-size: 16px ;
+    background-color: #ffffff ; /* light sea green (fundo) */
+	border: 1px solid #20b7a7 ; /* light sea green (borda do botão) */
+    color: #20b7a7 ; /* white (letras) */
+	border-radius: 5px;
+    padding: 10px 20px; /* cima+baixo - esq+dir */
+}
+button.more_opt:hover {
+    font-family: "Sansation_Light" ;
+    font-size: 16px ;
+    background-color:  #20b7a7 ; /* light sea green (fundo) */
+	border: 1px solid #20b7a7 ; /* light sea green (borda do botão) */
+    color: #ffffff ; /* white (letras) */
+	border-radius: 5px;
+    padding: 10px 20px; /* cima+baixo - esq+dir */
+}
+
+/* imagens ilustrativas do tipo de resultados */
+img {
+    width: 100% ;
+}
+
+/* tabela de resultados */
+table {
+    border-collapse: collapse ; /* assim os tds ficam sem espaços entre eles */
+}
+
+/* colunas da tabela de resultados */
+td {
+    padding: 4px ;
+    border-bottom: 1px solid #c3c5c7 ;
+    border-top: 1px solid #c3c5c7 ;
+    font-size: 16px ;
+}
+
+/* zona da imagem ilustrativa */
+td.td_img{
+    width: 10% ;
+}
+
+/* zona da descrição */
+td.td_desc{
+    text-align: justify ;
+    font-family: "Sansation_Light" ;
+    padding: 2% ;
+    width: 40% ;
+}
+
+/* zona do botão de mais opções */
+td.td_bt{
+    text-align: center ;
+    width: 25% ;
+}
+/* zona do código de barras */
+td.td_canvas{
+    text-align: center;
+    width: 12% ;
+}
