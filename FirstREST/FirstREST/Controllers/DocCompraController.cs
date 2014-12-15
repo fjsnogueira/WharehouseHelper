@@ -19,7 +19,6 @@ namespace FirstREST.Controllers
             return Lib_Primavera.Comercial.VGR_List();
         }
 
-
         public HttpResponseMessage Post(Lib_Primavera.Model.DocCompra dc)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();

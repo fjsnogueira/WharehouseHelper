@@ -7,19 +7,19 @@ namespace FirstREST.Lib_Primavera.Model
 {
     public class Login
     {
-        public string Username
+        public string username
         {
             get;
             set;
         }
 
-        public string Password
+        public string password
         {
             get;
             set;
         }
         
-        public string Armazem
+        public string armazem
         {
             get;
             set;

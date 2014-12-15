@@ -8,6 +8,9 @@ namespace FirstREST.Lib_Primavera.Model
     public class RespostaErro
     {
 
+        public bool Status
+        { get; set; }
+
         public int Erro
         { get; set; }
 

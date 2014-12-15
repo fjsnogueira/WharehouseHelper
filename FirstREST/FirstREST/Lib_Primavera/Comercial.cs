@@ -9,8 +9,7 @@ using Interop.StdBE800;
 using Interop.GcpBE800;
 using ADODB;
 using Interop.IGcpBS800;
-//using Interop.StdBESql800;
-//using Interop.StdBSSql800;
+
 
 namespace FirstREST.Lib_Primavera
 {
@@ -18,21 +17,21 @@ namespace FirstREST.Lib_Primavera
     {
         private static String NomeEmpresa = "SINF";
         private static String UtilizadorEmpresa = "";
-        private static String PasswordEmpresa = "" ;
+        private static String PasswordEmpresa = "";
 
         # region Cliente
 
         public static List<Model.Cliente> ListaClientes()
         {
             ErpBS objMotor = new ErpBS();
-             
+
             StdBELista objList;
 
             Model.Cliente cli = new Model.Cliente();
             List<Model.Cliente> listClientes = new List<Model.Cliente>();
 
 
-            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa ) == true)
+            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
 
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
@@ -103,6 +102,7 @@ namespace FirstREST.Lib_Primavera
 
                     if (PriEngine.Engine.Comercial.Clientes.Existe(cliente.CodCliente) == false)
                     {
+                        erro.Status = false;
                         erro.Erro = 1;
                         erro.Descricao = "O cliente não existe";
                         return erro;
@@ -119,6 +119,7 @@ namespace FirstREST.Lib_Primavera
 
                         PriEngine.Engine.Comercial.Clientes.Actualiza(objCli);
 
+                        erro.Status = true;
                         erro.Erro = 0;
                         erro.Descricao = "Sucesso";
                         return erro;
@@ -126,6 +127,7 @@ namespace FirstREST.Lib_Primavera
                 }
                 else
                 {
+                    erro.Status = false;
                     erro.Erro = 1;
                     erro.Descricao = "Erro ao abrir a empresa";
                     return erro;
@@ -136,7 +138,8 @@ namespace FirstREST.Lib_Primavera
 
             catch (Exception ex)
             {
-                erro.Erro = 1;
+                erro.Status = false;
+                erro.Erro = 2;
                 erro.Descricao = ex.Message;
                 return erro;
             }
@@ -154,14 +157,15 @@ namespace FirstREST.Lib_Primavera
                 {
                     if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente) == false)
                     {
+                        erro.Status = false;
                         erro.Erro = 1;
                         erro.Descricao = "O cliente não existe";
                         return erro;
                     }
                     else
                     {
-
                         PriEngine.Engine.Comercial.Clientes.Remove(codCliente);
+                        erro.Status = true;
                         erro.Erro = 0;
                         erro.Descricao = "Sucesso";
                         return erro;
@@ -170,6 +174,7 @@ namespace FirstREST.Lib_Primavera
 
                 else
                 {
+                    erro.Status = false;
                     erro.Erro = 1;
                     erro.Descricao = "Erro ao abrir a empresa";
                     return erro;
@@ -178,7 +183,8 @@ namespace FirstREST.Lib_Primavera
 
             catch (Exception ex)
             {
-                erro.Erro = 1;
+                erro.Status = false;
+                erro.Erro = 2;
                 erro.Descricao = ex.Message;
                 return erro;
             }
@@ -189,7 +195,7 @@ namespace FirstREST.Lib_Primavera
         {
 
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
-         
+
             GcpBECliente myCli = new GcpBECliente();
 
             try
@@ -204,12 +210,14 @@ namespace FirstREST.Lib_Primavera
 
                     PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
 
+                    erro.Status = true;
                     erro.Erro = 0;
                     erro.Descricao = "Sucesso";
                     return erro;
                 }
                 else
                 {
+                    erro.Status = false;
                     erro.Erro = 1;
                     erro.Descricao = "Erro ao abrir empresa";
                     return erro;
@@ -218,7 +226,8 @@ namespace FirstREST.Lib_Primavera
 
             catch (Exception ex)
             {
-                erro.Erro = 1;
+                erro.Status = false;
+                erro.Erro = 2;
                 erro.Descricao = ex.Message;
                 return erro;
             }
@@ -271,10 +280,10 @@ namespace FirstREST.Lib_Primavera
                     myArt.CodArtigo = objArtigo.get_Artigo();
                     myArt.DescArtigo = objArtigo.get_Descricao();
                     myArt.CodBarras = objArtigo.get_CodBarras();
-                    
+
                     return myArt;
                 }
-                
+
             }
             else
             {
@@ -286,7 +295,7 @@ namespace FirstREST.Lib_Primavera
         public static List<Model.Artigo> ListaArtigos()
         {
             ErpBS objMotor = new ErpBS();
-           
+
             StdBELista objList;
 
             Model.Artigo art = new Model.Artigo();
@@ -322,16 +331,17 @@ namespace FirstREST.Lib_Primavera
         #region Fornecedores
 
         public static Lib_Primavera.Model.Fornecedor GetFornecedor(string codFornecedor)
-        { 
-            string query = "SELECT nome FROM dbo.Fornecedores WHERE dbo.Fornecedores.Fornecedor='"+codFornecedor+"'";
+        {
+            string query = "SELECT nome FROM dbo.Fornecedores WHERE dbo.Fornecedores.Fornecedor='" + codFornecedor + "'";
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
-            Model.Fornecedor fornecedor =  new Model.Fornecedor();
+            Model.Fornecedor fornecedor = new Model.Fornecedor();
 
             if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
                 objList = PriEngine.Engine.Consulta(query);
-                if (!objList.NoFim()){
+                if (!objList.NoFim())
+                {
                     fornecedor.nome = objList.Valor("nome");
                 }
             }
@@ -348,7 +358,7 @@ namespace FirstREST.Lib_Primavera
             string query = "SELECT dbo.CabecCompras.TipoDoc, dbo.CabecCompras.id, dbo.CabecCompras.NumDoc, dbo.CabecCompras.Entidade, dbo.CabecCompras.DataDoc, dbo.LinhasCompras.NumLinha, dbo.LinhasCompras.Artigo, dbo.LinhasCompras.Quantidade,dbo.LinhasCompras.Armazem, dbo.LinhasComprasStatus.EstadoTrans, dbo.LinhasComprasStatus.QuantTrans FROM dbo.CabecCompras INNER JOIN dbo.LinhasCompras ON dbo.CabecCompras.Id = dbo.LinhasCompras.IdCabecCompras INNER JOIN dbo.LinhasComprasStatus ON dbo.LinhasCompras.Id = dbo.LinhasComprasStatus.IdLinhasCompras WHERE (dbo.CabecCompras.TipoDoc = N'ECF' AND dbo.LinhasComprasStatus.EstadoTrans = 'P') ORDER BY dbo.CabecCompras.NumDoc";
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
-            
+
             List<Model.DocCompra> listDocCompra = new List<Model.DocCompra>();
             Model.DocCompra docCompra;
             List<Model.LinhaDocCompra> listLinhasCompras;
@@ -424,7 +434,7 @@ namespace FirstREST.Lib_Primavera
         public static Model.RespostaErro VGR_New(Model.DocCompra dc)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
-            
+
 
             GcpBEDocumentoCompra myGR = new GcpBEDocumentoCompra();
             GcpBELinhaDocumentoCompra myLin = new GcpBELinhaDocumentoCompra();
@@ -454,12 +464,14 @@ namespace FirstREST.Lib_Primavera
                     PriEngine.Engine.IniciaTransaccao();
                     PriEngine.Engine.Comercial.Compras.Actualiza(myGR, "Teste");
                     PriEngine.Engine.TerminaTransaccao();
+                    erro.Status = true;
                     erro.Erro = 0;
                     erro.Descricao = "Sucesso";
                     return erro;
                 }
                 else
                 {
+                    erro.Status = false;
                     erro.Erro = 1;
                     erro.Descricao = "Erro ao abrir empresa";
                     return erro;
@@ -470,7 +482,8 @@ namespace FirstREST.Lib_Primavera
             catch (Exception ex)
             {
                 PriEngine.Engine.DesfazTransaccao();
-                erro.Erro = 1;
+                erro.Status = false;
+                erro.Erro = 2;
                 erro.Descricao = ex.Message;
                 return erro;
             }
@@ -484,14 +497,14 @@ namespace FirstREST.Lib_Primavera
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
             GcpBEDocumentoVenda myEnc = new GcpBEDocumentoVenda();
-             
+
             GcpBELinhaDocumentoVenda myLin = new GcpBELinhaDocumentoVenda();
 
             GcpBELinhasDocumentoVenda myLinhas = new GcpBELinhasDocumentoVenda();
-             
+
             PreencheRelacaoVendas rl = new PreencheRelacaoVendas();
             List<Model.LinhaDocVenda> lstlindv = new List<Model.LinhaDocVenda>();
-            
+
             try
             {
                 if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
@@ -511,7 +524,7 @@ namespace FirstREST.Lib_Primavera
                     }
 
 
-                   // PriEngine.Engine.Comercial.Compras.TransformaDocumento(
+                    // PriEngine.Engine.Comercial.Compras.TransformaDocumento(
 
                     PriEngine.Engine.IniciaTransaccao();
                     PriEngine.Engine.Comercial.Vendas.Actualiza(myEnc, "Teste");
@@ -541,7 +554,7 @@ namespace FirstREST.Lib_Primavera
         public static List<Model.DocVenda> Encomendas_List()
         {
             ErpBS objMotor = new ErpBS();
-            
+
             StdBELista objListCab;
             StdBELista objListLin;
             Model.DocVenda dv = new Model.DocVenda();
@@ -593,7 +606,7 @@ namespace FirstREST.Lib_Primavera
         public static Model.DocVenda Encomenda_Get(string numdoc)
         {
             ErpBS objMotor = new ErpBS();
-             
+
             StdBELista objListCab;
             StdBELista objListLin;
             Model.DocVenda dv = new Model.DocVenda();
@@ -602,7 +615,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
-                 
+
                 string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL' and NumDoc='" + numdoc + "'";
                 objListCab = PriEngine.Engine.Consulta(st);
                 dv = new Model.DocVenda();
@@ -639,73 +652,54 @@ namespace FirstREST.Lib_Primavera
 
         #endregion DocumentosVenda
 
-        #region Login
-        /*
-        public static Lib_Primavera.Model.Login getFuncionario(string username) {
-            
-            ErpBS objMotor = new ErpBS();
+        #region User
 
-            StdBELista objList;
-
-            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
-            {
-
-                //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
-
-                objList = PriEngine.Engine.Consulta("SELECT * FROM FuncArmazem WHERE Username = '"+username+"'");
-
-                if (!objList.Vazia())
-                {
-                    Model.Login login = new Model.Login();
-                    login.Username = objList.Valor("Username");
-                    login.Password = objList.Valor("Password");
-                    login.Armazem = objList.Valor("Armazem");
-                    return login;
-                }
-                else
-                    return null;
-            }
-            else
-                return null;
-        }
-
-        public static Lib_Primavera.Model.RespostaErro insertFuncionario(Lib_Primavera.Model.Login func){
+        public static Lib_Primavera.Model.RespostaErro isValid(Lib_Primavera.Model.Login user)
+        {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
-
-            GcpBECliente myCli = new GcpBECliente();
-
+            StdBECamposChave chave = new StdBECamposChave();
             try
             {
                 if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
                 {
+                    chave.AddCampoChave("CDU_Username", user.username);
+                    chave.AddCampoChave("CDU_Password", user.password);
 
-                    myCli.set_Cliente(cli.CodCliente);
-                    myCli.set_Nome(cli.NomeCliente);
-                    myCli.set_NumContribuinte(cli.NumContribuinte);
-                    myCli.set_Moeda(cli.Moeda);
+                    if (PriEngine.Engine.TabelasUtilizador.Existe("TDU_User", chave) == true)
+                    {
+                        erro.Status = true;
+                        erro.Erro = 0;
+                        erro.Descricao = "Sucesso";
+                        return erro;
+                    }
 
-                    PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
-
-                    erro.Erro = 0;
-                    erro.Descricao = "Sucesso";
+                    erro.Status = false;
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro, par username/password não encontrado";
                     return erro;
                 }
                 else
                 {
-                    erro.Erro = 1;
-                    erro.Descricao = "Erro ao abrir empresa";
+                    erro.Status = false;
+                    erro.Erro = 2;
+                    erro.Descricao = "Erro ao abrir a empresa";
                     return erro;
                 }
             }
-
             catch (Exception ex)
             {
-                erro.Erro = 1;
+                erro.Status = false;
+                erro.Erro = 3;
                 erro.Descricao = ex.Message;
                 return erro;
             }
         }
-        */
-        #endregion Login
+
+        public static bool createUser(Lib_Primavera.Model.Login user)
+        {
+            return true;
+        }
+
+        #endregion User
     }
 }
