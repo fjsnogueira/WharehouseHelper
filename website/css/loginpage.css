@@ -2,6 +2,7 @@
 /* ------ div principal: bloco central ------ */
 div.main_card_block {
     padding-top: 12px ;
+    padding-bottom: 20px ;
     margin: auto ;
     margin-top: 10%;
     width: 40% ;
@@ -108,31 +109,6 @@ h3 {
 }
 
 /************************************************************************/
-/* ------ a: link para registo ------ */
-
-a#register_link {
-    font-family: "Sansation_Light" ;
-    text-decoration: none ;
-}
-
-/* link */ 
-a#register_link:link {
-    color: #20b7a7 ; /* light sea green (fundo) */
-}
-
-/* link visitado */ 
-a#register_link:visited {
-    color: #158276 ; /**/
-}
-
-/* rato em cima do link */ 
-a#register_link:hover {
-    color: #f56746 ; /**/
-}
-
-
-
-/************************************************************************/
 /* ------ formulário de login ------ */
 div.main_card_loginform {
     padding: 0 15% ;
@@ -159,7 +135,7 @@ input {
 }
 
 /* botão de submit: "entrar" */
-button {
+button.login_bt {
 	font-family: "Sansation_Light" ;
 	width: 100%;
 	padding: 15px;
@@ -167,6 +143,17 @@ button {
 	font-size: 16px;
 	background-color: #20b7a7 ; /* light sea green (fundo) */
 	border: 1px solid #20b7a7 ; /* light sea green (borda do botão) */
+	border-radius: 5px;
+	color: #ffffff ; /* white (letras) */
+}
+button.login_bt:hover {
+	font-family: "Sansation_Light" ;
+	width: 100%;
+	padding: 15px;
+    margin-top: 20px ;
+	font-size: 16px;
+	background-color: #207070 ; /* light sea green (fundo) */
+	border: 1px solid #207070 ; /* light sea green (borda do botão) */
 	border-radius: 5px;
 	color: #ffffff ; /* white (letras) */
 }
