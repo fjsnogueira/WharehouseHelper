@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using Interop.ErpBS800;
 using Interop.StdPlatBS800;
@@ -269,6 +270,7 @@ namespace FirstREST.Lib_Primavera
                     objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
                     myArt.CodArtigo = objArtigo.get_Artigo();
                     myArt.DescArtigo = objArtigo.get_Descricao();
+                    myArt.CodBarras = objArtigo.get_CodBarras();
                     
                     return myArt;
                 }
@@ -300,7 +302,6 @@ namespace FirstREST.Lib_Primavera
                     art = new Model.Artigo();
                     art.CodArtigo = objList.Valor("artigo");
                     art.DescArtigo = objList.Valor("descricao");
-
                     listArts.Add(art);
                     objList.Seguinte();
                 }
@@ -322,57 +323,80 @@ namespace FirstREST.Lib_Primavera
 
         public static List<Model.DocCompra> VGR_List()
         {
+            string query = "SELECT dbo.CabecCompras.TipoDoc, dbo.CabecCompras.id, dbo.CabecCompras.NumDoc, dbo.CabecCompras.Entidade, dbo.CabecCompras.DataDoc, dbo.LinhasCompras.NumLinha, dbo.LinhasCompras.Artigo, dbo.LinhasCompras.Quantidade,dbo.LinhasCompras.Armazem, dbo.LinhasComprasStatus.EstadoTrans, dbo.LinhasComprasStatus.QuantTrans FROM dbo.CabecCompras INNER JOIN dbo.LinhasCompras ON dbo.CabecCompras.Id = dbo.LinhasCompras.IdCabecCompras INNER JOIN dbo.LinhasComprasStatus ON dbo.LinhasCompras.Id = dbo.LinhasComprasStatus.IdLinhasCompras WHERE (dbo.CabecCompras.TipoDoc = N'ECF' AND dbo.LinhasComprasStatus.EstadoTrans = 'P') ORDER BY dbo.CabecCompras.NumDoc";
             ErpBS objMotor = new ErpBS();
+            StdBELista objList;
             
-            StdBELista objListCab;
-            StdBELista objListLin;
-            Model.DocCompra dc = new Model.DocCompra();
-            List<Model.DocCompra> listdc = new List<Model.DocCompra>();
-            Model.LinhaDocCompra lindc = new Model.LinhaDocCompra();
-            List<Model.LinhaDocCompra> listlindc = new List<Model.LinhaDocCompra>();
+            List<Model.DocCompra> listDocCompra = new List<Model.DocCompra>();
+            Model.DocCompra docCompra;
+            List<Model.LinhaDocCompra> listLinhasCompras;
+            Model.LinhaDocCompra linhaDocCompra;
+            Model.LinhaDocCompraStatus statusLinhaCompra;
 
             if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
-                objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, Serie From CabecCompras where TipoDoc='VGR'");
-                while (!objListCab.NoFim())
+                objList = PriEngine.Engine.Consulta(query);
+
+                if (!objList.NoFim()) //tem pelo menos 1 elemento
                 {
-                    dc = new Model.DocCompra();
-                    dc.id = objListCab.Valor("id");
-                    dc.NumDocExterno = objListCab.Valor("NumDocExterno");
-                    dc.Entidade = objListCab.Valor("Entidade");
-                    dc.NumDoc = objListCab.Valor("NumDoc");
-                    dc.Data = objListCab.Valor("DataDoc");
-                    dc.TotalMerc = objListCab.Valor("TotalMerc");
-                    dc.Serie = objListCab.Valor("Serie");
-                    objListLin = PriEngine.Engine.Consulta("SELECT idCabecCompras, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido, Armazem, Lote from LinhasCompras where IdCabecCompras='" + dc.id + "' order By NumLinha");
-                    listlindc = new List<Model.LinhaDocCompra>();
+                    docCompra = new Model.DocCompra();
+                    docCompra.TipoDoc = objList.Valor("TipoDoc");
+                    docCompra.id = objList.Valor("id");
+                    docCompra.Entidade = objList.Valor("Entidade");
+                    docCompra.NumDoc = objList.Valor("NumDoc");
+                    docCompra.DataEmissao = objList.Valor("DataDoc");
+                    listLinhasCompras = new List<Model.LinhaDocCompra>();
 
-                    while (!objListLin.NoFim())
+                    //sacar linhaDoc associado + status
+                    linhaDocCompra = new Model.LinhaDocCompra();
+                    linhaDocCompra.NumLinha = objList.Valor("NumLinha");
+                    linhaDocCompra.CodArtigo = objList.Valor("Artigo");
+                    linhaDocCompra.Quantidade = objList.Valor("Quantidade");
+                    linhaDocCompra.Armazem = objList.Valor("Armazem");
+                    statusLinhaCompra = new Model.LinhaDocCompraStatus();
+                    statusLinhaCompra.EstadoTrans = objList.Valor("EstadoTrans");
+                    statusLinhaCompra.QuantTrans = objList.Valor("QuantTrans");
+                    linhaDocCompra.Status = statusLinhaCompra;
+
+                    listLinhasCompras.Add(linhaDocCompra);
+
+                    objList.Seguinte();
+
+                    while (!objList.NoFim()) //restantes elementos
                     {
-                        lindc = new Model.LinhaDocCompra();
-                        lindc.IdCabecDoc = objListLin.Valor("idCabecCompras");
-                        lindc.CodArtigo = objListLin.Valor("Artigo");
-                        lindc.DescArtigo = objListLin.Valor("Descricao");
-                        lindc.Quantidade = objListLin.Valor("Quantidade");
-                        lindc.Unidade = objListLin.Valor("Unidade");
-                        lindc.Desconto = objListLin.Valor("Desconto1");
-                        lindc.PrecoUnitario = objListLin.Valor("PrecUnit");
-                        lindc.TotalILiquido = objListLin.Valor("TotalILiquido");
-                        lindc.TotalLiquido = objListLin.Valor("PrecoLiquido");
-                        lindc.Armazem = objListLin.Valor("Armazem");
-                        lindc.Lote = objListLin.Valor("Lote");
+                        if (docCompra.id != objList.Valor("id"))
+                        {
+                            docCompra.LinhasDoc = listLinhasCompras;
+                            listDocCompra.Add(docCompra);
 
-                        listlindc.Add(lindc);
-                        objListLin.Seguinte();
+                            docCompra = new Model.DocCompra();
+                            docCompra.TipoDoc = objList.Valor("TipoDoc");
+                            docCompra.id = objList.Valor("id");
+                            docCompra.Entidade = objList.Valor("Entidade");
+                            docCompra.NumDoc = objList.Valor("NumDoc");
+                            docCompra.DataEmissao = objList.Valor("DataDoc");
+                            listLinhasCompras = new List<Model.LinhaDocCompra>();
+                        }
+                        //sacar linhas e status
+                        linhaDocCompra = new Model.LinhaDocCompra();
+                        linhaDocCompra.NumLinha = objList.Valor("NumLinha");
+                        linhaDocCompra.CodArtigo = objList.Valor("Artigo");
+                        linhaDocCompra.Quantidade = objList.Valor("Quantidade");
+                        linhaDocCompra.Armazem = objList.Valor("Armazem");
+                        statusLinhaCompra = new Model.LinhaDocCompraStatus();
+                        statusLinhaCompra.EstadoTrans = objList.Valor("EstadoTrans");
+                        statusLinhaCompra.QuantTrans = objList.Valor("QuantTrans");
+                        linhaDocCompra.Status = statusLinhaCompra;
+
+                        listLinhasCompras.Add(linhaDocCompra);
+
+                        objList.Seguinte();
                     }
-
-                    dc.LinhasDoc = listlindc;
-                    
-                    listdc.Add(dc);
-                    objListCab.Seguinte();
+                    docCompra.LinhasDoc = listLinhasCompras;
+                    listDocCompra.Add(docCompra);
                 }
             }
-            return listdc;
+            return listDocCompra;
         }
 
         public static Model.RespostaErro VGR_New(Model.DocCompra dc)
@@ -394,8 +418,6 @@ namespace FirstREST.Lib_Primavera
                     // Atribui valores ao cabecalho do doc
                     //myEnc.set_DataDoc(dv.Data);
                     myGR.set_Entidade(dc.Entidade);
-                    myGR.set_NumDocExterno(dc.NumDocExterno);
-                    myGR.set_Serie(dc.Serie);
                     myGR.set_Tipodoc("VGR");
                     myGR.set_TipoEntidade("F");
                     // Linhas do documento para a lista de linhas
@@ -403,7 +425,7 @@ namespace FirstREST.Lib_Primavera
                     PriEngine.Engine.Comercial.Compras.PreencheDadosRelacionados(myGR, rl);
                     foreach (Model.LinhaDocCompra lin in lstlindv)
                     {
-                        PriEngine.Engine.Comercial.Compras.AdicionaLinha(myGR, lin.CodArtigo, lin.Quantidade, lin.Armazem, "", lin.PrecoUnitario, lin.Desconto);
+                        PriEngine.Engine.Comercial.Compras.AdicionaLinha(myGR, lin.CodArtigo, lin.Quantidade, lin.Armazem, "");
                     }
 
 
@@ -594,5 +616,74 @@ namespace FirstREST.Lib_Primavera
         }
 
         #endregion DocumentosVenda
+
+        #region Login
+        /*
+        public static Lib_Primavera.Model.Login getFuncionario(string username) {
+            
+            ErpBS objMotor = new ErpBS();
+
+            StdBELista objList;
+
+            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
+            {
+
+                //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
+
+                objList = PriEngine.Engine.Consulta("SELECT * FROM FuncArmazem WHERE Username = '"+username+"'");
+
+                if (!objList.Vazia())
+                {
+                    Model.Login login = new Model.Login();
+                    login.Username = objList.Valor("Username");
+                    login.Password = objList.Valor("Password");
+                    login.Armazem = objList.Valor("Armazem");
+                    return login;
+                }
+                else
+                    return null;
+            }
+            else
+                return null;
+        }
+
+        public static Lib_Primavera.Model.RespostaErro insertFuncionario(Lib_Primavera.Model.Login func){
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+
+            GcpBECliente myCli = new GcpBECliente();
+
+            try
+            {
+                if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
+                {
+
+                    myCli.set_Cliente(cli.CodCliente);
+                    myCli.set_Nome(cli.NomeCliente);
+                    myCli.set_NumContribuinte(cli.NumContribuinte);
+                    myCli.set_Moeda(cli.Moeda);
+
+                    PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
+
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
+        */
+        #endregion Login
     }
 }

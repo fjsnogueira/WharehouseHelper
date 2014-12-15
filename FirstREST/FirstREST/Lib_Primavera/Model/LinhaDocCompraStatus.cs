@@ -5,25 +5,18 @@ using System.Web;
 
 namespace FirstREST.Lib_Primavera.Model
 {
-    public class Artigo
+    public class LinhaDocCompraStatus
     {
-        public string CodArtigo
+        public string EstadoTrans
         {
             get;
             set;
         }
 
-        public string DescArtigo
+        public double QuantTrans
         {
             get;
             set;
         }
-
-        public string CodBarras
-        {
-            get;
-            set;
-        }
-
     }
 }

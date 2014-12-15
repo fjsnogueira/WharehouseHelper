@@ -8,20 +8,13 @@ namespace FirstREST.Lib_Primavera.Model
     public class DocCompra
     {
 
+        public string TipoDoc
+        {
+            get;
+            set;
+        }
+
         public string id
-        {
-            get;
-            set;
-        }
-
-        public string NumDocExterno
-        {
-            get;
-            set;
-        }
-
-
-        public string Entidade
         {
             get;
             set;
@@ -33,19 +26,13 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public DateTime Data
+        public string Entidade
         {
             get;
             set;
         }
 
-        public double TotalMerc
-        {
-            get;
-            set;
-        }
-
-        public string Serie
+        public DateTime DataEmissao
         {
             get;
             set;

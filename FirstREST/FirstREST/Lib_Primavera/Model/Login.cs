@@ -5,21 +5,21 @@ using System.Web;
 
 namespace FirstREST.Lib_Primavera.Model
 {
-    public class Artigo
+    public class Login
     {
-        public string CodArtigo
+        public string Username
         {
             get;
             set;
         }
 
-        public string DescArtigo
+        public string Password
         {
             get;
             set;
         }
-
-        public string CodBarras
+        
+        public string Armazem
         {
             get;
             set;

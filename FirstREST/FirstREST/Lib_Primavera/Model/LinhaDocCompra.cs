@@ -9,62 +9,19 @@ namespace FirstREST.Lib_Primavera.Model
     public class LinhaDocCompra
     {
 
-        public string CodArtigo
-        {
-            get;
-            set;
-        }
-
-        public string DescArtigo
-        {
-            get;
-            set;
-        }
-
-        public string IdCabecDoc
-        {
-            get;
-            set;
-        }
-
         public int NumLinha
         {
             get;
             set;
         }
 
+        public string CodArtigo
+        {
+            get;
+            set;
+        }
 
         public double Quantidade
-        {
-            get;
-            set;
-        }
-
-        public string Unidade
-        {
-            get;
-            set;
-        }
-
-        public double Desconto
-        {
-            get;
-            set;
-        }
-
-        public double PrecoUnitario
-        {
-            get;
-            set;
-        }
-
-        public double TotalILiquido
-        {
-            get;
-            set;
-        }
-
-        public double TotalLiquido
         {
             get;
             set;
@@ -76,7 +33,7 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public string Lote
+        public Model.LinhaDocCompraStatus Status
         {
             get;
             set;
