@@ -42,6 +42,44 @@ namespace FirstREST.Lib_Primavera.Model
         }
     }
 
+    public class Armazem {
+        public string id
+        {
+            get;
+            set;
+        }
+
+        public string descricao
+        {
+            get;
+            set;
+        }
+
+        public string morada
+        {
+            get;
+            set;
+        }
+
+        public string localidade
+        {
+            get;
+            set;
+        }
+
+        public string Cp
+        {
+            get;
+            set;
+        }
+
+        public string CpLocalidade
+        {
+            get;
+            set;
+        }
+    }
+
     public class LinhaDocCompraStatus
     {
         public string EstadoTrans
@@ -66,6 +104,12 @@ namespace FirstREST.Lib_Primavera.Model
         }
 
         public List<Model.Fornecedor> Fornecedores
+        {
+            get;
+            set;
+        }
+
+        public List<Model.Armazem> Armazens
         {
             get;
             set;

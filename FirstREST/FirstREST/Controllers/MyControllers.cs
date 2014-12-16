@@ -46,6 +46,23 @@ namespace FirstREST.Controllers
         }
     }
 
+    public class ArmazemController : ApiController {
+        
+        public Armazem Get(string id)
+        {
+            Lib_Primavera.Model.Armazem armazem = Lib_Primavera.Comercial.GetArmazem(id);
+            if (armazem == null)
+            {
+                throw new HttpResponseException(
+                  Request.CreateResponse(HttpStatusCode.NotFound));
+            }
+            else
+            {
+                return armazem;
+            }
+        }
+    }
+
     public class SearchController : ApiController
     {
         public Search Get(string id)
