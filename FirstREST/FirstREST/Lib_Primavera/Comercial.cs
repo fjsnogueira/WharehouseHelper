@@ -9,7 +9,7 @@ using Interop.StdBE800;
 using Interop.GcpBE800;
 using ADODB;
 using Interop.IGcpBS800;
-
+using System.Text.RegularExpressions;
 
 namespace FirstREST.Lib_Primavera
 {
@@ -235,29 +235,6 @@ namespace FirstREST.Lib_Primavera
 
         }
 
-        /*
-        public static void InsereCliente(string codCliente, string nomeCliente, string numContribuinte, string moeda)
-        {
-            ErpBS objMotor = new ErpBS();
-            MotorPrimavera mp = new MotorPrimavera();
-
-            GcpBECliente myCli = new GcpBECliente();
-
-            objMotor = mp.AbreEmpresa("DEMO", "", "", "Default");
-
-            myCli.set_Cliente(codCliente);
-            myCli.set_Nome(nomeCliente);
-            myCli.set_NumContribuinte(numContribuinte);
-            myCli.set_Moeda(moeda);
-
-            objMotor.Comercial.Clientes.Actualiza(myCli);
-
-        }
-
-
-        */
-
-
         #endregion Cliente;   // -----------------------------  END   CLIENTE    -----------------------
 
         #region Artigos
@@ -304,13 +281,14 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
 
-                objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+                objList = PriEngine.Engine.Consulta("SELECT dbo.Artigo.Artigo, dbo.Artigo.Descricao, dbo.Artigo.CodBarras FROM dbo.Artigo");
 
                 while (!objList.NoFim())
                 {
                     art = new Model.Artigo();
                     art.CodArtigo = objList.Valor("artigo");
                     art.DescArtigo = objList.Valor("descricao");
+                    art.CodBarras = objList.Valor("CodBarras");
                     listArts.Add(art);
                     objList.Seguinte();
                 }
@@ -332,7 +310,7 @@ namespace FirstREST.Lib_Primavera
 
         public static Lib_Primavera.Model.Fornecedor GetFornecedor(string codFornecedor)
         {
-            string query = "SELECT nome FROM dbo.Fornecedores WHERE dbo.Fornecedores.Fornecedor='" + codFornecedor + "'";
+            string query = "SELECT fornecedor, nome FROM dbo.Fornecedores WHERE dbo.Fornecedores.Fornecedor='" + codFornecedor + "'";
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
             Model.Fornecedor fornecedor = new Model.Fornecedor();
@@ -342,6 +320,7 @@ namespace FirstREST.Lib_Primavera
                 objList = PriEngine.Engine.Consulta(query);
                 if (!objList.NoFim())
                 {
+                    fornecedor.id = objList.Valor("fornecedor");
                     fornecedor.nome = objList.Valor("nome");
                 }
             }
@@ -697,9 +676,67 @@ namespace FirstREST.Lib_Primavera
 
         public static bool createUser(Lib_Primavera.Model.Login user)
         {
-            return true;
+            return false;
         }
 
         #endregion User
+
+        #region search
+        public static Lib_Primavera.Model.Search search(string valor)
+        {
+
+            Lib_Primavera.Model.Search procura = new Model.Search();
+            procura.Artigos = new List<Model.Artigo>();
+            procura.Fornecedores = new List<Model.Fornecedor>();
+            procura.Encomendas = new List<Model.DocCompra>();
+            string queryArtigos = "SELECT dbo.Artigo.Artigo, dbo.Artigo.Descricao, dbo.Artigo.CodBarras FROM dbo.Artigo WHERE dbo.Artigo.Artigo LIKE '%"+valor+"%'";
+            string queryFornecedores = "SELECT dbo.Fornecedores.Fornecedor, dbo.Fornecedores.nome FROM dbo.Fornecedores WHERE dbo.Fornecedores.Fornecedor LIKE '%" + valor + "%' OR dbo.Fornecedores.nome LIKE '%" + valor + "%'";
+            string[] substrings = Regex.Split(valor, "ECF-");
+            string queryEncomendas = "SELECT DISTINCT dbo.CabecCompras.TipoDoc, dbo.CabecCompras.id, dbo.CabecCompras.NumDoc, dbo.CabecCompras.Entidade, dbo.CabecCompras.DataDoc FROM dbo.CabecCompras INNER JOIN dbo.LinhasCompras ON dbo.CabecCompras.Id = dbo.LinhasCompras.IdCabecCompras INNER JOIN dbo.LinhasComprasStatus ON dbo.LinhasCompras.Id = dbo.LinhasComprasStatus.IdLinhasCompras WHERE (dbo.CabecCompras.TipoDoc = N'ECF' AND dbo.LinhasComprasStatus.EstadoTrans = 'P' AND dbo.CabecCompras.NumDoc LIKE '" + substrings[1] + "') ORDER BY dbo.CabecCompras.NumDoc";
+            ErpBS objMotor = new ErpBS();
+            StdBELista objList;
+            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
+            {
+                objList = PriEngine.Engine.Consulta(queryArtigos);
+
+                while (!objList.NoFim()) //inserir Artigos
+                {
+                    Lib_Primavera.Model.Artigo artigoEncontrado = new Model.Artigo();
+                    artigoEncontrado.CodArtigo = objList.Valor("artigo");
+                    artigoEncontrado.DescArtigo = objList.Valor("descricao");
+                    artigoEncontrado.CodBarras = objList.Valor("CodBarras");
+                    procura.Artigos.Add(artigoEncontrado);
+                    objList.Seguinte();
+                }
+
+                objList = PriEngine.Engine.Consulta(queryFornecedores);
+
+                while (!objList.NoFim()) //inserir Fornecedores
+                {
+                    Lib_Primavera.Model.Fornecedor fornecedorEncontrado = new Model.Fornecedor();
+                    fornecedorEncontrado.id = objList.Valor("fornecedor");
+                    fornecedorEncontrado.nome = objList.Valor("nome");
+                    procura.Fornecedores.Add(fornecedorEncontrado);
+                    objList.Seguinte();
+                }
+
+                objList = PriEngine.Engine.Consulta(queryEncomendas);
+
+                while (!objList.NoFim()) //inserir Encomendas
+                {
+                    Lib_Primavera.Model.DocCompra encomendaEncontrada = new Model.DocCompra();
+                    encomendaEncontrada.TipoDoc = objList.Valor("TipoDoc");
+                    encomendaEncontrada.id = objList.Valor("id");
+                    encomendaEncontrada.Entidade = objList.Valor("Entidade");
+                    encomendaEncontrada.NumDoc = objList.Valor("NumDoc");
+                    encomendaEncontrada.DataEmissao = objList.Valor("DataDoc");
+                    encomendaEncontrada.LinhasDoc = new List<Model.LinhaDocCompra>();
+                    procura.Encomendas.Add(encomendaEncontrada);
+                    objList.Seguinte();
+                }
+            }
+            return procura;
+        }
+        #endregion search
     }
 }
