@@ -22,7 +22,7 @@ button.bt_receive:hover {
 
 /* código de barras da encomenda (topo da pagina à direita) */
 .order_bc {
-    text-align: right;
+    text-align: center;
     margin: 0 8%;
     margin-top: -10px;
 }
