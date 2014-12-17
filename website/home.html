@@ -12,6 +12,7 @@
         <script type="text/javascript" src="lib/barcodeRender.js"></script>
         
         <link rel="stylesheet" href="css/searchpage.css" />
+        <link rel="stylesheet" href="css/tabs-style.css" />
         <link rel="stylesheet" href="css/fonts.css" />
         <link rel="stylesheet" href="css/bodybg.css" />
         <link rel="stylesheet" href="css/style.css" />
@@ -23,7 +24,7 @@
             
             <!-- titulos -->
             <div class="main_search_title"> 
-                <h1> Pesquisa de encomendas </h1>
+                <h1> Conferência e Recepção de Encomendas </h1>
                 <h3> Por favor, digite um nome ou identificador de um fornecedor, código de encomendas ou de artigos. </h3>
             </div>
             
@@ -38,62 +39,81 @@
                 </form>
             </div>
             
-            <!-- resultados da pesquisa -->
-            <div class="search_results">
-                <h3> <span class="bt-icon icon-search"></span> Resultados obtidos </h3>
-                <table id="search_elements"> 
-                    <tr>
-                        <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
-                        <td class="td_img"> <img src="img/artigo.png"> </td>
-                        <!-- breve descrição do elemento -->
-                        <td class="td_desc"> Descrição do artigo resultante das pesquisa. </td>
-                        <!-- botão para abrir mais opções -->
-                        <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
-                        <!-- código de barras associado -->
-                        <td class="td_canvas"> <canvas id="canvas1"> </canvas> </td>
-                    </tr>
-                    <tr>
-                        <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
-                        <td class="td_img"> <img src="img/encomenda.png"> </td>
-                        <!-- breve descrição do elemento -->
-                        <td class="td_desc"> Descrição da encomenda resultante das pesquisa. </td>
-                        <!-- botão para abrir mais opções -->
-                        <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
-                        <!-- código de barras associado -->
-                        <td class="td_canvas"> <canvas id="canvas2"> </canvas> </td>
-                    </tr>
-                    <tr>
-                        <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
-                        <td class="td_img"> <img src="img/fornecedor.png"> </td>
-                        <!-- breve descrição do elemento -->
-                        <td class="td_desc"> Descrição do fornecedor resultante das pesquisa. </td>
-                        <!-- botão para abrir mais opções -->
-                        <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
-                        <!-- código de barras associado -->
-                        <td class="td_canvas"> <canvas id="canvas3"> </canvas> </td>
-                    </tr>
-                    <tr>
-                        <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
-                        <td class="td_img"> <img src="img/armazem.png"> </td>
-                        <!-- breve descrição do elemento -->
-                        <td class="td_desc"> Descrição do armazém resultante das pesquisa. </td>
-                        <!-- botão para abrir mais opções -->
-                        <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
-                        <!-- código de barras associado -->
-                        <td class="td_canvas"> <canvas id="canvas4"> </canvas> </td>
-                    </tr>
-                </table>
+            <!-- menu de navegação -->
+            <div class="tabs tabs-style-bar">
+                <nav>
+                    <ul>
+                        <li><a href="#section-bar-1"> <span class="bt-icon icon-search"></span> Resultados da pesquisa </a></li>
+                        <li><a href="#section-bar-2"> <span class="bt-icon icon-cabinet"></span> Armazéns da empresa </a></li>
+                        <li><a href="#section-bar-3"> <span class="bt-icon icon-truck"></span> Fornecedores da empresa </a></li>
+                    </ul>
+                </nav>
+                <div class="content-wrap">
+                    
+                    <section id="section-bar-1">
+                        <table>
+                            <tr>
+                                <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
+                                <td class="td_img"> <img src="img/encomenda.png"> </td>
+                                <!-- breve descrição do elemento -->
+                                <td class="td_desc"> Descrição da encomenda resultante das pesquisa. </td>
+                                <!-- botão para abrir mais opções -->
+                                <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
+                                <!-- código de barras associado -->
+                                <td class="td_canvas"> <canvas id="canvas1_1"> </canvas> </td>
+                            </tr>
+                        </table>
+                    </section>
+                    
+                    <section id="section-bar-2">
+                        <table>
+                            <tr>
+                                <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
+                                <td class="td_img"> <img src="img/armazem.png"> </td>
+                                <!-- breve descrição do elemento -->
+                                <td class="td_desc"> Descrição do armazém. </td>
+                                <!-- botão para abrir mais opções -->
+                                <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
+                                <!-- código de barras associado -->
+                                <td class="td_canvas"> <canvas id="canvas2_1"> </canvas> </td>
+                            </tr>
+                        </table>
+                    </section>
+                    
+                    <section id="section-bar-3">
+                        <table>
+                            <tr>
+                                <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
+                                <td class="td_img"> <img src="img/fornecedor.png"> </td>
+                                <!-- breve descrição do elemento -->
+                                <td class="td_desc"> Descrição do fornecedor. </td>
+                                <!-- botão para abrir mais opções -->
+                                <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
+                                <!-- código de barras associado -->
+                                <td class="td_canvas"> <canvas id="canvas3_1"> </canvas> </td>
+                            </tr>
+                        </table>
+                    </section>
+                </div>
             </div>
             
         </div>
         
+        <script src="js/cbpFWTabs.js"></script>
+		<script>
+			(function() {
+				[].slice.call( document.querySelectorAll( '.tabs' ) ).forEach( function( el ) {
+					new CBPFWTabs( el );
+				});
+			})();
+		</script>
         <script type="text/javascript"> 
             function meteQB(){
-                render('ean13','8424818263563','canvas1');
-                render('code128','ECF-0001','canvas2');
-                render('code128','FND-0001','canvas3');
-                render('code128','ARM-0001','canvas4');
+                render('code128','ECF-0001','canvas1_1');
+                render('code128','FND-0001','canvas3_1');
+                render('code128','ARM-0001','canvas2_1');
             };
         </script>
+        
     </body>
 </html>
