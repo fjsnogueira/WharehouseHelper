@@ -1,0 +1,46 @@
+/* código de barras da encomenda (topo da pagina à direita) */
+.order_bc {
+    text-align: right;
+    margin: 0 8%;
+    margin-top: -10px;
+}
+
+/* botões de + e - para a quantidade */
+button.qt {
+    width: 15% ;
+	font-family: "Sansation_Light" ;
+    display: inline-block ;
+	padding: 6px;
+	font-size: 14px ;
+	border-radius: 5px;
+	color: #ffffff ; /* white (letras) */
+}
+
+button.esq {
+    margin-right: -5px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    background-color: #e66648 ; /* flamingo (fundo) */
+	border: 1px solid #e66648 ; /* flamingo (borda do botão) */
+}
+
+button.dir {
+    margin-left: -5px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    background-color: #20b7a7 ; /* light sea green (fundo) */
+	border: 1px solid #20b7a7 ; /* light sea green (borda do botão) */
+}
+
+/* input de quantidade de um artigo */
+input.qt {
+    text-align: center ;
+    padding-bottom: 5px ;
+    padding-top: 5px ;
+	font-size: 16px ;
+	width: 50% ;
+	border: 1px solid #c3c5c7 ; /* ghost */
+    font-family: "Sansation_Light" ;
+    border-left: none;
+    border-right: none;
+}
