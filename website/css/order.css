@@ -1,3 +1,25 @@
+/* botão de gerar faturas/guias de remessa (final da página) */
+div.bt_receive_container {
+    text-align: center;
+}
+
+button.bt_receive {
+	font-family: "Sansation_Light" ;
+	width: 50%;
+	padding: 15px;
+    margin-top: 50px ;
+	font-size: 16px;
+	background-color: #20b7a7 ; /* light sea green (fundo) */
+	border: 1px solid #20b7a7 ; /* light sea green (borda do botão) */
+	border-radius: 5px;
+	color: #ffffff ; /* white (letras) */
+}
+
+button.bt_receive:hover {
+	background-color: #207070 ; /* light sea green (fundo) */
+	border: 1px solid #207070 ; /* light sea green (borda do botão) */
+}
+
 /* código de barras da encomenda (topo da pagina à direita) */
 .order_bc {
     text-align: right;
