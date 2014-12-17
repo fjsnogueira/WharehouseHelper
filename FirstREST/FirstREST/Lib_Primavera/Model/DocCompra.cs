@@ -14,6 +14,12 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+        public string NumDocExterno
+        {
+            get;
+            set;
+        }
+
         public string id
         {
             get;
@@ -33,6 +39,18 @@ namespace FirstREST.Lib_Primavera.Model
         }
 
         public DateTime DataEmissao
+        {
+            get;
+            set;
+        }
+
+        public double TotalMerc
+        {
+            get;
+            set;
+        }
+
+        public string Serie
         {
             get;
             set;
