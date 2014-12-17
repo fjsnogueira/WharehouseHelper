@@ -10,7 +10,6 @@ using FirstREST.Lib_Primavera.Model;
 
 namespace FirstREST.Controllers
 {
-
     public class LoginController : ApiController
     {
         public HttpResponseMessage Post(Lib_Primavera.Model.Login user)

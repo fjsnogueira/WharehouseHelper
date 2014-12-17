@@ -121,4 +121,32 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
     }
+
+    public class ArtigosRecepcionados{
+        public string idArtigo{
+            get;
+            set;
+        }
+
+        public int quantidade{
+            get;
+            set;
+        }
+    }
+
+    public class EncomendaRecepcionada {
+
+        public string idEncomenda
+        {
+            get;
+            set;
+        }
+
+        List<Model.ArtigosRecepcionados> artigos
+        {
+            get;
+            set;
+        }
+
+    }
 }

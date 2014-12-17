@@ -4,17 +4,26 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-  $("button").click(function(){
-    $.post("demo_test_post.asp",
-    {
-      name:"Donald Duck",
-      city:"Duckburg"
-    },
-    function(data,status){
-		console.log(data);
-		alert("Data: " + data + "\nStatus: " + status);
-    });
-  });
+	var url = "localhost/api/doccompra/";
+	console.log(url);
+	var data = {idEncomenda: 1 , artigos : [{idArtigo: 1, quantidade: 2},{idArtigo: 3, quantidade: 3}]};
+	
+	$("button").click(function(){  
+
+	$.post({
+        url: url,
+        data: JSON.stringify(data),
+        headers: {
+			'Content-Type': 'application/json'
+		},success: function(data, textStatus, jqXHR){
+			console.log(data);
+			alert("Data: " + data + "\nStatus: " + status);},
+		error: function (jqXHR, textStatus, errorThrown) {
+			alert(textStatus);
+			console.log("Something went wrong: "+jqXHR);
+			console.log(textStatus);}
+		});
+	});
 });
 </script>
 </head>
