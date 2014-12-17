@@ -33,6 +33,18 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+        public double Desconto
+        {
+            get;
+            set;
+        }
+
+        public double PrecoUnitario
+        {
+            get;
+            set;
+        }
+
         public Model.LinhaDocCompraStatus Status
         {
             get;

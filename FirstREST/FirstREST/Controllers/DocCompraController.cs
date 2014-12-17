@@ -17,48 +17,27 @@ namespace FirstREST.Controllers
         {
             return Lib_Primavera.Comercial.VGR_List();
         }
-        /*
-        public HttpResponseMessage Post(Lib_Primavera.Model.DocCompra dc)
-        {
-            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
-            erro = Lib_Primavera.Comercial.VGR_New(dc);
-
-            if (erro.Erro == 0)
-            {
-                var response = Request.CreateResponse( HttpStatusCode.Created , dc.id ) ;
-                string uri = Url.Link("DefaultApi", new { DocId = dc.id });
-                response.Headers.Location = new Uri(uri);
-                return response;
-            }
-
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
-
-        }
-        */
 
         public HttpResponseMessage Post(EncomendaRecepcionada encomenda)
         {
             this.Request.Content.ToString();
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
-            erro.Erro = 1;
-            erro.Descricao = encomenda.ToString();
-            
-            //erro = Lib_Primavera.Comercial.InserirFactura_New(doc, art);
+            Lib_Primavera.Model.DocCompra docCompra = Lib_Primavera.Comercial.getEncomenda(encomenda.idEncomenda);
+            Lib_Primavera.Comercial.updateEncomenda(docCompra, encomenda);
+            erro = Lib_Primavera.Comercial.VGR_New(docCompra);
 
             if (erro.Erro == 0)
             {
-                //var response = Request.CreateResponse(HttpStatusCode.Created, dc.id);
-                //string uri = Url.Link("DefaultApi", new { DocId = dc.id });
+                var response = Request.CreateResponse(
+                  HttpStatusCode.Created, docCompra.id);
+                //string uri = Url.Link("DefaultApi", new { DocId = docCompra.id });
                 //response.Headers.Location = new Uri(uri);
-                return Request.CreateResponse(HttpStatusCode.Created, encomenda.ToString()); ;
+                return response;
             }
-
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                Console.WriteLine(erro.Descricao);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
             }
 
         }

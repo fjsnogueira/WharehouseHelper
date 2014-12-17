@@ -6,32 +6,40 @@
 $(document).ready(function(){
 	var url = "http://localhost:49822/api/doccompra/";
 	console.log(url);
-	var data={};
-	data.idEncomenda = 1;
-	data.artigos =  new Array();
-	var artigo={};
-	artigo.id=1;
-	artigo.quantidade=2;
-	data.artigos.push(artigo);
-	
-	console.log(JSON.stringify(data))
-	$("button").click(function(){  
 
+	$("button").click(function(){
+
+	var obj = new encomenda("ECF-1");
+	obj.addArtigo("CYMBAL0001",1);
+		
 	$.ajax({
         url: url,
 		type: "POST",
-        data: JSON.stringify(data),
+        data: JSON.stringify(obj),
         headers: {
 			'Content-Type': 'application/json'
 		},success: function(data, textStatus, jqXHR){
 			console.log(data);
 			alert("Data: " + data + "\nStatus: " + status);},
 		error: function (jqXHR, textStatus, errorThrown) {
-			alert(textStatus);
-			console.log("Something went wrong: "+jqXHR);
-			console.log(textStatus);}
+			console.log(errorThrown);
+			console.log("Reason:");
+			console.log(jqXHR.responseText);
+			}
 		});
 	});
+	
+	function encomenda(id){
+		this.idEncomenda=id;
+		this.artigos = new Array();
+		this.addArtigo = function (id,quantidade){
+			var artigo = {};
+			artigo.idArtigo=id;
+			artigo.quantidade=quantidade;
+			this.artigos.push(artigo);
+		}
+	}
+	
 });
 </script>
 </head>

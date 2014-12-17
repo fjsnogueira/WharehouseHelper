@@ -27,7 +27,7 @@ namespace FirstREST.Controllers
         }
     }
 
-    public class FornecedoresController : ApiController
+    public class FornecedorController : ApiController
     {
         // GET api/Fornecedor/5    
         public Fornecedor Get(string id)
