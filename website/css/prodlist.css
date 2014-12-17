@@ -50,12 +50,12 @@ td {
     padding: 4px ;
     border-bottom: 1px solid #c3c5c7 ;
     font-size: 16px ;
-    
-    border: 1px dashed red;
 }
 
 td.tmsg {
-    text-align: center;
+    text-align: center ;
+    font-family: "Sansation_Light" ;
+    color: #7c818a ;
 }
 
 /* zona do botão de mais opções */
