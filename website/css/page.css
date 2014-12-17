@@ -1,0 +1,23 @@
+/************************************************************************/
+/* ------ div principal ------ */
+div.main_search_block {
+    margin: 20px auto ;
+    padding: 12px ;
+    padding-left: 2%;
+    width:90% ;
+    background-color: #ffffff ; /* white */
+    box-shadow: 0px 1px 6px 0px #393e45 ; /* charade */
+    border-radius: 6px ;
+}
+
+/************************************************************************/
+/* ------ títulos ------  */
+h1, h3 {
+    font-family: "Sansation_Light" ;
+    color: #36383c ; /* vulcan */
+}
+
+h3 {
+    color: #7c818a ; /* regent gray */
+    font-weight: 100 ;
+}

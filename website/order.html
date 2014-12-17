@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html>
+    <header>
+        <title> Registo de Encomendas </title>
+        
+        <meta charset="utf-8">
+        
+        <script type="text/javascript" src="bwip.js"></script>
+        <script type="text/javascript" src="lib/jquery-1.4.1.js"></script>
+        <script type="text/javascript" src="lib/canvas.js"></script>
+        <script type="text/javascript" src="lib/barcodeRender.js"></script>
+        
+        <link rel="stylesheet" href="css/prodlist.css" />
+        <link rel="stylesheet" href="css/checkbox.css" />
+        <link rel="stylesheet" href="css/page.css" />
+        <link rel="stylesheet" href="css/fonts.css" />
+        <link rel="stylesheet" href="css/bodybg.css" />
+        <link rel="stylesheet" href="css/style.css" />
+    </header>
+
+    <body onload="meteQB()"> 
+    
+        <div class="main_search_block">
+            
+            <!-- titulos -->
+            <div class="main_search_title"> 
+                <h1> Encomenda ECF-0001 </h1>
+            </div>
+            
+            <!-- formulário de login --> 
+            <div class="main_search_form" hidden> 
+                <form class="search_form" > 
+                    <!-- nome do funcionario-->
+                    <div class="form_input">
+                        <input type="text" placeholder="Introduza um código ou nome de um armazém ou fornecedor" name="username">
+                        <button id="search_bt" class="form_label" type="submit"> pesquisar </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="search_results">
+                <h3> <img src="img/encomenda.png"> Informações sobre a Encomenda </h3>
+            </div>
+            
+            <!-- resultados da pesquisa -->
+            <div class="search_results">
+                <h3> <img src="img/artigo.png"> Lista de Artigos na Encomenda </h3>
+                <br><br>
+                <table id="search_elements"> 
+                    <tr>
+                        <td colspan="3" class="tmsg"> Selecione os artigos recebidos e confirme a quantidade a receber.  </td>
+                    </tr>
+                    <tr>
+                        <!-- CHECKBOX -->
+                        <td class="checkbox unchecked">
+                            <div class="checkbox">
+                                <input type="checkbox" value="1" id="checkboxOneInput1">
+                                <label for="checkboxOneInput1"></label>
+                            </div>
+                        </td>
+                        <!-- breve descrição do elemento -->
+                        <td class="td_desc"> Esta é a descrição do artigo número 1. </td>
+                        <!-- código de barras associado -->
+                        <td class="td_canvas"> <canvas id="canvas1"> </canvas> </td>
+                    </tr>
+                    <tr>
+                        <!-- CHECKBOX -->
+                        <td class="checkbox unchecked">
+                            <div class="checkbox">
+                                <input type="checkbox" value="2" id="checkboxOneInput2">
+                                <label for="checkboxOneInput2"></label>
+                            </div>
+                        </td>
+                        <!-- breve descrição do elemento -->
+                        <td class="td_desc"> Descrição do artigo 2. </td>
+                        <!-- código de barras associado -->
+                        <td class="td_canvas"> <canvas id="canvas2"> </canvas> </td>
+                    </tr>
+                    <tr>
+                        <!-- CHECKBOX -->
+                        <td class="checkbox unchecked">
+                            <div class="checkbox">
+                                <input type="checkbox" value="3" id="checkboxOneInput3">
+                                <label for="checkboxOneInput3"></label>
+                            </div>
+                        </td>
+                        <!-- breve descrição do elemento -->
+                        <td class="td_desc"> Descrição do artigo 3. </td>
+                        <!-- código de barras associado -->
+                        <td class="td_canvas"> <canvas id="canvas3"> </canvas> </td>
+                    </tr>
+                    <tr>
+                        <!-- CHECKBOX -->
+                        <td class="checkbox unchecked">
+                            <div class="checkbox">
+                                <input type="checkbox" value="4" id="checkboxOneInput4">
+                                <label for="checkboxOneInput4"></label>
+                            </div>
+                        </td>
+                        <!-- breve descrição do elemento -->
+                        <td class="td_desc"> Descrição do artigo 4. </td>
+                        <!-- código de barras associado -->
+                        <td class="td_canvas"> <canvas id="canvas4"> </canvas> </td>
+                    </tr>
+                </table>
+            </div>
+            
+        </div>
+        
+        <script type="text/javascript"> 
+            function meteQB(){
+                render('ean13','8424818263563','canvas1');
+                render('ean13','8424818263563','canvas2');
+                render('ean13','8424818263563','canvas3');
+                render('ean13','8424818263563','canvas4');
+            };
+        </script>
+        
+    </body>
+</html>

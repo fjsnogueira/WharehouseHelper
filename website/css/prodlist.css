@@ -1,0 +1,76 @@
+/************************************************************************/
+/* ------ resultados da pesquisa ------ */
+
+div.search_results {
+    width: 80%;
+    margin: auto;
+    margin-top: 7%;
+    margin-bottom: 30px;
+}
+
+/* botão de mais opções */
+button.more_opt {
+    font-family: "Sansation_Light" ;
+    font-size: 16px ;
+    background-color: #ffffff ; /* light sea green (fundo) */
+	border: 1px solid #20b7a7 ; /* light sea green (borda do botão) */
+    color: #20b7a7 ; /* white (letras) */
+	border-radius: 5px;
+    padding: 10px 20px; /* cima+baixo - esq+dir */
+}
+button.more_opt:hover {
+    font-family: "Sansation_Light" ;
+    font-size: 16px ;
+    background-color:  #20b7a7 ; /* light sea green (fundo) */
+	border: 1px solid #20b7a7 ; /* light sea green (borda do botão) */
+    color: #ffffff ; /* white (letras) */
+	border-radius: 5px;
+    padding: 10px 20px; /* cima+baixo - esq+dir */
+}
+
+/************************************************************************/
+/* imagens ilustrativas do tipo de resultados */
+img {
+    width: 5% ;
+    margin: 0;
+    padding: 0;
+    margin-top: -1.7%;
+    margin-right: 1%;
+    float: left;
+}
+
+/* tabela de resultados */
+table {
+    border-collapse: collapse ; /* assim os tds ficam sem espaços entre eles */
+    width: 100%;
+}
+
+/* colunas da tabela de resultados */
+td {
+    padding: 4px ;
+    border-bottom: 1px solid #c3c5c7 ;
+    font-size: 16px ;
+    
+    border: 1px dashed red;
+}
+
+td.tmsg {
+    text-align: center;
+}
+
+/* zona do botão de mais opções */
+td.checkbox {
+    text-align: center;
+}
+
+/* zona da descrição */
+td.td_desc {
+    text-align: justify ;
+    font-family: "Sansation_Light" ;
+    padding: 2% ;
+}
+
+/* zona do código de barras */
+td.td_canvas {
+    text-align: center;
+}
