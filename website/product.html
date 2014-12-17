@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html>
+    <header>
+        <title> Registo de Encomendas </title>
+        
+        <meta charset="utf-8">
+        
+        <script type="text/javascript" src="bwip.js"></script>
+        <script type="text/javascript" src="lib/jquery-1.4.1.js"></script>
+        <script type="text/javascript" src="lib/canvas.js"></script>
+        <script type="text/javascript" src="lib/barcodeRender.js"></script>
+        
+        <link rel="stylesheet" href="css/prodlist.css" />
+        <link rel="stylesheet" href="css/checkbox.css" />
+        <link rel="stylesheet" href="css/page.css" />
+        <link rel="stylesheet" href="css/fonts.css" />
+        <link rel="stylesheet" href="css/bodybg.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/order.css" />
+        <link rel="stylesheet" href="css/info.css" />
+        
+    </header>
+
+    <body onload="meteQB()"> 
+    
+        <div class="main_search_block">
+            
+            <!-- titulos -->
+            <div class="main_search_title"> 
+                <h1>  Artigo 8424818263563 </h1>
+            </div>
+            
+            
+            <div class="search_results"> 
+                <h3> <img src="img/fornecedor.png"> Informações do Artigo </h3>
+                <div class="info">
+                    <table>
+                        <tr>
+                            <td>
+                                <canvas id="canvas0"></canvas>
+                            </td>
+                            <td>
+                                <p> <label> Nome: </label> Nome do artigo </p>
+                                <p> <label> Identificador:</label> CYMBAL0001 </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+            </div>
+            
+            <br>
+            
+            <!-- resultados da pesquisa -->
+            <div class="search_results">
+                <h3> <img src="img/encomenda.png"> Lista de Encomenda Pendentes com o Artigo </h3>
+                <table id="search_elements"> 
+                    <tr>
+                        <!-- breve descrição do elemento -->
+                        <td class="td_desc"> Descrição da encomenda resultante das pesquisa. </td>
+                        <!-- botão para abrir mais opções -->
+                        <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
+                        <!-- código de barras associado -->
+                        <td class="td_canvas"> <canvas id="canvas1"> </canvas> </td>
+                    </tr>
+                    
+                    <tr>
+                        <!-- breve descrição do elemento -->
+                        <td class="td_desc"> Descrição da encomenda resultante das pesquisa. </td>
+                        <!-- botão para abrir mais opções -->
+                        <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
+                        <!-- código de barras associado -->
+                        <td class="td_canvas"> <canvas id="canvas2"> </canvas> </td>
+                    </tr>
+                    <tr>
+                        <!-- breve descrição do elemento -->
+                        <td class="td_desc"> Descrição da encomenda resultante das pesquisa. </td>
+                        <!-- botão para abrir mais opções -->
+                        <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
+                        <!-- código de barras associado -->
+                        <td class="td_canvas"> <canvas id="canvas3"> </canvas> </td>
+                    </tr>
+                    <tr>
+                        <!-- breve descrição do elemento -->
+                        <td class="td_desc"> Descrição da encomenda resultante das pesquisa. </td>
+                        <!-- botão para abrir mais opções -->
+                        <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
+                        <!-- código de barras associado -->
+                        <td class="td_canvas"> <canvas id="canvas4"> </canvas> </td>
+                    </tr>
+                </table>
+            </div>
+            
+        </div>
+        
+        <script type="text/javascript"> 
+            function meteQB(){
+                render('ean13','8424818263563','canvas0');
+                render('code128','ECF-0001','canvas1');
+                render('code128','ECF-0002','canvas2');
+                render('code128','ECF-0003','canvas3');
+                render('code128','ECF-0004','canvas4');
+            };
+        </script>
+        
+    </body>
+</html>
