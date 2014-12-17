@@ -442,7 +442,7 @@ namespace FirstREST.Lib_Primavera
         public static Model.DocCompra getEncomenda(string codBarValue)
         {
             string[] substrings = Regex.Split(codBarValue, "ECF-");
-            string query = "SELECT dbo.CabecCompras.TipoDoc, dbo.CabecCompras.id, dbo.CabecCompras.NumDoc, dbo.CabecCompras.Entidade, dbo.CabecCompras.DataDoc, dbo.LinhasCompras.NumLinha, dbo.LinhasCompras.Artigo, dbo.LinhasCompras.Quantidade,dbo.LinhasCompras.Armazem, dbo.LinhasComprasStatus.EstadoTrans, dbo.LinhasComprasStatus.QuantTrans FROM dbo.CabecCompras INNER JOIN dbo.LinhasCompras ON dbo.CabecCompras.Id = dbo.LinhasCompras.IdCabecCompras INNER JOIN dbo.LinhasComprasStatus ON dbo.LinhasCompras.Id = dbo.LinhasComprasStatus.IdLinhasCompras WHERE (dbo.CabecCompras.TipoDoc = N'ECF' AND dbo.LinhasComprasStatus.EstadoTrans = 'P' AND dbo.CabecCompras.NumDoc like '" + substrings[1] + "') ORDER BY dbo.CabecCompras.NumDoc";
+            string query = "SELECT dbo.CabecCompras.TipoDoc, dbo.CabecCompras.id, dbo.CabecCompras.NumDoc, dbo.CabecCompras.Entidade, dbo.CabecCompras.DataDoc, dbo.LinhasCompras.NumLinha, dbo.LinhasCompras.Artigo, dbo.LinhasCompras.Quantidade, PRISINF.dbo.LinhasCompras.Desconto1, PRISINF.dbo.LinhasCompras.PrecUnit, dbo.LinhasCompras.Armazem, dbo.LinhasComprasStatus.EstadoTrans, dbo.LinhasComprasStatus.QuantTrans FROM dbo.CabecCompras INNER JOIN dbo.LinhasCompras ON dbo.CabecCompras.Id = dbo.LinhasCompras.IdCabecCompras INNER JOIN dbo.LinhasComprasStatus ON dbo.LinhasCompras.Id = dbo.LinhasComprasStatus.IdLinhasCompras WHERE (dbo.CabecCompras.TipoDoc = N'ECF' AND dbo.LinhasComprasStatus.EstadoTrans = 'P' AND dbo.CabecCompras.NumDoc like '" + substrings[1] + "') ORDER BY dbo.CabecCompras.NumDoc";
 
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
@@ -468,6 +468,8 @@ namespace FirstREST.Lib_Primavera
                     linhaDocCompra.CodArtigo = objList.Valor("Artigo");
                     linhaDocCompra.Quantidade = objList.Valor("Quantidade");
                     linhaDocCompra.Armazem = objList.Valor("Armazem");
+                    linhaDocCompra.Desconto = objList.Valor("Desconto1");
+                    linhaDocCompra.PrecoUnitario = objList.Valor("PrecUnit");
                     statusLinhaCompra = new Model.LinhaDocCompraStatus();
                     statusLinhaCompra.EstadoTrans = objList.Valor("EstadoTrans");
                     statusLinhaCompra.QuantTrans = objList.Valor("QuantTrans");
@@ -484,6 +486,8 @@ namespace FirstREST.Lib_Primavera
                         linhaDocCompra.CodArtigo = objList.Valor("Artigo");
                         linhaDocCompra.Quantidade = objList.Valor("Quantidade");
                         linhaDocCompra.Armazem = objList.Valor("Armazem");
+                        linhaDocCompra.Desconto = objList.Valor("Desconto1");
+                        linhaDocCompra.PrecoUnitario = objList.Valor("PrecUnit");
                         statusLinhaCompra = new Model.LinhaDocCompraStatus();
                         statusLinhaCompra.EstadoTrans = objList.Valor("EstadoTrans");
                         statusLinhaCompra.QuantTrans = objList.Valor("QuantTrans");
@@ -497,6 +501,28 @@ namespace FirstREST.Lib_Primavera
             }
 
             return result;
+        }
+
+        public static void updateEncomenda(Model.DocCompra docCompra, Model.EncomendaRecepcionada encomendaRecebida) {
+
+            bool found = false;
+            foreach (Model.LinhaDocCompra linha in docCompra.LinhasDoc)
+            {
+                found = false;
+                foreach (Model.ArtigosRecepcionados artigoRecebido in encomendaRecebida.artigos)
+                {
+                    if (artigoRecebido.idArtigo == linha.CodArtigo) // mesmo artigo
+                    {
+                        linha.Status.QuantTrans += artigoRecebido.quantidade;
+                        if (linha.Status.QuantTrans == linha.Quantidade)
+                            linha.Status.EstadoTrans = "T";
+                        found = true;
+                    }
+                    if (found)
+                        break;
+                }
+            }
+            return;
         }
 
         public static Model.RespostaErro VGR_New(Model.DocCompra dc)
@@ -525,7 +551,7 @@ namespace FirstREST.Lib_Primavera
                     PriEngine.Engine.Comercial.Compras.PreencheDadosRelacionados(myGR, rl);
                     foreach (Model.LinhaDocCompra lin in lstlindv)
                     {
-                        PriEngine.Engine.Comercial.Compras.AdicionaLinha(myGR, lin.CodArtigo, lin.Quantidade, lin.Armazem, "");
+                        PriEngine.Engine.Comercial.Compras.AdicionaLinha(myGR, lin.CodArtigo, lin.Quantidade, lin.Armazem, "", lin.PrecoUnitario, lin.Desconto);
                     }
 
 
