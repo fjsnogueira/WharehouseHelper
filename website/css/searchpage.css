@@ -107,6 +107,7 @@ button.more_opt {
 	border-radius: 5px;
     padding: 10px 20px; /* cima+baixo - esq+dir */
 }
+
 button.more_opt:hover {
     font-family: "Sansation_Light" ;
     font-size: 16px ;
