@@ -39,13 +39,19 @@
                 </form>
             </div>
             
+            <!-- titulo resultados da pesquisa -->
+            <div class="search_results">
+                <h3>  <span class="bt-icon icon-search"></span> Resultados da Pesquisa </h3>
+            </div>
+            
             <!-- menu de navegação -->
             <div class="tabs tabs-style-bar">
                 <nav>
                     <ul>
-                        <li><a href="#section-bar-1"> <span class="bt-icon icon-search"></span> Resultados da pesquisa </a></li>
-                        <li><a href="#section-bar-2"> <span class="bt-icon icon-cabinet"></span> Armazéns da empresa </a></li>
-                        <li><a href="#section-bar-3"> <span class="bt-icon icon-truck"></span> Fornecedores da empresa </a></li>
+                        <li><a href="#section-bar-1"> <span class="bt-icon icon-barcode"></span> Encomendas Pendentes </a></li>
+                        <li><a href="#section-bar-2"> <span class="bt-icon icon-tag"></span> Artigos Encomendados </a></li>
+                        <li><a href="#section-bar-3"> <span class="bt-icon icon-cabinet"></span> Armazéns da Empresa </a></li>
+                        <li><a href="#section-bar-4"> <span class="bt-icon icon-truck"></span> Fornecedores da Empresa </a></li>
                     </ul>
                 </nav>
                 <div class="content-wrap">
@@ -69,9 +75,9 @@
                         <table>
                             <tr>
                                 <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
-                                <td class="td_img"> <img src="img/armazem.png"> </td>
+                                <td class="td_img"> <img src="img/artigo.png"> </td>
                                 <!-- breve descrição do elemento -->
-                                <td class="td_desc"> Descrição do armazém. </td>
+                                <td class="td_desc"> Descrição do artigo resultante das pesquisa. </td>
                                 <!-- botão para abrir mais opções -->
                                 <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
                                 <!-- código de barras associado -->
@@ -84,13 +90,28 @@
                         <table>
                             <tr>
                                 <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
+                                <td class="td_img"> <img src="img/armazem.png"> </td>
+                                <!-- breve descrição do elemento -->
+                                <td class="td_desc"> Descrição do armazém. </td>
+                                <!-- botão para abrir mais opções -->
+                                <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
+                                <!-- código de barras associado -->
+                                <td class="td_canvas"> <canvas id="canvas3_1"> </canvas> </td>
+                            </tr>
+                        </table>
+                    </section>
+                    
+                    <section id="section-bar-4">
+                        <table>
+                            <tr>
+                                <!-- ilustrar se é encomenda ou artigo ou fornecedor -->
                                 <td class="td_img"> <img src="img/fornecedor.png"> </td>
                                 <!-- breve descrição do elemento -->
                                 <td class="td_desc"> Descrição do fornecedor. </td>
                                 <!-- botão para abrir mais opções -->
                                 <td class="td_bt"> <button class="more_opt"> abrir opções </button> </td>
                                 <!-- código de barras associado -->
-                                <td class="td_canvas"> <canvas id="canvas3_1"> </canvas> </td>
+                                <td class="td_canvas"> <canvas id="canvas4_1"> </canvas> </td>
                             </tr>
                         </table>
                     </section>
@@ -110,8 +131,9 @@
         <script type="text/javascript"> 
             function meteQB(){
                 render('code128','ECF-0001','canvas1_1');
+                render('ean13','8424818263563','canvas2_1');
                 render('code128','FND-0001','canvas3_1');
-                render('code128','ARM-0001','canvas2_1');
+                render('code128','ARM-0001','canvas4_1');
             };
         </script>
         
