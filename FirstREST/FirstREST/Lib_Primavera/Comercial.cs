@@ -332,7 +332,8 @@ namespace FirstREST.Lib_Primavera
 
         #region armazem
 
-        public static Lib_Primavera.Model.Armazem GetArmazem(string codArmazem) {
+        public static Lib_Primavera.Model.Armazem GetArmazem(string codArmazem)
+        {
             Model.Armazem armazem = new Model.Armazem();
             string query = "SELECT Armazem, Descricao, Morada, Localidade, Cp, CpLocalidade FROM dbo.Armazens WHERE dbo.Armazens.Armazem='" + codArmazem + "'";
             ErpBS objMotor = new ErpBS();
@@ -354,7 +355,7 @@ namespace FirstREST.Lib_Primavera
 
             return armazem;
         }
-    
+
 
         #endregion armazem
 
@@ -362,7 +363,7 @@ namespace FirstREST.Lib_Primavera
 
         public static List<Model.DocCompra> VGR_List()
         {
-            string query = "SELECT dbo.CabecCompras.TipoDoc, dbo.CabecCompras.id, dbo.CabecCompras.NumDoc, dbo.CabecCompras.Entidade, dbo.CabecCompras.DataDoc, dbo.LinhasCompras.NumLinha, dbo.LinhasCompras.Artigo, dbo.LinhasCompras.Quantidade,dbo.LinhasCompras.Armazem, dbo.LinhasComprasStatus.EstadoTrans, dbo.LinhasComprasStatus.QuantTrans FROM dbo.CabecCompras INNER JOIN dbo.LinhasCompras ON dbo.CabecCompras.Id = dbo.LinhasCompras.IdCabecCompras INNER JOIN dbo.LinhasComprasStatus ON dbo.LinhasCompras.Id = dbo.LinhasComprasStatus.IdLinhasCompras WHERE (dbo.CabecCompras.TipoDoc = N'ECF' AND dbo.LinhasComprasStatus.EstadoTrans = 'P') ORDER BY dbo.CabecCompras.NumDoc";
+            string query = "SELECT PRISINF.dbo.CabecCompras.TipoDoc, PRISINF.dbo.CabecCompras.id, PRISINF.dbo.CabecCompras.NumDoc, PRISINF.dbo.CabecCompras.Entidade, PRISINF.dbo.CabecCompras.DataDoc, PRISINF.dbo.LinhasCompras.NumLinha, PRISINF.dbo.LinhasCompras.Artigo, PRISINF.dbo.LinhasCompras.Quantidade,PRISINF.dbo.LinhasCompras.Armazem, PRISINF.dbo.LinhasComprasStatus.EstadoTrans, PRISINF.dbo.LinhasComprasStatus.QuantTrans FROM PRISINF.dbo.CabecCompras INNER JOIN PRISINF.dbo.LinhasCompras ON PRISINF.dbo.CabecCompras.Id = PRISINF.dbo.LinhasCompras.IdCabecCompras INNER JOIN PRISINF.dbo.LinhasComprasStatus ON PRISINF.dbo.LinhasCompras.Id = PRISINF.dbo.LinhasComprasStatus.IdLinhasCompras WHERE (PRISINF.dbo.CabecCompras.TipoDoc = N'ECF' AND PRISINF.dbo.LinhasComprasStatus.EstadoTrans = 'P') ORDER BY PRISINF.dbo.CabecCompras.NumDoc";
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
 
@@ -438,9 +439,10 @@ namespace FirstREST.Lib_Primavera
             return listDocCompra;
         }
 
-        public static Model.DocCompra getEncomenda(string codBarValue) {
+        public static Model.DocCompra getEncomenda(string codBarValue)
+        {
             string[] substrings = Regex.Split(codBarValue, "ECF-");
-            string query = "SELECT dbo.CabecCompras.TipoDoc, dbo.CabecCompras.id, dbo.CabecCompras.NumDoc, dbo.CabecCompras.Entidade, dbo.CabecCompras.DataDoc, dbo.LinhasCompras.NumLinha, dbo.LinhasCompras.Artigo, dbo.LinhasCompras.Quantidade,dbo.LinhasCompras.Armazem, dbo.LinhasComprasStatus.EstadoTrans, dbo.LinhasComprasStatus.QuantTrans FROM dbo.CabecCompras INNER JOIN dbo.LinhasCompras ON dbo.CabecCompras.Id = dbo.LinhasCompras.IdCabecCompras INNER JOIN dbo.LinhasComprasStatus ON dbo.LinhasCompras.Id = dbo.LinhasComprasStatus.IdLinhasCompras WHERE (dbo.CabecCompras.TipoDoc = N'ECF' AND dbo.LinhasComprasStatus.EstadoTrans = 'P' AND dbo.CabecCompras.NumDoc like '" + substrings[1]+ "') ORDER BY dbo.CabecCompras.NumDoc";
+            string query = "SELECT dbo.CabecCompras.TipoDoc, dbo.CabecCompras.id, dbo.CabecCompras.NumDoc, dbo.CabecCompras.Entidade, dbo.CabecCompras.DataDoc, dbo.LinhasCompras.NumLinha, dbo.LinhasCompras.Artigo, dbo.LinhasCompras.Quantidade,dbo.LinhasCompras.Armazem, dbo.LinhasComprasStatus.EstadoTrans, dbo.LinhasComprasStatus.QuantTrans FROM dbo.CabecCompras INNER JOIN dbo.LinhasCompras ON dbo.CabecCompras.Id = dbo.LinhasCompras.IdCabecCompras INNER JOIN dbo.LinhasComprasStatus ON dbo.LinhasCompras.Id = dbo.LinhasComprasStatus.IdLinhasCompras WHERE (dbo.CabecCompras.TipoDoc = N'ECF' AND dbo.LinhasComprasStatus.EstadoTrans = 'P' AND dbo.CabecCompras.NumDoc like '" + substrings[1] + "') ORDER BY dbo.CabecCompras.NumDoc";
 
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
@@ -449,7 +451,7 @@ namespace FirstREST.Lib_Primavera
             Model.LinhaDocCompra linhaDocCompra;
             Model.LinhaDocCompraStatus statusLinhaCompra;
             if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
-            { 
+            {
                 objList = PriEngine.Engine.Consulta(query);
 
                 if (!objList.NoFim()) //tem pelo menos 1 elemento
@@ -771,74 +773,103 @@ namespace FirstREST.Lib_Primavera
         #region search
         public static Lib_Primavera.Model.Search search(string valor)
         {
-
             Lib_Primavera.Model.Search procura = new Model.Search();
-            procura.Artigos = new List<Model.Artigo>();
-            procura.Fornecedores = new List<Model.Fornecedor>();
-            procura.Armazens = new List<Model.Armazem>();
-            procura.Encomendas = new List<Model.DocCompra>();
-            string queryArtigos = "SELECT dbo.Artigo.Artigo, dbo.Artigo.Descricao, dbo.Artigo.CodBarras FROM dbo.Artigo WHERE dbo.Artigo.Artigo LIKE '%"+valor+"%'";
-            string queryFornecedores = "SELECT dbo.Fornecedores.Fornecedor, dbo.Fornecedores.nome FROM dbo.Fornecedores WHERE dbo.Fornecedores.Fornecedor LIKE '%" + valor + "%' OR dbo.Fornecedores.nome LIKE '%" + valor + "%'";
-            string queryArmazens = "SELECT Armazem, Descricao, Morada, Localidade, Cp, CpLocalidade FROM dbo.Armazens WHERE dbo.Armazens.Armazem LIKE'%" + valor + "%'";
+            procura.Artigos = new Dictionary<string, List<int>>();
+            procura.Fornecedores = new Dictionary<string, List<int>>();
+            procura.Armazens = new Dictionary<string, List<int>>();
+            procura.Encomendas = new List<int>();
             string[] substrings = Regex.Split(valor, "ECF-");
-            string queryEncomendas = "SELECT DISTINCT dbo.CabecCompras.TipoDoc, dbo.CabecCompras.id, dbo.CabecCompras.NumDoc, dbo.CabecCompras.Entidade, dbo.CabecCompras.DataDoc FROM dbo.CabecCompras INNER JOIN dbo.LinhasCompras ON dbo.CabecCompras.Id = dbo.LinhasCompras.IdCabecCompras INNER JOIN dbo.LinhasComprasStatus ON dbo.LinhasCompras.Id = dbo.LinhasComprasStatus.IdLinhasCompras WHERE (dbo.CabecCompras.TipoDoc = N'ECF' AND dbo.LinhasComprasStatus.EstadoTrans = 'P' AND dbo.CabecCompras.NumDoc LIKE '" + substrings[substrings.Length -1] + "') ORDER BY dbo.CabecCompras.NumDoc";
+            //string query = "SELECT PRISINF.dbo.CabecCompras.TipoDoc, PRISINF.dbo.CabecCompras.id, PRISINF.dbo.CabecCompras.NumDoc, PRISINF.dbo.CabecCompras.Entidade, PRISINF.dbo.LinhasCompras.Artigo, PRISINF.dbo.LinhasCompras.Armazem FROM PRISINF.dbo.CabecCompras INNER JOIN PRISINF.dbo.LinhasCompras ON PRISINF.dbo.CabecCompras.Id = PRISINF.dbo.LinhasCompras.IdCabecCompras INNER JOIN PRISINF.dbo.LinhasComprasStatus ON PRISINF.dbo.LinhasCompras.Id = PRISINF.dbo.LinhasComprasStatus.IdLinhasCompras WHERE (PRISINF.dbo.CabecCompras.TipoDoc = N'ECF' AND PRISINF.dbo.LinhasComprasStatus.EstadoTrans = 'P' AND (PRISINF.dbo.CabecCompras.NumDoc LIKE '" + substrings[substrings.Length - 1] + "' OR PRISINF.dbo.LinhasCompras.Artigo LIKE '%" + valor + "%' OR PRISINF.dbo.LinhasCompras.Armazem LIKE '%" + valor + "%' OR PRISINF.dbo.CabecCompras.Entidade LIKE '%" + valor + "%')) ORDER BY PRISINF.dbo.CabecCompras.NumDoc";
+            string queryEncomendas = "SELECT DISTINCT PRISINF.dbo.CabecCompras.TipoDoc, PRISINF.dbo.CabecCompras.id, PRISINF.dbo.CabecCompras.NumDoc FROM PRISINF.dbo.CabecCompras INNER JOIN PRISINF.dbo.LinhasCompras ON PRISINF.dbo.CabecCompras.Id = PRISINF.dbo.LinhasCompras.IdCabecCompras INNER JOIN PRISINF.dbo.LinhasComprasStatus ON PRISINF.dbo.LinhasCompras.Id = PRISINF.dbo.LinhasComprasStatus.IdLinhasCompras WHERE (PRISINF.dbo.CabecCompras.TipoDoc = N'ECF' AND PRISINF.dbo.LinhasComprasStatus.EstadoTrans = 'P' AND (PRISINF.dbo.CabecCompras.NumDoc LIKE '" + substrings[substrings.Length - 1] + "' )) ORDER BY PRISINF.dbo.CabecCompras.NumDoc";
+            string queryArtigos = "SELECT DISTINCT	PRISINF.dbo.CabecCompras.TipoDoc, PRISINF.dbo.CabecCompras.id, PRISINF.dbo.CabecCompras.NumDoc, PRISINF.dbo.LinhasCompras.Artigo FROM PRISINF.dbo.CabecCompras INNER JOIN PRISINF.dbo.LinhasCompras ON PRISINF.dbo.CabecCompras.Id = PRISINF.dbo.LinhasCompras.IdCabecCompras INNER JOIN PRISINF.dbo.LinhasComprasStatus ON PRISINF.dbo.LinhasCompras.Id = PRISINF.dbo.LinhasComprasStatus.IdLinhasCompras WHERE (PRISINF.dbo.CabecCompras.TipoDoc = N'ECF' AND PRISINF.dbo.LinhasComprasStatus.EstadoTrans = 'P' AND PRISINF.dbo.LinhasCompras.Artigo LIKE '%" + valor + "%' ) ORDER BY PRISINF.dbo.CabecCompras.NumDoc";
+            string queryArmazens = "SELECT DISTINCT	PRISINF.dbo.CabecCompras.TipoDoc, PRISINF.dbo.CabecCompras.id, PRISINF.dbo.CabecCompras.NumDoc,PRISINF.dbo.LinhasCompras.Armazem FROM PRISINF.dbo.CabecCompras INNER JOIN PRISINF.dbo.LinhasCompras ON PRISINF.dbo.CabecCompras.Id = PRISINF.dbo.LinhasCompras.IdCabecCompras INNER JOIN PRISINF.dbo.LinhasComprasStatus ON PRISINF.dbo.LinhasCompras.Id = PRISINF.dbo.LinhasComprasStatus.IdLinhasCompras WHERE (PRISINF.dbo.CabecCompras.TipoDoc = N'ECF' AND PRISINF.dbo.LinhasComprasStatus.EstadoTrans = 'P' AND PRISINF.dbo.LinhasCompras.Armazem LIKE '%" + valor + "%') ORDER BY PRISINF.dbo.CabecCompras.NumDoc";
+            string queryFornecedores = "SELECT DISTINCT	PRISINF.dbo.CabecCompras.TipoDoc, PRISINF.dbo.CabecCompras.id, PRISINF.dbo.CabecCompras.NumDoc, PRISINF.dbo.CabecCompras.Entidade FROM PRISINF.dbo.CabecCompras INNER JOIN PRISINF.dbo.LinhasCompras ON PRISINF.dbo.CabecCompras.Id = PRISINF.dbo.LinhasCompras.IdCabecCompras INNER JOIN PRISINF.dbo.LinhasComprasStatus ON PRISINF.dbo.LinhasCompras.Id = PRISINF.dbo.LinhasComprasStatus.IdLinhasCompras WHERE (PRISINF.dbo.CabecCompras.TipoDoc = N'ECF' AND PRISINF.dbo.LinhasComprasStatus.EstadoTrans = 'P' AND PRISINF.dbo.CabecCompras.Entidade LIKE '%" + valor + "%') ORDER BY PRISINF.dbo.CabecCompras.NumDoc";
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
+
             if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
             {
-                objList = PriEngine.Engine.Consulta(queryArtigos);
+                objList = PriEngine.Engine.Consulta(queryEncomendas);
+                string chave;
+                int parValor;
 
-                while (!objList.NoFim()) //inserir Artigos
+                while (!objList.NoFim())
                 {
-                    Lib_Primavera.Model.Artigo artigoEncontrado = new Model.Artigo();
-                    artigoEncontrado.CodArtigo = objList.Valor("artigo");
-                    artigoEncontrado.DescArtigo = objList.Valor("descricao");
-                    artigoEncontrado.CodBarras = objList.Valor("CodBarras");
-                    procura.Artigos.Add(artigoEncontrado);
+                    if (!procura.Encomendas.Contains(objList.Valor("NumDoc")))
+                    {
+                        procura.Encomendas.Add(objList.Valor("NumDoc"));
+                    }
                     objList.Seguinte();
                 }
 
-                objList = PriEngine.Engine.Consulta(queryFornecedores);
+                objList = PriEngine.Engine.Consulta(queryArtigos);
 
-                while (!objList.NoFim()) //inserir Fornecedores
+                while (!objList.NoFim())
                 {
-                    Lib_Primavera.Model.Fornecedor fornecedorEncontrado = new Model.Fornecedor();
-                    fornecedorEncontrado.id = objList.Valor("fornecedor");
-                    fornecedorEncontrado.nome = objList.Valor("nome");
-                    procura.Fornecedores.Add(fornecedorEncontrado);
+                    chave = objList.Valor("Artigo");
+                    parValor = objList.Valor("NumDoc");
+                    if (procura.Artigos.ContainsKey(chave))
+                    {
+                        List<int> listaEncomendas = procura.Artigos[chave];
+                        if (!listaEncomendas.Contains(parValor))
+                        {
+                            listaEncomendas.Add(parValor);
+                        }
+                    }
+                    else {
+                        List<int> lista = new List<int>();
+                        lista.Add(parValor);
+                        procura.Artigos.Add(chave, lista);
+                    }
                     objList.Seguinte();
                 }
 
                 objList = PriEngine.Engine.Consulta(queryArmazens);
 
-                while (!objList.NoFim()) //inserir Armazens
+                while (!objList.NoFim())
                 {
-                    Lib_Primavera.Model.Armazem armazemEncontrado = new Model.Armazem();
-                    armazemEncontrado.id = objList.Valor("Armazem");
-                    armazemEncontrado.descricao = objList.Valor("Descricao");
-                    armazemEncontrado.morada = objList.Valor("Morada");
-                    armazemEncontrado.localidade = objList.Valor("Localidade");
-                    armazemEncontrado.Cp = objList.Valor("Cp");
-                    armazemEncontrado.CpLocalidade = objList.Valor("CpLocalidade");
-                    procura.Armazens.Add(armazemEncontrado);
+                    chave = objList.Valor("Armazem");
+                    parValor = objList.Valor("NumDoc");
+                    if (procura.Armazens.ContainsKey(chave))
+                    {
+                        List<int> listaEncomendas = procura.Armazens[chave];
+                        if (!listaEncomendas.Contains(parValor))
+                        {
+                            listaEncomendas.Add(parValor);
+                        }
+                    }
+                    else
+                    {
+                        List<int> lista = new List<int>();
+                        lista.Add(parValor);
+                        procura.Armazens.Add(chave, lista);
+                    }
                     objList.Seguinte();
                 }
 
+                objList = PriEngine.Engine.Consulta(queryFornecedores);
 
-                objList = PriEngine.Engine.Consulta(queryEncomendas);
-
-                while (!objList.NoFim()) //inserir Encomendas
+                while (!objList.NoFim())
                 {
-                    Lib_Primavera.Model.DocCompra encomendaEncontrada = new Model.DocCompra();
-                    encomendaEncontrada.TipoDoc = objList.Valor("TipoDoc");
-                    encomendaEncontrada.id = objList.Valor("id");
-                    encomendaEncontrada.Entidade = objList.Valor("Entidade");
-                    encomendaEncontrada.NumDoc = objList.Valor("NumDoc");
-                    encomendaEncontrada.DataEmissao = objList.Valor("DataDoc");
-                    encomendaEncontrada.LinhasDoc = new List<Model.LinhaDocCompra>();
-                    procura.Encomendas.Add(encomendaEncontrada);
+                    chave = objList.Valor("Entidade");
+                    parValor = objList.Valor("NumDoc");
+                    if (procura.Fornecedores.ContainsKey(chave))
+                    {
+                        List<int> listaEncomendas = procura.Fornecedores[chave];
+                        if (!listaEncomendas.Contains(parValor))
+                        {
+                            listaEncomendas.Add(parValor);
+                        }
+                    }
+                    else
+                    {
+                        List<int> lista = new List<int>();
+                        lista.Add(parValor);
+                        procura.Fornecedores.Add(chave, lista);
+                    }
                     objList.Seguinte();
                 }
+
             }
             return procura;
         }

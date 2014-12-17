@@ -4,14 +4,22 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-	var url = "localhost/api/doccompra/";
+	var url = "http://localhost:49822/api/doccompra/";
 	console.log(url);
-	var data = {idEncomenda: 1 , artigos : [{idArtigo: 1, quantidade: 2},{idArtigo: 3, quantidade: 3}]};
+	var data={};
+	data.idEncomenda = 1;
+	data.artigos =  new Array();
+	var artigo={};
+	artigo.id=1;
+	artigo.quantidade=2;
+	data.artigos.push(artigo);
 	
+	console.log(JSON.stringify(data))
 	$("button").click(function(){  
 
-	$.post({
+	$.ajax({
         url: url,
+		type: "POST",
         data: JSON.stringify(data),
         headers: {
 			'Content-Type': 'application/json'

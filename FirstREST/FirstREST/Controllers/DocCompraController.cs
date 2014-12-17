@@ -45,7 +45,6 @@ namespace FirstREST.Controllers
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             erro.Erro = 1;
             erro.Descricao = encomenda.ToString();
-
             
             //erro = Lib_Primavera.Comercial.InserirFactura_New(doc, art);
 

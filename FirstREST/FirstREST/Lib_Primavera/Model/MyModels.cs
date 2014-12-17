@@ -42,7 +42,8 @@ namespace FirstREST.Lib_Primavera.Model
         }
     }
 
-    public class Armazem {
+    public class Armazem
+    {
         public string id
         {
             get;
@@ -95,46 +96,52 @@ namespace FirstREST.Lib_Primavera.Model
         }
     }
 
-    public class Search {
+    public class Search
+    {
 
-        public List<Model.Artigo> Artigos
+        public List<int> Encomendas
         {
             get;
             set;
         }
 
-        public List<Model.Fornecedor> Fornecedores
+        public Dictionary<string, List<int>> Artigos
         {
             get;
             set;
         }
 
-        public List<Model.Armazem> Armazens
+        public Dictionary<string, List<int>> Fornecedores
         {
             get;
             set;
         }
 
-        public List<Model.DocCompra> Encomendas
+        public Dictionary<string, List<int>> Armazens
+        {
+            get;
+            set;
+        }
+
+    }
+
+    public class ArtigosRecepcionados
+    {
+        public string idArtigo
+        {
+            get;
+            set;
+        }
+
+        public int quantidade
         {
             get;
             set;
         }
     }
 
-    public class ArtigosRecepcionados{
-        public string idArtigo{
-            get;
-            set;
-        }
-
-        public int quantidade{
-            get;
-            set;
-        }
-    }
-
-    public class EncomendaRecepcionada {
+    public class EncomendaRecepcionada
+    {
 
         public string idEncomenda
         {
@@ -142,7 +149,7 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        List<Model.ArtigosRecepcionados> artigos
+        public List<Model.ArtigosRecepcionados> artigos
         {
             get;
             set;
