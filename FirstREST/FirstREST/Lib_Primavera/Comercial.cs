@@ -18,7 +18,7 @@ namespace FirstREST.Lib_Primavera
         private static String NomeEmpresa = "SINF";
         private static String UtilizadorEmpresa = "";
         private static String PasswordEmpresa = "";
-        private static Dictionary<string, Lib_Primavera.Model.SessionModel> Session = new Dictionary<string,Model.SessionModel>();
+        private static Dictionary<string, Lib_Primavera.Model.SessionModel> Session = new Dictionary<string, Model.SessionModel>();
 
         # region Cliente
 
@@ -513,7 +513,8 @@ namespace FirstREST.Lib_Primavera
             return result;
         }
 
-        public static void updateEncomenda(Model.DocCompra docCompra, Model.EncomendaRecepcionada encomendaRecebida) {
+        public static void updateEncomenda(Model.DocCompra docCompra, Model.EncomendaRecepcionada encomendaRecebida)
+        {
 
             bool found = false;
             foreach (Model.LinhaDocCompra linha in docCompra.LinhasDoc)
@@ -774,11 +775,21 @@ namespace FirstREST.Lib_Primavera
                     if (PriEngine.Engine.TabelasUtilizador.Existe("TDU_User", chave) == true)
                     {
                         Lib_Primavera.Model.SessionModel loggedUser = getUser(user.username);
-                        Session[loggedUser.Session_Val] = loggedUser; 
-                        erro.Status = true;
-                        erro.Erro = 0;
-                        erro.Descricao = loggedUser.Session_Val;
+                        if (loggedUser.Session_Val != "")
+                        {
+                            Session[loggedUser.Session_Val] = loggedUser;
+                            erro.Status = true;
+                            erro.Erro = 0;
+                            erro.Descricao = loggedUser.Session_Val;
+                        }
+                        else
+                        {
+                            erro.Status = false;
+                            erro.Erro = 1;
+                            erro.Descricao = "Erro, par username/password não encontrado";
+                        }
                         return erro;
+
                     }
 
                     erro.Status = false;
@@ -809,7 +820,7 @@ namespace FirstREST.Lib_Primavera
             session.UserName = "";
             session.Armazem = "";
             session.Session_Val = "";
-            string query = "SELECT CDU_Username, CDU_Armazem FROM PRISINF.dbo.TDU_User WHERE PRISINF.dbo.TDU_User.CDU_Username like '" + username + "'";
+            string query = "SELECT CDU_Username, CDU_Armazem FROM PRISINF.dbo.TDU_User WHERE PRISINF.dbo.TDU_User.CDU_Username = '" + username + "'";
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
 
@@ -829,13 +840,13 @@ namespace FirstREST.Lib_Primavera
             }
             return session;
         }
-        
+
         private static string Base64Encode(string plainText)
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
             return System.Convert.ToBase64String(plainTextBytes);
         }
-       
+
 
         #endregion User
 
@@ -885,7 +896,8 @@ namespace FirstREST.Lib_Primavera
                             listaEncomendas.Add(parValor);
                         }
                     }
-                    else {
+                    else
+                    {
                         List<int> lista = new List<int>();
                         lista.Add(parValor);
                         procura.Artigos.Add(chave, lista);

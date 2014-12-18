@@ -22,16 +22,24 @@ namespace FirstREST.Controllers
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             Lib_Primavera.Model.DocCompra docCompra = Lib_Primavera.Comercial.getEncomenda(encomenda.idEncomenda);
-            Lib_Primavera.Comercial.updateEncomenda(docCompra, encomenda);
-            erro = Lib_Primavera.Comercial.VGR_New(docCompra);
-
-            if (erro.Erro == 0)
+            if (docCompra.id != "")
             {
-                var response = Request.CreateResponse(
-                  HttpStatusCode.Created, docCompra.id);
-                //string uri = Url.Link("DefaultApi", new { DocId = docCompra.id });
-                //response.Headers.Location = new Uri(uri);
-                return response;
+                Lib_Primavera.Comercial.updateEncomenda(docCompra, encomenda);
+                erro = Lib_Primavera.Comercial.VGR_New(docCompra);
+
+                if (erro.Erro == 0)
+                {
+                    var response = Request.CreateResponse(
+                      HttpStatusCode.Created, docCompra.id);
+                    //string uri = Url.Link("DefaultApi", new { DocId = docCompra.id });
+                    //response.Headers.Location = new Uri(uri);
+                    return response;
+                }
+                else
+                {
+                    Console.WriteLine(erro.Descricao);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
+                }
             }
             else
             {
