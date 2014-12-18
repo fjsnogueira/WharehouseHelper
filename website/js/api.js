@@ -46,7 +46,8 @@ function login(username, password){
 	var loginData;
 	loginData['username'] = username;
 	loginData['password'] = password;
-
+	
+	//deve esperar receber json
 	$.ajax({
 		url: 		SERVER_BASE_URL + SERVER_API_URL + API["login"],
 		type: 		POST,
@@ -60,8 +61,7 @@ function login(username, password){
 function loginSuccess(data, testStatus, jqXHR){
 	// Setup cookie information //
 	$.cookie('username', data['username']);
-	$.cookie('wharehouse', data['wharehouse']);
-	$.cookie('status', 'logged');
+	$.cookie('session', data['session']);
 	
 	// fazer aqui qualquer coisa //
 }
@@ -70,8 +70,7 @@ function loginSuccess(data, testStatus, jqXHR){
 function loginError(jqXHR, textStatus, errorThrown){
 	// Setup cookie information //
 	$.cookie('username', '');
-	$.cookie('wharehouse', '');
-	$.cookie('status', 'error');
+	$.cookie('session', 'error');
 	
 	// fazer aqui qualquer coisa //
 }
@@ -81,8 +80,7 @@ function logout(){
 
 	// Cleans current cookies
 	$.removeCookie('username');
-	$.removeCookie('wharehouse');
-	$.removeCookie('status');
+	$.removeCookie('session');
 	
 	// fazer aqui qualquer coisa //
 	
@@ -163,6 +161,7 @@ function encomendasError(jqXHR, textStatus, errorThrown){
 
 // TODO: encomenda tem de ser um modelo valido
 function updateEncomenda(encomenda){
+	//precisa de receber as cookies do user
 	$.ajax({
 		url: 		SERVER_BASE_URL + SERVER_API_URL + API["docCompra"],
 		type: 		POST,
