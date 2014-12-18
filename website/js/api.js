@@ -60,9 +60,8 @@ function login(username, password){
 	$.ajax({
 		url: 			SERVER_BASE_URL + SERVER_API_URL + API.login,
 		type: 			"POST",
-		data: 			JSON.stringify(loginData),
-		xhrFields: 		{ withCredentials: true },
-		headers: 		{ 'Content-Type': 'application/json' },
+		data: 			loginData,
+		headers: 		{ 'Content-Type': 'application/x-www-form-urlencoded' },
 		beforeSend: 	function(){ $("#login").text('A ligar...');},
 		success: 		loginSuccess,
 		error: 			loginError
