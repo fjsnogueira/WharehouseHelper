@@ -3,13 +3,24 @@
 /******************************************************************************/
 
 var SERVER_BASE_URL 	= 	'http://sinf.ngrok.com/';	// Server base url
+var SERVER_API_URL		=	'api/'						// Server api url extension
+
+var API					=	{
+		login:			"login/",
+		artigos:		"artigos/",
+		docCompra:		"doccompra/",
+		fornecedor:		"fornecedor/",
+		armazem:		"armazem/",
+		search:			"search/"
+	}
+		
 
 /******************************************************************************/
 /***********************     		Imports     		***********************/
 /******************************************************************************/
 
-// Needs jquery to be imported in order to execute properly //
-// Needs jquery.cookie to be imported in order to execute properly //
+// Needs jquery to be imported in order to execute properly
+// Needs jquery.cookie to be imported in order to execute properly
 
 /******************************************************************************/
 /***************************     Login / Logout     ***************************/
@@ -37,7 +48,7 @@ function login(username, password){
 	loginData['password'] = password;
 
 	$.ajax({
-		url: 		SERVER_BASE_URL + 'login',
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API["login"],
 		type: 		POST,
 		data: 		loginData,
 		success: 	loginSuccess(data, textStatus, jqXHR),
@@ -51,6 +62,8 @@ function loginSuccess(data, testStatus, jqXHR){
 	$.cookie('username', data['username']);
 	$.cookie('wharehouse', data['wharehouse']);
 	$.cookie('status', 'logged');
+	
+	// fazer aqui qualquer coisa //
 }
 
 // Creates the needed cookies on a login that failed
@@ -59,6 +72,8 @@ function loginError(jqXHR, textStatus, errorThrown){
 	$.cookie('username', '');
 	$.cookie('wharehouse', '');
 	$.cookie('status', 'error');
+	
+	// fazer aqui qualquer coisa //
 }
 
 // Logs out a user removing all cookies associated with him
@@ -69,16 +84,169 @@ function logout(){
 	$.removeCookie('wharehouse');
 	$.removeCookie('status');
 	
+	// fazer aqui qualquer coisa //
+	
 }
-
-/******************************************************************************/
-/***********************     		Sign Up     		***********************/
-/******************************************************************************/
-
-
 
 /******************************************************************************/
 /***********************     		QueryTime     		***********************/
 /******************************************************************************/
 
+// -----     getArtigo     ----- //
 
+function getArtigo(artigoID){
+
+	$.ajax({
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API["artigos"],
+		type: 		GET,
+		data: 		artigoID,
+		success: 	artigoSuccess(data, textStatus, jqXHR),
+		error: 		artigoError(jqXHR, textStatus, errorThrown)
+	});
+}
+
+// retorna ok no caso do artigo ter sido encontrado
+function artigoSuccess(data, testStatus, jqXHR){
+	// fazer aqui qualquer coisa //
+}
+
+// retorna erro no caso do artigo nao ter sido encontrado
+function loginError(jqXHR, textStatus, errorThrown){
+	// fazer aqui qualquer coisa //
+}
+
+// ----- getArtigos ----- //
+
+function getArtigos(){
+	$.ajax({
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API["artigos"],
+		type: 		GET,
+		data: 		"",
+		success: 	artigosSuccess(data, textStatus, jqXHR),
+		error: 		artigosError(jqXHR, textStatus, errorThrown)
+	});
+}
+
+// retorna ok no caso dos artigos terem sido encontrados
+function artigosSuccess(data, testStatus, jqXHR){
+	// fazer aqui qualquer coisa //
+}
+
+// retorna erro no caso dos artigos nao terem sido encontrados
+function artigosError(jqXHR, textStatus, errorThrown){
+	// fazer aqui qualquer coisa //
+}
+
+// ----- getEncomendas ----- //
+
+function getEncomendas(){
+	$.ajax({
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API["docCompra"],
+		type: 		GET,
+		data: 		"",
+		success: 	encomendasSuccess(data, textStatus, jqXHR),
+		error: 		encomendasError(jqXHR, textStatus, errorThrown)
+	});
+}
+
+// retorna ok no caso das encomendas terem sido encontradas
+function encomendasSuccess(data, testStatus, jqXHR){
+	// fazer aqui qualquer coisa //
+}
+
+// retorna erro no caso das encomendas nao terem sido encontradas
+function encomendasError(jqXHR, textStatus, errorThrown){
+	// fazer aqui qualquer coisa //
+}
+
+// ----- updateEncomenda ----- //
+
+// TODO: encomenda tem de ser um modelo valido
+function updateEncomenda(encomenda){
+	$.ajax({
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API["docCompra"],
+		type: 		POST,
+		data: 		encomenda,
+		success: 	updateEncomendaSuccess(data, textStatus, jqXHR),
+		error: 		updateEncomendaError(jqXHR, textStatus, errorThrown)
+	});
+}
+
+// retorna ok no caso da encomenda ter sido actualizada com sucesso
+function updateEncomendaSuccess(data, testStatus, jqXHR){
+	// fazer aqui qualquer coisa //
+}
+
+// retorna erro no caso da encomenda nao ter sido actualizada com sucesso
+function updateEncomendaError(jqXHR, textStatus, errorThrown){
+	// fazer aqui qualquer coisa //
+}
+
+// -----     getFornecedor     ----- //
+
+function getFornecedor(fornecedorID){
+
+	$.ajax({
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API["fornecedor"],
+		type: 		GET,
+		data: 		fornecedorID,
+		success: 	fornecedorSuccess(data, textStatus, jqXHR),
+		error: 		fornecedorError(jqXHR, textStatus, errorThrown)
+	});
+}
+
+// retorna ok no caso do fornecedor ter sido encontrado
+function fornecedorSuccess(data, testStatus, jqXHR){
+	// fazer aqui qualquer coisa //
+}
+
+// retorna erro no caso do fornecedor nao ter sido encontrado
+function fornecedorError(jqXHR, textStatus, errorThrown){
+	// fazer aqui qualquer coisa //
+}
+
+// -----     getArmazem     ----- //
+
+function getArmazem(armazemID){
+
+	$.ajax({
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API["armazem"],
+		type: 		GET,
+		data: 		armazemID,
+		success: 	armazemSuccess(data, textStatus, jqXHR),
+		error: 		armazemError(jqXHR, textStatus, errorThrown)
+	});
+}
+
+// retorna ok no caso do armazem ter sido encontrado
+function armazemSuccess(data, testStatus, jqXHR){
+	// fazer aqui qualquer coisa //
+}
+
+// retorna erro no caso do armazem nao ter sido encontrado
+function armazemError(jqXHR, textStatus, errorThrown){
+	// fazer aqui qualquer coisa //
+}
+
+// -----     searchDB     ----- //
+
+function searchDB(attribute){
+
+	$.ajax({
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API["search"],
+		type: 		GET,
+		data: 		attribute,
+		success: 	armazemSuccess(data, textStatus, jqXHR),
+		error: 		armazemError(jqXHR, textStatus, errorThrown)
+	});
+}
+
+// retorna ok no caso algo tenha sido encontrado
+function armazemSuccess(data, testStatus, jqXHR){
+	// fazer aqui qualquer coisa //
+}
+
+// retorna erro no caso de nada ter sido encontrado
+function armazemError(jqXHR, textStatus, errorThrown){
+	// fazer aqui qualquer coisa //
+}
