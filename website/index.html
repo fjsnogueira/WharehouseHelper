@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html>
-    <header>
+    <head>
         <title> Registo de Encomendas </title>
         
         <meta charset="utf-8">
@@ -9,7 +9,12 @@
         <link rel="stylesheet" href="css/loginpage.css" />
         <link rel="stylesheet" href="css/fonts.css" />
         <link rel="stylesheet" href="css/bodybg.css" />
-    </header>
+		
+		<script src="js/lib/jquery-2.1.1.min.js"></script>
+		<script src="js/lib/jquery.cookie.js"></script>
+		<script src="js/api.js"></script>
+		<script src="js/index.js"></script>
+    </head>
 
     <body>
         
@@ -35,10 +40,10 @@
             
             <!-- formulário de login --> 
             <div class="main_card_loginform"> 
-                <form class="main_card_form" > 
-                    <input type="text" placeholder="identificador de armaz&eacute;m">
-                    <input type="password" placeholder="palavra passe">
-                    <button type="submit" class="login_bt"> entrar </button>
+                <form class="main_card_form" id="login_form" > 
+                    <input type="text" placeholder="identificador de armaz&eacute;m" id="username">
+                    <input type="password" placeholder="palavra passe" id="password">
+                    <button type="submit" class="login_bt" id="login"> entrar</button>
                 </form>
             </div>
         </div>

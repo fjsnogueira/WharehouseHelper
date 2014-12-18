@@ -3,7 +3,7 @@
 /******************************************************************************/
 
 var SERVER_BASE_URL 	= 	'http://sinf.ngrok.com/';	// Server base url
-var SERVER_API_URL		=	'api/'						// Server api url extension
+var SERVER_API_URL		=	'api/';						// Server api url extension
 
 var API					=	{
 		login:			"login/",
@@ -12,7 +12,7 @@ var API					=	{
 		fornecedor:		"fornecedor/",
 		armazem:		"armazem/",
 		search:			"search/"
-	}
+	};
 		
 
 /******************************************************************************/
@@ -40,21 +40,32 @@ var API					=	{
  */
 function login(username, password){
 
+	console.log("inside login");
+
 	// Setup status as waiting
 	$.cookie('status', 'waiting');
 
-	var loginData;
-	loginData['username'] = username;
-	loginData['password'] = password;
+	console.log("username: " + username);
+	console.log("password: " + password);
+	
+	var loginData = {
+		username:		username,
+		password:		password
+	};
+	
+	console.log("ready to make a request");
 	
 	//deve esperar receber json
 	$.ajax({
-		url: 		SERVER_BASE_URL + SERVER_API_URL + API["login"],
+		url: 		SERVER_API_URL + API.login,
 		type: 		POST,
 		data: 		loginData,
+		beforeSend: function(){ $("#login").val('Connecting...');},
 		success: 	loginSuccess(data, textStatus, jqXHR),
 		error: 		loginError(jqXHR, textStatus, errorThrown)
 	});
+	
+	alert("acabei a minha request!");
 }
 
 // Creates all the needed cookies on a success login
@@ -65,6 +76,7 @@ function loginSuccess(data, testStatus, jqXHR){
 	$.cookie('status', 'success');
 	
 	// fazer aqui qualquer coisa //
+	console.log("success!");alert("asjdhas");
 }
 
 // Creates the needed cookies on a login that failed
@@ -74,6 +86,7 @@ function loginError(jqXHR, textStatus, errorThrown){
 	$.cookie('status', 'error');
 	
 	// fazer aqui qualquer coisa //
+	console.log("error!");alert("asjdhas");
 }
 
 // Logs out a user removing all cookies associated with him
