@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html>
-    <header>
+    <head>
         <title> Entradas em Armazém </title>
         
         <meta charset="utf-8">
@@ -16,7 +16,12 @@
         <link rel="stylesheet" href="css/fonts.css" />
         <link rel="stylesheet" href="css/bodybg.css" />
         <link rel="stylesheet" href="css/style.css" />
-    </header>
+		
+		<script src="js/lib/jquery-2.1.1.min.js"></script>
+		<script src="js/lib/jquery.cookie.js"></script>
+		<script src="js/api.js"></script>
+		<script src="js/home.js"></script>
+    </head>
 
     <body onload="meteQB()">
         
@@ -33,8 +38,8 @@
                 <form class="search_form" > 
                     <!-- nome do funcionario-->
                     <div class="form_input">
-                        <input type="text" placeholder="Introduza os termos a pesquisar" name="username">
-                        <button id="search_bt" class="form_label" type="submit"> pesquisar </button>
+                        <input type="text" placeholder="Introduza os termos a pesquisar" name="username" id="searchText">
+                        <button id="search_bt" class="form_label" onclick="doSearch();return false;"> pesquisar </button>
                     </div>
                 </form>
             </div>

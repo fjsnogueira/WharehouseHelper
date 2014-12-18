@@ -70,22 +70,21 @@ function login(username, password){
 
 // Creates all the needed cookies on a success login
 function loginSuccess(data, testStatus, jqXHR){
+	// Setup cookie information //
+	$.cookie('username', data['username']);
+	$.cookie('session', data['session']);
+	$.cookie('status', 'success');
+	
+	window.location.href = "home.html";
+}
 
-	if( data['Status'] == false ){
+function loginError(){
 		// Creates the needed cookies on a login that failed
 		// Setup cookie information //
 		$.cookie('username', '');
 		$.cookie('status', 'error');
 		
 		$("#login").text('Erro! Por favor tente mais tarde.');
-	}else {
-		// Setup cookie information //
-		$.cookie('username', data['username']);
-		$.cookie('session', data['session']);
-		$.cookie('status', 'success');
-		
-		window.location.href = "home.html";
-	}
 }
 
 // Logs out a user removing all cookies associated with him
@@ -123,7 +122,7 @@ function artigoSuccess(data, testStatus, jqXHR){
 }
 
 // retorna erro no caso do artigo nao ter sido encontrado
-function loginError(jqXHR, textStatus, errorThrown){
+function artigoError(jqXHR, textStatus, errorThrown){
 	// fazer aqui qualquer coisa //
 }
 
