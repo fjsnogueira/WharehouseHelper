@@ -63,31 +63,34 @@ function login(username, password){
 		data: 			loginData,
 		headers: 		{ 'Content-Type': 'application/x-www-form-urlencoded' },
 		beforeSend: 	function(){ $("#login").text('A ligar...');},
-		success: 		loginSuccess,
-		statusCode:		{ 500: loginError }
-		// error: 			loginError
+		success: 		loginSuccess
 	});
 }
 
 // Creates all the needed cookies on a success login
 function loginSuccess(data, testStatus, jqXHR){
-	// Setup cookie information //
-	$.cookie('username', data['username']);
-	$.cookie('session', data['session']);
-	$.cookie('status', 'success');
-	
-	console.log("success!");
-	window.location.href = "home.html";
+
+	if( data['Status'] == false )
+		loginError();
+	else {
+		// Setup cookie information //
+		$.cookie('username', data['username']);
+		$.cookie('session', data['session']);
+		$.cookie('status', 'success');
+		
+		console.log("success!");
+		window.location.href = "home.html";
+	}
 }
 
 // Creates the needed cookies on a login that failed
-function loginError(jqXHR, textStatus, errorThrown){
+function loginError(){
 	// Setup cookie information //
 	$.cookie('username', '');
 	$.cookie('status', 'error');
 	
 	console.log("error logging in!");
-	$("#login").text('Erro! Por favor verifique os dados e tente novamente.');
+	$("#login").text('Erro! Por favor tente mais tarde.');
 }
 
 // Logs out a user removing all cookies associated with him
