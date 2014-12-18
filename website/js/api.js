@@ -63,27 +63,28 @@ function login(username, password){
 		data: 			loginData,
 		headers: 		{ 'Content-Type': 'application/x-www-form-urlencoded' },
 		beforeSend: 	function(){ $("#login").text('A ligar...');},
-		success: 		loginSuccess,
-		error: 			loginError
+		success: 		loginSuccess
 	});
 }
 
 // Creates all the needed cookies on a success login
 function loginSuccess(data, testStatus, jqXHR){
 
-	if( jqXHR.status == 500 )
-		alert("WOLOLO!");
-	// Setup cookie information //
-	$.cookie('username', data['username']);
-	$.cookie('session', data['session']);
-	$.cookie('status', 'success');
-	
-	console.log("success!");
-	window.location.href = "home.html";
+	if( data['Status'] == false )
+		loginError();
+	else {
+		// Setup cookie information //
+		$.cookie('username', data['username']);
+		$.cookie('session', data['session']);
+		$.cookie('status', 'success');
+		
+		console.log("success!");
+		window.location.href = "home.html";
+	}
 }
 
 // Creates the needed cookies on a login that failed
-function loginError(jqXHR, textStatus, errorThrown){
+function loginError(){
 	// Setup cookie information //
 	$.cookie('username', '');
 	$.cookie('status', 'error');
