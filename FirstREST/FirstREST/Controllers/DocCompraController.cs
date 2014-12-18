@@ -20,7 +20,6 @@ namespace FirstREST.Controllers
 
         public HttpResponseMessage Post(EncomendaRecepcionada encomenda)
         {
-            this.Request.Content.ToString();
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             Lib_Primavera.Model.DocCompra docCompra = Lib_Primavera.Comercial.getEncomenda(encomenda.idEncomenda);
             Lib_Primavera.Comercial.updateEncomenda(docCompra, encomenda);

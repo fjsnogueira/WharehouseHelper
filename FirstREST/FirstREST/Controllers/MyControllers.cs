@@ -14,11 +14,13 @@ namespace FirstREST.Controllers
     {
         public HttpResponseMessage Post(Lib_Primavera.Model.Login user)
         {
-            Lib_Primavera.Model.RespostaErro erro = Lib_Primavera.Comercial.isValid(user);
+            Lib_Primavera.Model.RespostaErro erro = Lib_Primavera.Comercial.Login(user);
             if (erro.Status == true)
             {
-                var response = Request.CreateResponse(HttpStatusCode.Accepted, erro);
-                return response;
+                Dictionary<string, string> response = new Dictionary<string, string>();
+                response.Add("username", user.username);
+                response.Add("session", erro.Descricao);
+                return Request.CreateResponse(HttpStatusCode.Accepted, response, Configuration.Formatters.JsonFormatter);
             }
             else
             {

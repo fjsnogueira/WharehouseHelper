@@ -18,13 +18,13 @@ namespace FirstREST.Lib_Primavera.Model
             get;
             set;
         }
+    }
 
-        public string armazem
-        {
-            get;
-            set;
-        }
-
+    public class SessionModel
+    {
+        public string UserName { get; set; }
+        public string Armazem { get; set; }
+        public string Session_Val { get; set; }
     }
 
     public class Fornecedor

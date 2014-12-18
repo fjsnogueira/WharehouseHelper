@@ -18,6 +18,7 @@ namespace FirstREST.Lib_Primavera
         private static String NomeEmpresa = "SINF";
         private static String UtilizadorEmpresa = "";
         private static String PasswordEmpresa = "";
+        private static Dictionary<string, Lib_Primavera.Model.SessionModel> Session = new Dictionary<string,Model.SessionModel>();
 
         # region Cliente
 
@@ -330,7 +331,7 @@ namespace FirstREST.Lib_Primavera
 
         #endregion Fornecedores
 
-        #region armazem
+        #region Armazem
 
         public static Lib_Primavera.Model.Armazem GetArmazem(string codArmazem)
         {
@@ -759,7 +760,7 @@ namespace FirstREST.Lib_Primavera
 
         #region User
 
-        public static Lib_Primavera.Model.RespostaErro isValid(Lib_Primavera.Model.Login user)
+        public static Lib_Primavera.Model.RespostaErro Login(Lib_Primavera.Model.Login user)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
             StdBECamposChave chave = new StdBECamposChave();
@@ -772,9 +773,11 @@ namespace FirstREST.Lib_Primavera
 
                     if (PriEngine.Engine.TabelasUtilizador.Existe("TDU_User", chave) == true)
                     {
+                        Lib_Primavera.Model.SessionModel loggedUser = getUser(user.username);
+                        Session[loggedUser.Session_Val] = loggedUser; 
                         erro.Status = true;
                         erro.Erro = 0;
-                        erro.Descricao = "Sucesso";
+                        erro.Descricao = loggedUser.Session_Val;
                         return erro;
                     }
 
@@ -800,10 +803,39 @@ namespace FirstREST.Lib_Primavera
             }
         }
 
-        public static bool createUser(Lib_Primavera.Model.Login user)
+        private static Lib_Primavera.Model.SessionModel getUser(string username)
         {
-            return false;
+            Model.SessionModel session = new Model.SessionModel();
+            session.UserName = "";
+            session.Armazem = "";
+            session.Session_Val = "";
+            string query = "SELECT CDU_Username, CDU_Armazem FROM PRISINF.dbo.TDU_User WHERE PRISINF.dbo.TDU_User.CDU_Username like '" + username + "'";
+            ErpBS objMotor = new ErpBS();
+            StdBELista objList;
+
+            if (PriEngine.InitializeCompany(NomeEmpresa, UtilizadorEmpresa, PasswordEmpresa) == true)
+            {
+                objList = PriEngine.Engine.Consulta(query);
+                if (!objList.NoFim())
+                {
+                    session.UserName = objList.Valor("CDU_Username");
+                    session.Armazem = objList.Valor("CDU_Armazem");
+
+                    //hash of username concatenated with julianData of current time
+                    session.Session_Val = Base64Encode(session.UserName + (DateTime.Now.ToOADate() + 2415018.5).ToString());
+                    return session;
+                }
+
+            }
+            return session;
         }
+        
+        private static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+       
 
         #endregion User
 
