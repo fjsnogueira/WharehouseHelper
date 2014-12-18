@@ -40,6 +40,18 @@ namespace FirstREST.Lib_Primavera.Model
             get;
             set;
         }
+
+        public string morada
+        {
+            get;
+            set;
+        }
+
+        public string numContrib
+        {
+            get;
+            set;
+        }
     }
 
     public class Armazem

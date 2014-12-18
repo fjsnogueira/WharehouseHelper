@@ -323,6 +323,8 @@ namespace FirstREST.Lib_Primavera
                 {
                     fornecedor.id = objList.Valor("fornecedor");
                     fornecedor.nome = objList.Valor("nome");
+                    fornecedor.morada = objList.Valor("Morada");
+                    fornecedor.numContrib = objList.Valor("NumContrib");
                 }
             }
 
