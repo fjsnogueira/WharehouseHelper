@@ -64,13 +64,15 @@ function login(username, password){
 		headers: 		{ 'Content-Type': 'application/x-www-form-urlencoded' },
 		beforeSend: 	function(){ $("#login").text('A ligar...');},
 		success: 		loginSuccess,
-		statusCode:		{ 500: loginError }
-		// error: 			loginError
+		error: 			loginError
 	});
 }
 
 // Creates all the needed cookies on a success login
 function loginSuccess(data, testStatus, jqXHR){
+
+	if( jqXHR.status == 500 )
+		alert("WOLOLO!");
 	// Setup cookie information //
 	$.cookie('username', data['username']);
 	$.cookie('session', data['session']);
@@ -87,7 +89,7 @@ function loginError(jqXHR, textStatus, errorThrown){
 	$.cookie('status', 'error');
 	
 	console.log("error logging in!");
-	$("#login").text('Erro! Por favor verifique os dados e tente novamente.');
+	$("#login").text('Erro! Por favor tente mais tarde.');
 }
 
 // Logs out a user removing all cookies associated with him
