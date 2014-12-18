@@ -8,7 +8,7 @@ Repositório para o projeto de SINF em 2014.
 * João Faria
 
 # O projeto #
-A pasta com o projeto está no ambiente de trabalho "FirstREST" se não me engano. Sempre forem abrir o projeto corram o ficheiro "pila.bat" que o Grandão fez. Basicamente apaga um ficheiro oculto que o VS cria e que bloqueia depois o loading da solução **no entanto para correrem a solução tem de abrir o VS como ADMINISTRADOR** para ele aceitar o binding ao ngrok!!
+A pasta com o projeto está no ambiente de trabalho "FirstREST" se não me engano. Sempre forem abrir o projeto corram o ficheiro "script.bat" que o Grandão fez. Basicamente apaga um ficheiro oculto que o VS cria e que bloqueia depois o loading da solução **no entanto para correrem a solução tem de abrir o VS como ADMINISTRADOR** para ele aceitar o binding ao ngrok!!
 
 # Máquina Virtual #
 
