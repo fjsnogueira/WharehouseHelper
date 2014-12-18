@@ -39,14 +39,14 @@ namespace FirstREST.Controllers
                 }
                 else
                 {
-                    Console.WriteLine(erro.Descricao);
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
+                    erro.Status = false;
+                    return Request.CreateResponse(HttpStatusCode.Accepted, erro);
                 }
             }
             else
             {
-                Console.WriteLine(erro.Descricao);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
+                erro.Status=false;
+                return Request.CreateResponse(HttpStatusCode.Accepted, erro);
             }
 
         }

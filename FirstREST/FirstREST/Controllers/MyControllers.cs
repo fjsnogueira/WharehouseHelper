@@ -18,13 +18,14 @@ namespace FirstREST.Controllers
             if (erro.Status == true)
             {
                 Dictionary<string, string> response = new Dictionary<string, string>();
+                response.Add("Status","true");
                 response.Add("username", user.username);
                 response.Add("session", erro.Descricao);
                 return Request.CreateResponse(HttpStatusCode.Accepted, response, Configuration.Formatters.JsonFormatter);
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.Unauthorized, erro);
+                return Request.CreateResponse(HttpStatusCode.Accepted, erro);
             }
         }
     }
@@ -33,10 +34,11 @@ namespace FirstREST.Controllers
     {
         public HttpResponseMessage Post(Lib_Primavera.Model.Login user)
         {
+            Lib_Primavera.Model.RespostaErro erro = new RespostaErro();
             if (Request.Headers.Contains("session"))
             {
                 string token = Request.Headers.GetValues("session").First();
-                Lib_Primavera.Model.RespostaErro erro = Lib_Primavera.Comercial.Logout(token, user);
+                erro = Lib_Primavera.Comercial.Logout(token, user);
                 if (erro.Status == true)
                 {
                     Dictionary<string, string> response = new Dictionary<string, string>();
@@ -46,12 +48,14 @@ namespace FirstREST.Controllers
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, erro);
+                    return Request.CreateResponse(HttpStatusCode.Accepted, erro);
                 }
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "No session token found");
+                erro.Status = false;
+                erro.Descricao = "No session token found";
+                return Request.CreateResponse(HttpStatusCode.Accepted, erro);
             }
         }
     }
