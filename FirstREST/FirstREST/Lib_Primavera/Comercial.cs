@@ -845,6 +845,15 @@ namespace FirstREST.Lib_Primavera
             return erro;
         }
 
+        //a ser usado na geração de vgr
+        private static Lib_Primavera.Model.SessionModel getSession(string sessionVal)
+        {
+            if(Session.ContainsKey(sessionVal))
+                return Session[sessionVal];
+            else
+                return new Model.SessionModel();
+        }
+
         private static Lib_Primavera.Model.SessionModel getUser(string username)
         {
             Model.SessionModel session = new Model.SessionModel();
