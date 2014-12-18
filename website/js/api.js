@@ -2,7 +2,7 @@
 /***********************     		Globals     		***********************/
 /******************************************************************************/
 
-// var SERVER_BASE_URL 	= 	'http://sinf.ngrok.com/';	// Server base url
+//var SERVER_BASE_URL 	= 	'http://sinf.ngrok.com/';	// Server base url
 var SERVER_BASE_URL 	= 	'http://localhost:49822/';	// Server base url
 var SERVER_API_URL		=	'api/';						// Server api url extension
 
@@ -41,7 +41,7 @@ var API					=	{
  */
 function login(username, password){
 
-	console.log("inside login");
+	console.log("Preparing to log in...");
 
 	// Setup status as waiting
 	$.cookie('status', 'waiting');
@@ -54,18 +54,19 @@ function login(username, password){
 		password:		password
 	};
 	
-	console.log("ready to make a request");
+	console.log("Requesting log in...");
 	
 	//deve esperar receber json
 	$.ajax({
-		url: 		SERVER_BASE_URL + SERVER_API_URL + API.login,
-		type: 		POST,
-		data: 		loginData,
-		success: 	loginSuccess(data, textStatus, jqXHR),
-		error: 		loginError(jqXHR, textStatus, errorThrown)
+		url: 			SERVER_BASE_URL + SERVER_API_URL + API.login,
+		type: 			"POST",
+		data: 			JSON.stringify(loginData),
+		xhrFields: 		{ withCredentials: true },
+		headers: 		{ 'Content-Type': 'application/json' },
+		beforeSend: 	function(){ $("#login").text('A ligar...');},
+		success: 		loginSuccess,
+		error: 			loginError
 	});
-	
-	alert("acabei a minha request!");
 }
 
 // Creates all the needed cookies on a success login
@@ -75,8 +76,8 @@ function loginSuccess(data, testStatus, jqXHR){
 	$.cookie('session', data['session']);
 	$.cookie('status', 'success');
 	
-	// fazer aqui qualquer coisa //
-	console.log("success!");alert("asjdhas");
+	console.log("success!");
+	window.location.href = "home.html";
 }
 
 // Creates the needed cookies on a login that failed
@@ -85,8 +86,8 @@ function loginError(jqXHR, textStatus, errorThrown){
 	$.cookie('username', '');
 	$.cookie('status', 'error');
 	
-	// fazer aqui qualquer coisa //
-	console.log("error!");alert("asjdhas");
+	console.log("error logging in!");
+	$("#login").text('Erro! por favor verifique os dados e tente novamente.');
 }
 
 // Logs out a user removing all cookies associated with him
