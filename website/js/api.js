@@ -2,7 +2,8 @@
 /***********************     		Globals     		***********************/
 /******************************************************************************/
 
-var SERVER_BASE_URL 	= 	'http://sinf.ngrok.com/';	// Server base url
+// var SERVER_BASE_URL 	= 	'http://sinf.ngrok.com/';	// Server base url
+var SERVER_BASE_URL 	= 	'http://localhost:49822/';	// Server base url
 var SERVER_API_URL		=	'api/';						// Server api url extension
 
 var API					=	{
@@ -57,10 +58,9 @@ function login(username, password){
 	
 	//deve esperar receber json
 	$.ajax({
-		url: 		SERVER_API_URL + API.login,
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API.login,
 		type: 		POST,
 		data: 		loginData,
-		beforeSend: function(){ $("#login").val('Connecting...');},
 		success: 	loginSuccess(data, textStatus, jqXHR),
 		error: 		loginError(jqXHR, textStatus, errorThrown)
 	});
