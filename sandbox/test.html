@@ -11,11 +11,15 @@ $(document).ready(function(){
 
 	var obj = new encomenda("ECF-1");
 	obj.addArtigo("CYMBAL0001",1);
-		
+	document.cookie="status=waiting";
+
 	$.ajax({
         url: url,
 		type: "POST",
         data: JSON.stringify(obj),
+		xhrFields: {
+			withCredentials: true
+		},
         headers: {
 			'Content-Type': 'application/json'
 		},success: function(data, textStatus, jqXHR){

@@ -814,6 +814,35 @@ namespace FirstREST.Lib_Primavera
             }
         }
 
+        public static Lib_Primavera.Model.RespostaErro Logout(string sessionVal, Lib_Primavera.Model.Login user)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+
+            if (Session.ContainsKey(sessionVal))
+            {
+                if (Session[sessionVal].UserName == user.username)
+                {
+                    Session.Remove(sessionVal);
+                    erro.Status = true;
+                    erro.Erro = 0;
+                    erro.Descricao = "succesfully logged out user";
+                }
+                else
+                {
+                    erro.Status = false;
+                    erro.Erro = 1;
+                    erro.Descricao = "session value and username do not match";
+                }
+            }
+            else
+            {
+                erro.Status = false;
+                erro.Erro = 1;
+                erro.Descricao = "session value not found in storage";
+            }
+            return erro;
+        }
+
         private static Lib_Primavera.Model.SessionModel getUser(string username)
         {
             Model.SessionModel session = new Model.SessionModel();
@@ -846,7 +875,6 @@ namespace FirstREST.Lib_Primavera
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
             return System.Convert.ToBase64String(plainTextBytes);
         }
-
 
         #endregion User
 

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Net.Http.Headers;
 using FirstREST.Lib_Primavera.Model;
 using System.Net.Http.Formatting;
 
@@ -20,6 +21,7 @@ namespace FirstREST.Controllers
 
         public HttpResponseMessage Post(EncomendaRecepcionada encomenda)
         {
+            HttpRequestHeaders aux = Request.Headers;
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             Lib_Primavera.Model.DocCompra docCompra = Lib_Primavera.Comercial.getEncomenda(encomenda.idEncomenda);
             if (docCompra.id != "")
