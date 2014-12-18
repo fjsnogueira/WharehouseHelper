@@ -62,6 +62,7 @@ function loginSuccess(data, testStatus, jqXHR){
 	// Setup cookie information //
 	$.cookie('username', data['username']);
 	$.cookie('session', data['session']);
+	$.cookie('status', 'success');
 	
 	// fazer aqui qualquer coisa //
 }
@@ -70,7 +71,7 @@ function loginSuccess(data, testStatus, jqXHR){
 function loginError(jqXHR, textStatus, errorThrown){
 	// Setup cookie information //
 	$.cookie('username', '');
-	$.cookie('session', 'error');
+	$.cookie('status', 'error');
 	
 	// fazer aqui qualquer coisa //
 }
@@ -81,6 +82,7 @@ function logout(){
 	// Cleans current cookies
 	$.removeCookie('username');
 	$.removeCookie('session');
+	$.removeCookie('status');
 	
 	// fazer aqui qualquer coisa //
 	
