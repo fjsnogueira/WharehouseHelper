@@ -64,7 +64,8 @@ function login(username, password){
 		headers: 		{ 'Content-Type': 'application/x-www-form-urlencoded' },
 		beforeSend: 	function(){ $("#login").text('A ligar...');},
 		success: 		loginSuccess,
-		error: 			loginError
+		statusCode:		{ 500: loginError }
+		// error: 			loginError
 	});
 }
 
@@ -86,7 +87,7 @@ function loginError(jqXHR, textStatus, errorThrown){
 	$.cookie('status', 'error');
 	
 	console.log("error logging in!");
-	$("#login").text('Erro! por favor verifique os dados e tente novamente.');
+	$("#login").text('Erro! Por favor verifique os dados e tente novamente.');
 }
 
 // Logs out a user removing all cookies associated with him
