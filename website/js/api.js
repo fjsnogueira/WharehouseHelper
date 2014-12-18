@@ -70,12 +70,16 @@ function login(username, password){
 
 // Creates all the needed cookies on a success login
 function loginSuccess(data, testStatus, jqXHR){
-	// Setup cookie information //
-	$.cookie('username', data['username']);
-	$.cookie('session', data['session']);
-	$.cookie('status', 'success');
-	
-	window.location.href = "home.html";
+
+	if( data['Status'] != false ) {
+		// Setup cookie information //
+		$.cookie('username', data['username']);
+		$.cookie('session', data['session']);
+		$.cookie('status', 'success');
+		
+		window.location.href = "home.html";
+	} else
+		loginError();
 }
 
 function loginError(){
