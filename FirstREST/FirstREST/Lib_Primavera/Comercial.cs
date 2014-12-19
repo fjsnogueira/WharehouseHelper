@@ -311,7 +311,7 @@ namespace FirstREST.Lib_Primavera
 
         public static Lib_Primavera.Model.Fornecedor GetFornecedor(string codFornecedor)
         {
-            string query = "SELECT fornecedor, nome FROM dbo.Fornecedores WHERE dbo.Fornecedores.Fornecedor='" + codFornecedor + "'";
+            string query = "SELECT fornecedor, nome, morada, local, cp, NumContrib, pais  FROM dbo.Fornecedores WHERE dbo.Fornecedores.Fornecedor='" + codFornecedor + "'";
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
             Model.Fornecedor fornecedor = new Model.Fornecedor();
@@ -325,6 +325,9 @@ namespace FirstREST.Lib_Primavera
                     fornecedor.nome = objList.Valor("nome");
                     fornecedor.morada = objList.Valor("Morada");
                     fornecedor.numContrib = objList.Valor("NumContrib");
+                    fornecedor.codpostal = objList.Valor("cp");
+                    fornecedor.local = objList.Valor("local");
+                    fornecedor.pais = objList.Valor("pais");
                 }
             }
 
