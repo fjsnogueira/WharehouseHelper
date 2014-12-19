@@ -517,9 +517,9 @@ namespace FirstREST.Lib_Primavera
             return result;
         }
 
-        public static void updateEncomenda(Model.DocCompra docCompra, Model.EncomendaRecepcionada encomendaRecebida)
+        public static bool updateEncomenda(Model.DocCompra docCompra, Model.EncomendaRecepcionada encomendaRecebida)
         {
-
+            bool updated = false;
             bool found = false;
             foreach (Model.LinhaDocCompra linha in docCompra.LinhasDoc)
             {
@@ -528,16 +528,15 @@ namespace FirstREST.Lib_Primavera
                 {
                     if (artigoRecebido.idArtigo == linha.CodArtigo) // mesmo artigo
                     {
-                        linha.Status.QuantTrans += artigoRecebido.quantidade;
-                        if (linha.Status.QuantTrans == linha.Quantidade)
-                            linha.Status.EstadoTrans = "T";
+                        linha.Quantidade += artigoRecebido.quantidade;
                         found = true;
+                        updated = true;
                     }
                     if (found)
                         break;
                 }
             }
-            return;
+            return updated;
         }
 
         public static Model.RespostaErro VGR_New(Model.DocCompra dc)
@@ -558,17 +557,18 @@ namespace FirstREST.Lib_Primavera
                 {
                     // Atribui valores ao cabecalho do doc
                     //myGR.set_DataDoc(DateTime.Now);
-                    myGR.set_DataVenc(dc.DataVencimento);
-                    myGR.set_DataDoc(dc.DataEmissao);
+
                     myGR.set_Entidade(dc.Entidade);
                     myGR.set_NumDocExterno("1");
-                    myGR.set_CondPag(dc.CondPag);
                     myGR.set_Serie(dc.Serie);
                     myGR.set_Tipodoc("VGR");
                     myGR.set_TipoEntidade("F");
                     // Linhas do documento para a lista de linhas
                     lstlindv = dc.LinhasDoc;
                     PriEngine.Engine.Comercial.Compras.PreencheDadosRelacionados(myGR, rl);
+                    myGR.set_CondPag(dc.CondPag);
+                    myGR.set_DataVenc(dc.DataVencimento);
+                    myGR.set_DataDoc(dc.DataEmissao);
                     foreach (Model.LinhaDocCompra lin in lstlindv)
                     {
                         PriEngine.Engine.Comercial.Compras.AdicionaLinha(myGR, lin.CodArtigo, lin.Quantidade, lin.Armazem, "", lin.PrecoUnitario, lin.Desconto);
