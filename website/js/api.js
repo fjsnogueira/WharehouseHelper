@@ -249,20 +249,26 @@ function armazemError(jqXHR, textStatus, errorThrown){
 function searchDB(attribute){
 
 	$.ajax({
-		url: 		SERVER_BASE_URL + SERVER_API_URL + API["search"],
-		type: 		GET,
-		data: 		attribute,
-		success: 	armazemSuccess(data, textStatus, jqXHR),
-		error: 		armazemError(jqXHR, textStatus, errorThrown)
+		url: 			SERVER_BASE_URL + SERVER_API_URL + API.search,
+		type: 			"GET",
+		data: 			attribute,
+		beforeSend: 	function(){ 
+			// Create loader
+			$('#loader').html('<img src="img/loader.gif" id="imgLoader"><br/>&nbsp&nbsp&nbspLoading...');
+			$('#imgLoader').css('margin-top', ($(window).height()/2.0) - 32);
+			$('#loader').css('display', 'block');
+		},
+		success: 		searchSuccess,
+		error: 			searchError
 	});
 }
 
 // retorna ok no caso algo tenha sido encontrado
-function armazemSuccess(data, testStatus, jqXHR){
+function searchSuccess(data, testStatus, jqXHR){
 	// fazer aqui qualquer coisa //
 }
 
 // retorna erro no caso de nada ter sido encontrado
-function armazemError(jqXHR, textStatus, errorThrown){
+function searchError(jqXHR, textStatus, errorThrown){
 	// fazer aqui qualquer coisa //
 }

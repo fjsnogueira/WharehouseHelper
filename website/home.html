@@ -25,6 +25,8 @@
 
     <body onload="meteQB()">
         
+		<div id="loader" style="display: none"></div>
+		
         <div class="main_search_block">
             
             <!-- titulos -->
@@ -137,8 +139,8 @@
             function meteQB(){
                 render('code128','ECF-0001','canvas1_1');
                 render('ean13','8424818263563','canvas2_1');
-                render('code128','FND-0001','canvas3_1');
-                render('code128','ARM-0001','canvas4_1');
+				render('code128','ARM-0001','canvas3_1');
+                render('code128','FND-0001','canvas4_1');
             };
         </script>
         
