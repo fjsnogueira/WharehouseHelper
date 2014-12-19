@@ -56,6 +56,8 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+        public string CondPag { get; set; }
+
         public DateTime DataVencimento { get; set; }
 
         public List<Model.LinhaDocCompra> LinhasDoc

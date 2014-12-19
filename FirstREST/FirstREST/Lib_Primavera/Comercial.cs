@@ -311,7 +311,7 @@ namespace FirstREST.Lib_Primavera
 
         public static Lib_Primavera.Model.Fornecedor GetFornecedor(string codFornecedor)
         {
-            string query = "SELECT fornecedor, nome FROM dbo.Fornecedores WHERE dbo.Fornecedores.Fornecedor='" + codFornecedor + "'";
+            string query = "SELECT fornecedor, nome, morada, local, cp, NumContrib, pais  FROM dbo.Fornecedores WHERE dbo.Fornecedores.Fornecedor='" + codFornecedor + "'";
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
             Model.Fornecedor fornecedor = new Model.Fornecedor();
@@ -325,6 +325,9 @@ namespace FirstREST.Lib_Primavera
                     fornecedor.nome = objList.Valor("nome");
                     fornecedor.morada = objList.Valor("Morada");
                     fornecedor.numContrib = objList.Valor("NumContrib");
+                    fornecedor.codpostal = objList.Valor("cp");
+                    fornecedor.local = objList.Valor("local");
+                    fornecedor.pais = objList.Valor("pais");
                 }
             }
 
@@ -366,7 +369,7 @@ namespace FirstREST.Lib_Primavera
 
         public static List<Model.DocCompra> VGR_List()
         {
-            string query = "SELECT PRISINF.dbo.CabecCompras.TipoDoc, PRISINF.dbo.CabecCompras.CabecCompras.id,PRISINF.dbo.DataVencimento, PRISINF.dbo.CabecCompras.NumDoc, PRISINF.dbo.CabecCompras.Entidade, PRISINF.dbo.CabecCompras.DataDoc,PRISINF.dbo.CabecCompras.NumDocExterno, PRISINF.dbo.CabecCompras.TotalMerc,PRISINF.dbo.CabecCompras.Serie, PRISINF.dbo.LinhasCompras.NumLinha, PRISINF.dbo.LinhasCompras.Artigo, PRISINF.dbo.LinhasCompras.Quantidade, PRISINF.dbo.LinhasCompras.Desconto1, PRISINF.dbo.LinhasCompras.PrecUnit, PRISINF.dbo.LinhasCompras.Armazem, PRISINF.dbo.LinhasComprasStatus.EstadoTrans, PRISINF.dbo.LinhasComprasStatus.QuantTrans FROM PRISINF.dbo.CabecCompras INNER JOIN PRISINF.dbo.LinhasCompras ON PRISINF.dbo.CabecCompras.Id = PRISINF.dbo.LinhasCompras.IdCabecCompras INNER JOIN PRISINF.dbo.LinhasComprasStatus ON PRISINF.dbo.LinhasCompras.Id = PRISINF.dbo.LinhasComprasStatus.IdLinhasCompras WHERE (PRISINF.dbo.CabecCompras.TipoDoc = N'ECF' AND PRISINF.dbo.LinhasComprasStatus.EstadoTrans = 'P') ORDER BY PRISINF.dbo.CabecCompras.NumDoc";
+            string query = "SELECT PRISINF.dbo.CabecCompras.TipoDoc, PRISINF.dbo.CabecCompras.id,  PRISINF.dbo.CabecCompras.CondPag, PRISINF.dbo.CabecCompras.DataVencimento, PRISINF.dbo.CabecCompras.NumDoc, PRISINF.dbo.CabecCompras.Entidade, PRISINF.dbo.CabecCompras.DataDoc,PRISINF.dbo.CabecCompras.NumDocExterno, PRISINF.dbo.CabecCompras.TotalMerc,PRISINF.dbo.CabecCompras.Serie, PRISINF.dbo.LinhasCompras.NumLinha, PRISINF.dbo.LinhasCompras.Artigo, PRISINF.dbo.LinhasCompras.Quantidade, PRISINF.dbo.LinhasCompras.Desconto1, PRISINF.dbo.LinhasCompras.PrecUnit, PRISINF.dbo.LinhasCompras.Armazem, PRISINF.dbo.LinhasComprasStatus.EstadoTrans, PRISINF.dbo.LinhasComprasStatus.QuantTrans FROM PRISINF.dbo.CabecCompras INNER JOIN PRISINF.dbo.LinhasCompras ON PRISINF.dbo.CabecCompras.Id = PRISINF.dbo.LinhasCompras.IdCabecCompras INNER JOIN PRISINF.dbo.LinhasComprasStatus ON PRISINF.dbo.LinhasCompras.Id = PRISINF.dbo.LinhasComprasStatus.IdLinhasCompras WHERE (PRISINF.dbo.CabecCompras.TipoDoc = N'ECF' AND PRISINF.dbo.LinhasComprasStatus.EstadoTrans = 'P') ORDER BY PRISINF.dbo.CabecCompras.NumDoc";
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
 
@@ -391,6 +394,7 @@ namespace FirstREST.Lib_Primavera
                     docCompra.DataVencimento = objList.Valor("DataVencimento");
                     docCompra.NumDocExterno = objList.Valor("NumDocExterno");
                     docCompra.TotalMerc = objList.Valor("TotalMerc");
+                    docCompra.CondPag = objList.Valor("CondPag");
                     docCompra.Serie = objList.Valor("Serie");
 
                     listLinhasCompras = new List<Model.LinhaDocCompra>();
@@ -450,7 +454,7 @@ namespace FirstREST.Lib_Primavera
         public static Model.DocCompra getEncomenda(string codBarValue)
         {
             string[] substrings = Regex.Split(codBarValue, "ECF-");
-            string query = "SELECT PRISINF.dbo.CabecCompras.TipoDoc, PRISINF.dbo.CabecCompras.DataVencimento, PRISINF.dbo.CabecCompras.id, PRISINF.dbo.CabecCompras.NumDoc, PRISINF.dbo.CabecCompras.Entidade, PRISINF.dbo.CabecCompras.DataDoc,PRISINF.dbo.CabecCompras.NumDocExterno, PRISINF.dbo.CabecCompras.TotalMerc,PRISINF.dbo.CabecCompras.Serie, PRISINF.dbo.LinhasCompras.NumLinha, PRISINF.dbo.LinhasCompras.Artigo, PRISINF.dbo.LinhasCompras.Quantidade, PRISINF.dbo.LinhasCompras.Desconto1, PRISINF.dbo.LinhasCompras.PrecUnit, PRISINF.dbo.LinhasCompras.Armazem, PRISINF.dbo.LinhasComprasStatus.EstadoTrans, PRISINF.dbo.LinhasComprasStatus.QuantTrans FROM PRISINF.dbo.CabecCompras INNER JOIN PRISINF.dbo.LinhasCompras ON PRISINF.dbo.CabecCompras.Id = PRISINF.dbo.LinhasCompras.IdCabecCompras INNER JOIN PRISINF.dbo.LinhasComprasStatus ON PRISINF.dbo.LinhasCompras.Id = PRISINF.dbo.LinhasComprasStatus.IdLinhasCompras WHERE (PRISINF.dbo.CabecCompras.TipoDoc = N'ECF' AND PRISINF.dbo.LinhasComprasStatus.EstadoTrans = 'P' AND dbo.CabecCompras.NumDoc like '" + substrings[1] + "') ORDER BY PRISINF.dbo.CabecCompras.NumDoc";
+            string query = "SELECT PRISINF.dbo.CabecCompras.TipoDoc, PRISINF.dbo.CabecCompras.DataVencimento, PRISINF.dbo.CabecCompras.CondPag, PRISINF.dbo.CabecCompras.id, PRISINF.dbo.CabecCompras.NumDoc, PRISINF.dbo.CabecCompras.Entidade, PRISINF.dbo.CabecCompras.DataDoc,PRISINF.dbo.CabecCompras.NumDocExterno, PRISINF.dbo.CabecCompras.TotalMerc,PRISINF.dbo.CabecCompras.Serie, PRISINF.dbo.LinhasCompras.NumLinha, PRISINF.dbo.LinhasCompras.Artigo, PRISINF.dbo.LinhasCompras.Quantidade, PRISINF.dbo.LinhasCompras.Desconto1, PRISINF.dbo.LinhasCompras.PrecUnit, PRISINF.dbo.LinhasCompras.Armazem, PRISINF.dbo.LinhasComprasStatus.EstadoTrans, PRISINF.dbo.LinhasComprasStatus.QuantTrans FROM PRISINF.dbo.CabecCompras INNER JOIN PRISINF.dbo.LinhasCompras ON PRISINF.dbo.CabecCompras.Id = PRISINF.dbo.LinhasCompras.IdCabecCompras INNER JOIN PRISINF.dbo.LinhasComprasStatus ON PRISINF.dbo.LinhasCompras.Id = PRISINF.dbo.LinhasComprasStatus.IdLinhasCompras WHERE (PRISINF.dbo.CabecCompras.TipoDoc = N'ECF' AND PRISINF.dbo.LinhasComprasStatus.EstadoTrans = 'P' AND dbo.CabecCompras.NumDoc like '" + substrings[1] + "') ORDER BY PRISINF.dbo.CabecCompras.NumDoc";
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
 
@@ -470,6 +474,7 @@ namespace FirstREST.Lib_Primavera
                     result.DataEmissao = objList.Valor("DataDoc");
                     result.DataVencimento = objList.Valor("DataVencimento");
                     result.NumDocExterno = objList.Valor("NumDocExterno");
+                    result.CondPag = objList.Valor("CondPag");
                     result.TotalMerc = objList.Valor("TotalMerc");
                     result.Serie = objList.Valor("Serie");
 
@@ -557,8 +562,10 @@ namespace FirstREST.Lib_Primavera
                     // Atribui valores ao cabecalho do doc
                     //myGR.set_DataDoc(DateTime.Now);
                     myGR.set_DataVenc(dc.DataVencimento);
+                    myGR.set_DataDoc(dc.DataEmissao);
                     myGR.set_Entidade(dc.Entidade);
-                    myGR.set_NumDocExterno(dc.NumDocExterno);
+                    myGR.set_NumDocExterno("1");
+                    myGR.set_CondPag(dc.CondPag);
                     myGR.set_Serie(dc.Serie);
                     myGR.set_Tipodoc("VGR");
                     myGR.set_TipoEntidade("F");

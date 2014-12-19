@@ -47,6 +47,20 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+        public string local {
+            get;
+            set;
+        }
+
+        public string codpostal {
+            get;
+            set;
+        }
+
+        public string pais {
+            get;
+            set;
+        }
         public string numContrib
         {
             get;
