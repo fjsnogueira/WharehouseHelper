@@ -40,7 +40,7 @@
 		// current index
 		this.current = -1;
 		// show current content item
-		this._show();
+		// this._show();
 		// init events
 		this._initEvents();
 	};
@@ -58,6 +58,15 @@
 	CBPFWTabs.prototype._show = function( idx ) {
 		if( this.current >= 0 ) {
 			this.tabs[ this.current ].className = this.items[ this.current ].className = '';
+		} else {
+			this.tabs.forEach( function( tab, idx ) {
+				if( tab.className == 'tab-current' )
+					tab.className = '';
+			});
+			this.items.forEach( function( tab, idx ) {
+				if( tab.className == 'content-current' )
+					tab.className = '';
+			});
 		}
 		// change current
 		this.current = idx != undefined ? idx : this.options.start >= 0 && this.options.start < this.items.length ? this.options.start : 0;
