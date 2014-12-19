@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html>
-    <header>
+    <head>
         <title> Registo de Encomendas </title>
         
         <meta charset="utf-8">
@@ -19,16 +19,21 @@
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/order.css" />
         <link rel="stylesheet" href="css/info.css" />
+		
+		<script src="js/lib/jquery-2.1.1.min.js"></script>
+		<script src="js/lib/jquery.cookie.js"></script>
+		<script src="js/api.js"></script>
+		<script src="js/order.js"></script>
         
-    </header>
+    </head>
 
-    <body onload="meteQB()"> 
+    <body onload="load()"> 
     
         <div class="main_search_block">
             
             <!-- titulos -->
             <div class="main_search_title"> 
-                <h1>  Encomenda ECF-0001 </h1>
+                <h1 id="orderTitle"></h1>
             </div>
             
             
@@ -41,8 +46,8 @@
                                 <canvas id="canvas0"></canvas>
                             </td>
                             <td>
-                                <p> <label> Fornecedor: </label> Nome do fornecedor </p>
-                                <p> <label> Data de criação:</label> 12-10-2014 </p>
+                                <p> <label id="orderSuplier"> Fornecedor: </label>  </p>
+                                <p> <label id="orderCreation"> Data de criação: </label>  </p>
                             </td>
                         </tr>
                     </table>
@@ -58,82 +63,6 @@
                     <table id="search_elements"> 
                         <tr>
                             <td colspan="4" class="tmsg"> Selecione os artigos recebidos e confirme a quantidade a receber.  </td>
-                        </tr>
-                        <tr>
-                            <!-- CHECKBOX -->
-                            <td class="checkbox unchecked">
-                                <div class="checkbox">
-                                    <input type="checkbox" value="1" id="checkboxOneInput1">
-                                    <label for="checkboxOneInput1"></label>
-                                </div>
-                            </td>
-                            <!-- breve descrição do elemento -->
-                            <td class="td_desc"> Esta é a descrição do artigo número 1. </td>
-                            <!-- quantidade do artigo -->
-                            <td class="td_qt"> 
-                                <button class="qt esq" type="button"> <span class="bt-icon icon-minus"></span> </button>
-                                <input class="qt" type="text" value="10">
-                                <button class="qt dir" type="button"> <span class="bt-icon icon-plus"></span> </button>
-                            </td>
-                            <!-- código de barras associado -->
-                            <td class="td_canvas"> <canvas id="canvas1"> </canvas> </td>
-                        </tr>
-                        <tr>
-                            <!-- CHECKBOX -->
-                            <td class="checkbox unchecked">
-                                <div class="checkbox">
-                                    <input type="checkbox" value="2" id="checkboxOneInput2">
-                                    <label for="checkboxOneInput2"></label>
-                                </div>
-                            </td>
-                            <!-- breve descrição do elemento -->
-                            <td class="td_desc"> Descrição do artigo 2. </td>
-                            <!-- quantidade do artigo -->
-                            <td class="td_qt"> 
-                                <button class="qt esq" type="button"> <span class="bt-icon icon-minus"></span> </button>
-                                <input class="qt" type="text" value="10">
-                                <button class="qt dir" type="button"> <span class="bt-icon icon-plus"></span> </button>
-                            </td>
-                            <!-- código de barras associado -->
-                            <td class="td_canvas"> <canvas id="canvas2"> </canvas> </td>
-                        </tr>
-                        <tr>
-                            <!-- CHECKBOX -->
-                            <td class="checkbox unchecked">
-                                <div class="checkbox">
-                                    <input type="checkbox" value="3" id="checkboxOneInput3">
-                                    <label for="checkboxOneInput3"></label>
-                                </div>
-                            </td>
-                            <!-- breve descrição do elemento -->
-                            <td class="td_desc"> Descrição do artigo 3. </td>
-                            <!-- quantidade do artigo -->
-                            <td class="td_qt"> 
-                                <button class="qt esq" type="button"> <span class="bt-icon icon-minus"></span> </button>
-                                <input class="qt" type="text" value="10">
-                                <button class="qt dir" type="button"> <span class="bt-icon icon-plus"></span> </button>
-                            </td>
-                            <!-- código de barras associado -->
-                            <td class="td_canvas"> <canvas id="canvas3"> </canvas> </td>
-                        </tr>
-                        <tr>
-                            <!-- CHECKBOX -->
-                            <td class="checkbox unchecked">
-                                <div class="checkbox">
-                                    <input type="checkbox" value="4" id="checkboxOneInput4">
-                                    <label for="checkboxOneInput4"></label>
-                                </div>
-                            </td>
-                            <!-- breve descrição do elemento -->
-                            <td class="td_desc"> Descrição do artigo 4. </td>
-                            <!-- quantidade do artigo -->
-                            <td class="td_qt"> 
-                                <button class="qt esq" type="button"> <span class="bt-icon icon-minus"></span> </button>
-                                <input class="qt" type="text" value="10">
-                                <button class="qt dir" type="button"> <span class="bt-icon icon-plus"></span> </button>
-                            </td>
-                            <!-- código de barras associado -->
-                            <td class="td_canvas"> <canvas id="canvas4"> </canvas> </td>
                         </tr>
                     </table>
                     <div class="bt_receive_container"> <button class="bt_receive" type="submit"> receber artigos </button> </div>

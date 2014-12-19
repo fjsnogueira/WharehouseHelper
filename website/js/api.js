@@ -25,6 +25,22 @@ function checkSearches(){
 	}
 }
 
+function changeToProduct(){
+	window.location.href = 'product.html';
+}
+
+function changeToOrder(){
+	window.location.href = 'order.html';
+}
+
+function changeToSupplier(){
+	window.location.href = 'suplier.html';
+}
+
+function changeToWarehouse(){
+	window.location.href = 'warehouse.html';
+}
+
 /******************************************************************************/
 /***********************     		Imports     		***********************/
 /******************************************************************************/
@@ -137,8 +153,9 @@ function artigoSuccess(data, testStatus, jqXHR){
 		$('#tabProducts').addClass('tab-current');
 		$('#section-bar-2').addClass('content-current');
 		$('#tableProducts').empty();
-		$('#tableProducts').append('<tr><td class="td_img"> <img src="img/artigo.jpg"></td><td class="td_desc">'+desc+'</td><td class="td_bt"> <button class="more_opt"> abrir opções </button> </td><td class="td_canvas"> <canvas id="canvas2_1"> </canvas> </td>');
+		$('#tableProducts').append('<tr><td class="td_img"> <img src="img/artigo.jpg"></td><td class="td_desc">'+desc+'</td><td class="td_bt"> <button class="more_opt" onclick="changeToProduct();return false;"> abrir opções </button> </td><td class="td_canvas"> <canvas id="canvas2_1"> </canvas> </td>');
 		render('ean13',data['CodBarras'],'canvas2_1');
+		$.cookie('product', data);
 		$('#loader').css('display', 'none');
 	} else
 		artigoError();
@@ -196,8 +213,9 @@ function encomendaSuccess(data, testStatus, jqXHR){
 		$('#tabOrders').addClass('tab-current');
 		$('#section-bar-1').addClass('content-current');
 		$('#tableOrders').empty();
-		$('#tableOrders').append('<tr><td class="td_img"> <img src="img/encomenda.jpg"></td><td class="td_desc">'+desc+'</td><td class="td_bt"> <button class="more_opt"> abrir opções </button> </td><td class="td_canvas"> <canvas id="canvas1_1"> </canvas> </td>');
+		$('#tableOrders').append('<tr><td class="td_img"> <img src="img/encomenda.jpg"></td><td class="td_desc">'+desc+'</td><td class="td_bt"> <button class="more_opt" onclick="changeToOrder();return false;"> abrir opções </button> </td><td class="td_canvas"> <canvas id="canvas1_1"> </canvas> </td>');
 		render('code128',data['TipoDoc']+'-'+data['NumDoc'],'canvas1_1');
+		window.top.name = JSON.stringify(data);
 		$('#loader').css('display', 'none');
 	} else
 		encomendaError();
@@ -205,7 +223,6 @@ function encomendaSuccess(data, testStatus, jqXHR){
 
 // retorna erro no caso das encomendas nao terem sido encontradas
 function encomendaError(jqXHR, textStatus, errorThrown){
-	alert("ajksdhsa");
 	// empty the table
 	$('#tableOrders').empty();
 	$('#tabOrders').removeClass('tab-current');
@@ -259,8 +276,9 @@ function fornecedorSuccess(data, testStatus, jqXHR){
 		$('#tabSuppliers').addClass('tab-current');
 		$('#section-bar-4').addClass('content-current');
 		$('#tableSuppliers').empty();
-		$('#tableSuppliers').append('<tr><td class="td_img"> <img src="img/fornecedor.jpg"></td><td class="td_desc">'+desc+'</td><td class="td_bt"> <button class="more_opt"> abrir opções </button> </td><td class="td_canvas"> <canvas id="canvas4_1"> </canvas> </td>');
+		$('#tableSuppliers').append('<tr><td class="td_img"> <img src="img/fornecedor.jpg"></td><td class="td_desc">'+desc+'</td><td class="td_bt"> <button class="more_opt" onclick="changeToSupplier();return false;"> abrir opções </button> </td><td class="td_canvas"> <canvas id="canvas4_1"> </canvas> </td>');
 		render('code128',data['id'],'canvas4_1');
+		$.cookie('supplier', data);
 		$('#loader').css('display', 'none');
 	} else
 		fornecedorError();
@@ -297,8 +315,9 @@ function armazemSuccess(data, testStatus, jqXHR){
 		$('#tabWarehouses').addClass('tab-current');
 		$('#section-bar-3').addClass('content-current');
 		$('#tableWarehouses').empty();
-		$('#tableWarehouses').append('<tr><td class="td_img"> <img src="img/armazem.jpg"></td><td class="td_desc">'+desc+'</td><td class="td_bt"> <button class="more_opt"> abrir opções </button> </td><td class="td_canvas"> <canvas id="canvas3_1"> </canvas> </td>');
+		$('#tableWarehouses').append('<tr><td class="td_img"> <img src="img/armazem.jpg"></td><td class="td_desc">'+desc+'</td><td class="td_bt"> <button class="more_opt" onclick="changeToWarehouse();return false;"> abrir opções </button> </td><td class="td_canvas"> <canvas id="canvas3_1"> </canvas> </td>');
 		render('code128',data['id'],'canvas3_1');
+		$.cookie('warehouse', data);
 		$('#loader').css('display', 'none');
 	} else
 		armazemError();
