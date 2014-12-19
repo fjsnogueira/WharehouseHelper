@@ -37,13 +37,13 @@ namespace FirstREST.Controllers
 
         public HttpResponseMessage Post(EncomendaRecepcionada encomenda)
         {
-            HttpRequestHeaders aux = Request.Headers;
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             Lib_Primavera.Model.DocCompra docCompra = Lib_Primavera.Comercial.getEncomenda(encomenda.idEncomenda);
-            if (docCompra.id != "")
+            if (!docCompra.id.Equals(""))
             {
                 if (Lib_Primavera.Comercial.updateEncomenda(docCompra, encomenda))
                 {
+                    
                     erro = Lib_Primavera.Comercial.VGR_New(docCompra);
 
                     if (erro.Erro == 0)
@@ -60,18 +60,9 @@ namespace FirstREST.Controllers
                         return Request.CreateResponse(HttpStatusCode.Accepted, erro);
                     }
                 }
-                else
-                {
-                    erro.Status = false;
-                    erro.Descricao = "Nada a atualizar";
-                    return Request.CreateResponse(HttpStatusCode.Accepted, erro);
-                }
             }
-            else
-            {
-                erro.Status = false;
-                return Request.CreateResponse(HttpStatusCode.Accepted, erro);
-            }
+            erro.Status = false;
+            return Request.CreateResponse(HttpStatusCode.Accepted, erro);
 
         }
 

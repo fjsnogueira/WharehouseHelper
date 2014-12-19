@@ -454,7 +454,7 @@ namespace FirstREST.Lib_Primavera
         public static Model.DocCompra getEncomenda(string codBarValue)
         {
             string[] substrings = Regex.Split(codBarValue, "ECF-");
-            string query = "SELECT PRISINF.dbo.CabecCompras.TipoDoc, PRISINF.dbo.CabecCompras.DataVencimento, PRISINF.dbo.CabecCompras.CondPag, PRISINF.dbo.CabecCompras.id, PRISINF.dbo.CabecCompras.NumDoc, PRISINF.dbo.CabecCompras.Entidade, PRISINF.dbo.CabecCompras.DataDoc,PRISINF.dbo.CabecCompras.NumDocExterno, PRISINF.dbo.CabecCompras.TotalMerc,PRISINF.dbo.CabecCompras.Serie, PRISINF.dbo.LinhasCompras.NumLinha, PRISINF.dbo.LinhasCompras.Artigo, PRISINF.dbo.LinhasCompras.Quantidade, PRISINF.dbo.LinhasCompras.Desconto1, PRISINF.dbo.LinhasCompras.PrecUnit, PRISINF.dbo.LinhasCompras.Armazem, PRISINF.dbo.LinhasComprasStatus.EstadoTrans, PRISINF.dbo.LinhasComprasStatus.QuantTrans FROM PRISINF.dbo.CabecCompras INNER JOIN PRISINF.dbo.LinhasCompras ON PRISINF.dbo.CabecCompras.Id = PRISINF.dbo.LinhasCompras.IdCabecCompras INNER JOIN PRISINF.dbo.LinhasComprasStatus ON PRISINF.dbo.LinhasCompras.Id = PRISINF.dbo.LinhasComprasStatus.IdLinhasCompras WHERE (PRISINF.dbo.CabecCompras.TipoDoc = N'ECF' AND PRISINF.dbo.LinhasComprasStatus.EstadoTrans = 'P' AND dbo.CabecCompras.NumDoc like '" + substrings[substrings.Length-1] + "') ORDER BY PRISINF.dbo.CabecCompras.NumDoc";
+            string query = "SELECT PRISINF.dbo.CabecCompras.TipoDoc, PRISINF.dbo.CabecCompras.DataVencimento, PRISINF.dbo.CabecCompras.CondPag, PRISINF.dbo.CabecCompras.id, PRISINF.dbo.CabecCompras.NumDoc, PRISINF.dbo.CabecCompras.Entidade, PRISINF.dbo.CabecCompras.DataDoc,PRISINF.dbo.CabecCompras.NumDocExterno, PRISINF.dbo.CabecCompras.TotalMerc,PRISINF.dbo.CabecCompras.Serie, PRISINF.dbo.LinhasCompras.NumLinha, PRISINF.dbo.LinhasCompras.Artigo, PRISINF.dbo.LinhasCompras.Quantidade, PRISINF.dbo.LinhasCompras.Desconto1, PRISINF.dbo.LinhasCompras.PrecUnit, PRISINF.dbo.LinhasCompras.Armazem, PRISINF.dbo.LinhasComprasStatus.EstadoTrans, PRISINF.dbo.LinhasComprasStatus.QuantTrans FROM PRISINF.dbo.CabecCompras INNER JOIN PRISINF.dbo.LinhasCompras ON PRISINF.dbo.CabecCompras.Id = PRISINF.dbo.LinhasCompras.IdCabecCompras INNER JOIN PRISINF.dbo.LinhasComprasStatus ON PRISINF.dbo.LinhasCompras.Id = PRISINF.dbo.LinhasComprasStatus.IdLinhasCompras WHERE (PRISINF.dbo.CabecCompras.TipoDoc = N'ECF' AND PRISINF.dbo.LinhasComprasStatus.EstadoTrans = 'P' AND dbo.CabecCompras.NumDoc like '" + substrings[substrings.Length - 1] + "') ORDER BY PRISINF.dbo.CabecCompras.NumDoc";
             ErpBS objMotor = new ErpBS();
             StdBELista objList;
 
@@ -524,14 +524,20 @@ namespace FirstREST.Lib_Primavera
         {
             bool updated = false;
             bool found = false;
+            List<Model.LinhaDocCompra> aux = new List<Model.LinhaDocCompra>();
+            Model.LinhaDocCompra linhaAux;
+
             foreach (Model.LinhaDocCompra linha in docCompra.LinhasDoc)
             {
                 found = false;
                 foreach (Model.ArtigosRecepcionados artigoRecebido in encomendaRecebida.artigos)
                 {
-                    if (artigoRecebido.idArtigo == linha.CodArtigo) // mesmo artigo
+                    if (linha.CodArtigo == artigoRecebido.idArtigo) // mesmo artigo
                     {
-                        linha.Quantidade += artigoRecebido.quantidade;
+                        linhaAux = new Model.LinhaDocCompra();
+                        linhaAux = linha;
+                        linhaAux.Quantidade = artigoRecebido.quantidade;
+                        aux.Add(linhaAux);
                         found = true;
                         updated = true;
                     }
@@ -539,6 +545,7 @@ namespace FirstREST.Lib_Primavera
                         break;
                 }
             }
+            docCompra.LinhasDoc = aux; 
             return updated;
         }
 
@@ -856,7 +863,7 @@ namespace FirstREST.Lib_Primavera
         //a ser usado na geração de vgr
         private static Lib_Primavera.Model.SessionModel getSession(string sessionVal)
         {
-            if(Session.ContainsKey(sessionVal))
+            if (Session.ContainsKey(sessionVal))
                 return Session[sessionVal];
             else
                 return new Model.SessionModel();
