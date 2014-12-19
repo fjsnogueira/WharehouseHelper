@@ -9,6 +9,7 @@ using System.Web.Http;
 using System.Net.Http.Headers;
 using FirstREST.Lib_Primavera.Model;
 using System.Net.Http.Formatting;
+using System.Text.RegularExpressions;
 
 namespace FirstREST.Controllers
 {
@@ -17,6 +18,21 @@ namespace FirstREST.Controllers
         public IEnumerable<Lib_Primavera.Model.DocCompra> Get()
         {
             return Lib_Primavera.Comercial.VGR_List();
+        }
+
+        // GET api/doccompra/5 
+        public DocCompra Get(string id)
+        {
+            Lib_Primavera.Model.DocCompra docCompra = Lib_Primavera.Comercial.getEncomenda(id);
+            if (String.Equals(docCompra, ""))
+            {
+                throw new HttpResponseException(
+                    Request.CreateResponse(HttpStatusCode.NotFound));
+            }
+            else
+            {
+                return docCompra;
+            }
         }
 
         public HttpResponseMessage Post(EncomendaRecepcionada encomenda)
