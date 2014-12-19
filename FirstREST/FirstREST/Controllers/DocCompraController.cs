@@ -42,26 +42,34 @@ namespace FirstREST.Controllers
             Lib_Primavera.Model.DocCompra docCompra = Lib_Primavera.Comercial.getEncomenda(encomenda.idEncomenda);
             if (docCompra.id != "")
             {
-                Lib_Primavera.Comercial.updateEncomenda(docCompra, encomenda);
-                erro = Lib_Primavera.Comercial.VGR_New(docCompra);
-
-                if (erro.Erro == 0)
+                if (Lib_Primavera.Comercial.updateEncomenda(docCompra, encomenda))
                 {
-                    var response = Request.CreateResponse(
-                      HttpStatusCode.Created, docCompra.id);
-                    //string uri = Url.Link("DefaultApi", new { DocId = docCompra.id });
-                    //response.Headers.Location = new Uri(uri);
-                    return response;
+                    erro = Lib_Primavera.Comercial.VGR_New(docCompra);
+
+                    if (erro.Erro == 0)
+                    {
+                        var response = Request.CreateResponse(
+                          HttpStatusCode.Created, docCompra.id);
+                        //string uri = Url.Link("DefaultApi", new { DocId = docCompra.id });
+                        //response.Headers.Location = new Uri(uri);
+                        return response;
+                    }
+                    else
+                    {
+                        erro.Status = false;
+                        return Request.CreateResponse(HttpStatusCode.Accepted, erro);
+                    }
                 }
                 else
                 {
                     erro.Status = false;
+                    erro.Descricao = "Nada a atualizar";
                     return Request.CreateResponse(HttpStatusCode.Accepted, erro);
                 }
             }
             else
             {
-                erro.Status=false;
+                erro.Status = false;
                 return Request.CreateResponse(HttpStatusCode.Accepted, erro);
             }
 
