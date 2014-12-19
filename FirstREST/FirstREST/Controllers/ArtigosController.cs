@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using FirstREST.Lib_Primavera.Model;
+using System.Text.RegularExpressions;
 
 
 namespace FirstREST.Controllers
@@ -15,7 +16,6 @@ namespace FirstREST.Controllers
     {
         //
         // GET: /Artigos/
-
         public IEnumerable<Lib_Primavera.Model.Artigo> Get()
         {
             return Lib_Primavera.Comercial.ListaArtigos();
@@ -26,17 +26,16 @@ namespace FirstREST.Controllers
         public Artigo Get(string id)
         {
             Lib_Primavera.Model.Artigo artigo = Lib_Primavera.Comercial.GetArtigo(id);
-            if (artigo == null)
+            if (String.Equals(artigo,""))
             {
                 throw new HttpResponseException(
-                  Request.CreateResponse(HttpStatusCode.NotFound));
+                    Request.CreateResponse(HttpStatusCode.NotFound));
             }
             else
             {
                 return artigo;
             }
         }
-
     }
 }
 

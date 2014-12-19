@@ -7,14 +7,23 @@ var SERVER_BASE_URL 	= 	'http://localhost:49822/';	// Server base url
 var SERVER_API_URL		=	'api/';						// Server api url extension
 
 var API					=	{
-		login:			"login/",
-		artigos:		"artigos/",
-		docCompra:		"doccompra/",
-		fornecedor:		"fornecedor/",
-		armazem:		"armazem/",
-		search:			"search/"
+			login:			"login/",
+			artigos:		"artigos/",
+			docCompra:		"doccompra/",
+			fornecedor:		"fornecedor/",
+			armazem:		"armazem/",
+			search:			"search/"
 	};
-		
+	
+var searches 			= 	0;	
+
+function checkSearches(){
+	searches++;
+	if( searches == 4 ) {
+		$('#loader').css('display', 'none');
+		searches = 0;
+	}
+}
 
 /******************************************************************************/
 /***********************     		Imports     		***********************/
@@ -107,35 +116,50 @@ function logout(){
 /***********************     		QueryTime     		***********************/
 /******************************************************************************/
 
-// -----     getArtigo     ----- //
+// -----     "GET"Artigo     ----- //
 
 function getArtigo(artigoID){
-
 	$.ajax({
-		url: 		SERVER_BASE_URL + SERVER_API_URL + API["artigos"],
-		type: 		GET,
-		data: 		artigoID,
-		success: 	artigoSuccess(data, textStatus, jqXHR),
-		error: 		artigoError(jqXHR, textStatus, errorThrown)
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API.artigos + artigoID,
+		type: 		"GET",
+		headers: 	{ 'Content-Type': 'text/plain; charset=utf-8' },
+		success: 	artigoSuccess,
+		error: 		artigoError
 	});
+
 }
 
 // retorna ok no caso do artigo ter sido encontrado
 function artigoSuccess(data, testStatus, jqXHR){
-	// fazer aqui qualquer coisa //
+	if( data != null ) {
+		// add the tr to tableProducts
+		var desc = data['DescArtigo'];
+		$('#tabProducts').addClass('tab-current');
+		$('#section-bar-2').addClass('content-current');
+		$('#tableProducts').empty();
+		$('#tableProducts').append('<tr><td class="td_img"> <img src="img/artigo.jpg"></td><td class="td_desc">'+desc+'</td><td class="td_bt"> <button class="more_opt"> abrir opções </button> </td><td class="td_canvas"> <canvas id="canvas2_1"> </canvas> </td>');
+		render('ean13',data['CodBarras'],'canvas2_1');
+		$('#loader').css('display', 'none');
+	} else
+		artigoError();
 }
 
 // retorna erro no caso do artigo nao ter sido encontrado
-function artigoError(jqXHR, textStatus, errorThrown){
+function artigoError(){
 	// fazer aqui qualquer coisa //
+	$('#tableProducts').empty();
+	$('#tabProducts').removeClass('tab-current');
+	$('#section-bar-2').removeClass('content-current');
+	
+	checkSearches();
 }
 
-// ----- getArtigos ----- //
+// ----- "GET"Artigos ----- //
 
 function getArtigos(){
 	$.ajax({
 		url: 		SERVER_BASE_URL + SERVER_API_URL + API["artigos"],
-		type: 		GET,
+		type: 		"GET",
 		data: 		"",
 		success: 	artigosSuccess(data, textStatus, jqXHR),
 		error: 		artigosError(jqXHR, textStatus, errorThrown)
@@ -152,26 +176,42 @@ function artigosError(jqXHR, textStatus, errorThrown){
 	// fazer aqui qualquer coisa //
 }
 
-// ----- getEncomendas ----- //
+// ----- "GET"Encomendas ----- //
 
-function getEncomendas(){
+function getEncomenda(encomendaID){
 	$.ajax({
-		url: 		SERVER_BASE_URL + SERVER_API_URL + API["docCompra"],
-		type: 		GET,
-		data: 		"",
-		success: 	encomendasSuccess(data, textStatus, jqXHR),
-		error: 		encomendasError(jqXHR, textStatus, errorThrown)
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API.docCompra + encomendaID,
+		type: 		"GET",
+		headers: 	{ 'Content-Type': 'text/plain; charset=utf-8' },
+		success: 	encomendaSuccess,
+		error: 		encomendaError
 	});
 }
 
 // retorna ok no caso das encomendas terem sido encontradas
-function encomendasSuccess(data, testStatus, jqXHR){
-	// fazer aqui qualquer coisa //
+function encomendaSuccess(data, testStatus, jqXHR){
+	if( data['id'] != null ) {
+		// add the tr to tableProducts
+		var desc = data['id'];
+		$('#tabOrders').addClass('tab-current');
+		$('#section-bar-1').addClass('content-current');
+		$('#tableOrders').empty();
+		$('#tableOrders').append('<tr><td class="td_img"> <img src="img/encomenda.jpg"></td><td class="td_desc">'+desc+'</td><td class="td_bt"> <button class="more_opt"> abrir opções </button> </td><td class="td_canvas"> <canvas id="canvas1_1"> </canvas> </td>');
+		render('code128',data['TipoDoc']+'-'+data['NumDoc'],'canvas1_1');
+		$('#loader').css('display', 'none');
+	} else
+		encomendaError();
 }
 
 // retorna erro no caso das encomendas nao terem sido encontradas
-function encomendasError(jqXHR, textStatus, errorThrown){
-	// fazer aqui qualquer coisa //
+function encomendaError(jqXHR, textStatus, errorThrown){
+	alert("ajksdhsa");
+	// empty the table
+	$('#tableOrders').empty();
+	$('#tabOrders').removeClass('tab-current');
+	$('#section-bar-1').removeClass('content-current');
+	
+	checkSearches();
 }
 
 // ----- updateEncomenda ----- //
@@ -181,7 +221,7 @@ function updateEncomenda(encomenda){
 	//precisa de receber as cookies do user
 	$.ajax({
 		url: 		SERVER_BASE_URL + SERVER_API_URL + API["docCompra"],
-		type: 		POST,
+		type: 		"POST",
 		data: 		encomenda,
 		success: 	updateEncomendaSuccess(data, textStatus, jqXHR),
 		error: 		updateEncomendaError(jqXHR, textStatus, errorThrown)
@@ -198,50 +238,80 @@ function updateEncomendaError(jqXHR, textStatus, errorThrown){
 	// fazer aqui qualquer coisa //
 }
 
-// -----     getFornecedor     ----- //
+// -----     "GET"Fornecedor     ----- //
 
 function getFornecedor(fornecedorID){
 
 	$.ajax({
-		url: 		SERVER_BASE_URL + SERVER_API_URL + API["fornecedor"],
-		type: 		GET,
-		data: 		fornecedorID,
-		success: 	fornecedorSuccess(data, textStatus, jqXHR),
-		error: 		fornecedorError(jqXHR, textStatus, errorThrown)
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API.fornecedor + fornecedorID,
+		type: 		"GET",
+		headers: 	{ 'Content-Type': 'text/plain; charset=utf-8' },
+		success: 	fornecedorSuccess,
+		error: 		fornecedorError
 	});
 }
 
 // retorna ok no caso do fornecedor ter sido encontrado
 function fornecedorSuccess(data, testStatus, jqXHR){
-	// fazer aqui qualquer coisa //
+	if( data['id'] != null ) {
+		// add the tr to tableProducts
+		var desc = data['nome'];
+		$('#tabSuppliers').addClass('tab-current');
+		$('#section-bar-4').addClass('content-current');
+		$('#tableSuppliers').empty();
+		$('#tableSuppliers').append('<tr><td class="td_img"> <img src="img/fornecedor.jpg"></td><td class="td_desc">'+desc+'</td><td class="td_bt"> <button class="more_opt"> abrir opções </button> </td><td class="td_canvas"> <canvas id="canvas4_1"> </canvas> </td>');
+		render('code128',data['id'],'canvas4_1');
+		$('#loader').css('display', 'none');
+	} else
+		fornecedorError();
 }
 
 // retorna erro no caso do fornecedor nao ter sido encontrado
 function fornecedorError(jqXHR, textStatus, errorThrown){
-	// fazer aqui qualquer coisa //
+	// empty the table
+	$('#tableSuppliers').empty();
+	$('#tabSuppliers').removeClass('tab-current');
+	$('#section-bar-4').removeClass('content-current');
+	
+	checkSearches();
 }
 
-// -----     getArmazem     ----- //
+// -----     "GET"Armazem     ----- //
 
 function getArmazem(armazemID){
-
 	$.ajax({
-		url: 		SERVER_BASE_URL + SERVER_API_URL + API["armazem"],
-		type: 		GET,
-		data: 		armazemID,
-		success: 	armazemSuccess(data, textStatus, jqXHR),
-		error: 		armazemError(jqXHR, textStatus, errorThrown)
+		url: 		SERVER_BASE_URL + SERVER_API_URL + API.armazem + armazemID,
+		type: 		"GET",
+		headers: 	{ 'Content-Type': 'text/plain; charset=utf-8' },
+		success: 	armazemSuccess,
+		error: 		armazemError
 	});
+
 }
 
-// retorna ok no caso do armazem ter sido encontrado
+// retorna ok no caso do artigo ter sido encontrado
 function armazemSuccess(data, testStatus, jqXHR){
-	// fazer aqui qualquer coisa //
+	if( data['id'] != null ) {
+		// add the tr to tableProducts
+		var desc = data['descricao'];
+		$('#tabWarehouses').addClass('tab-current');
+		$('#section-bar-3').addClass('content-current');
+		$('#tableWarehouses').empty();
+		$('#tableWarehouses').append('<tr><td class="td_img"> <img src="img/armazem.jpg"></td><td class="td_desc">'+desc+'</td><td class="td_bt"> <button class="more_opt"> abrir opções </button> </td><td class="td_canvas"> <canvas id="canvas3_1"> </canvas> </td>');
+		render('code128',data['id'],'canvas3_1');
+		$('#loader').css('display', 'none');
+	} else
+		armazemError();
 }
 
-// retorna erro no caso do armazem nao ter sido encontrado
-function armazemError(jqXHR, textStatus, errorThrown){
-	// fazer aqui qualquer coisa //
+// retorna erro no caso do artigo nao ter sido encontrado
+function armazemError(){
+	// empty the table
+	$('#tableWarehouses').empty();
+	$('#tabWarehouses').removeClass('tab-current');
+	$('#section-bar-3').removeClass('content-current');
+	
+	checkSearches();
 }
 
 // -----     searchDB     ----- //
@@ -252,12 +322,6 @@ function searchDB(attribute){
 		url: 			SERVER_BASE_URL + SERVER_API_URL + API.search,
 		type: 			"GET",
 		data: 			attribute,
-		beforeSend: 	function(){ 
-			// Create loader
-			$('#loader').html('<img src="img/loader.gif" id="imgLoader"><br/>&nbsp&nbsp&nbspLoading...');
-			$('#imgLoader').css('margin-top', ($(window).height()/2.0) - 32);
-			$('#loader').css('display', 'block');
-		},
 		success: 		searchSuccess,
 		error: 			searchError
 	});
